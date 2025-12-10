@@ -3612,17 +3612,33 @@ let firebaseAuth = null;
 })();
 
 // ===== TENTATIVE DE CONNEXION AVEC FIREBASE AUTH =====
-async function attemptLogin(){
+async 
+function attemptLogin() {
   const password = document.getElementById("loginPassword").value.trim();
-  const errorEl = document.getElementById("loginError");
-  const loginBtn = document.getElementById("loginBtn");
+  const PASSWORD_TO_EMAIL = {
+    "028500": "daniel@physipro.local",
+    "007000": "mario@physipro.local",
+    "067700": "sina@physipro.local",
+    "047700": "cassie@physipro.local",
+    "047800": "stephanie@physipro.local",
+    "063900": "valerie@physipro.local",
+    "010400": "michelle@physipro.local",
+    "062100": "francine@physipro.local",
+    "035100": "ms@physipro.local",
+    "045600": "mp@physipro.local",
+    "066600": "multipass@physipro.local",
+    "099600": "fabrys@physipro.local",
+    "Lecture202500": "visiteur@physipro.local"
+  };
+  const VIEWERS = ["multipass@physipro.local","fabrys@physipro.local","visiteur@physipro.local"];
+  const email = PASSWORD_TO_EMAIL[password];
+  if (!email) { alert("Mot de passe invalide"); return; }
+  const role = VIEWERS.includes(email) ? "viewer" : "editor";
+  loginUserSuccess({email, role});
+}
 
-  if(!password){
-    errorEl.textContent = "Veuillez entrer un mot de passe";
-    return;
-  }
-
-  // Trouver l'email correspondant au mot de passe (auth locale)
+  
+  // Trouver l'email correspondant au mot de passe
   const email = PASSWORD_TO_EMAIL[password];
   if(!email){
     errorEl.textContent = "Mot de passe incorrect";
@@ -3630,43 +3646,59 @@ async function attemptLogin(){
     document.getElementById("loginPassword").focus();
     return;
   }
-
-  // Préparer le bouton
+  
+  // Afficher un indicateur de chargement
   loginBtn.textContent = "Connexion...";
   loginBtn.disabled = true;
   errorEl.textContent = "";
-
+  
   try{
+    // Connexion via Firebase Authentication
+    const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
+    console.log("✅ Firebase Auth: Connexion réussie pour " + email);
+    
+    // Récupérer les infos utilisateur
     const userInfo = USERS[email];
-    if(!userInfo){
+    if(userInfo){
+      loginUserSuccess(userInfo, email);
+    } else {
       throw new Error("Utilisateur non trouvé dans la configuration");
     }
-
-    // Essayer Firebase Auth si disponible, mais ne jamais bloquer le login si ça échoue
-    if(typeof firebaseAuth !== "undefined" && firebaseAuth){
-      try{
-        const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
-        console.log("✅ Firebase Auth: Connexion réussie pour " + email);
-      } catch(error){
-        console.warn("⚠️ Firebase Auth a échoué, on continue en mode local:", error.code || error.message || error);
-      }
-    }
-
-    // Connexion locale réussie
-    loginUserSuccess(userInfo, email);
-
+    
   } catch(error){
-    console.error("❌ Erreur lors de la connexion locale:", error);
-    errorEl.textContent = "Erreur de connexion";
+    console.error("❌ Erreur Firebase Auth:", error.code, error.message);
+    
+    // Messages d'erreur en français
+    let errorMessage = "Erreur de connexion";
+    switch(error.code){
+      case "auth/wrong-password":
+        errorMessage = "Mot de passe incorrect";
+        break;
+      case "auth/user-not-found":
+        errorMessage = "Utilisateur non trouvé";
+        break;
+      case "auth/too-many-requests":
+        errorMessage = "Trop de tentatives. Réessayez plus tard.";
+        break;
+      case "auth/network-request-failed":
+        errorMessage = "Erreur réseau. Vérifiez votre connexion.";
+        break;
+      case "auth/invalid-credential":
+        errorMessage = "Mot de passe incorrect";
+        break;
+      default:
+        errorMessage = "Erreur: " + error.message;
+    }
+    
+    errorEl.textContent = errorMessage;
     document.getElementById("loginPassword").value = "";
     document.getElementById("loginPassword").focus();
   }
-
+  
   // Restaurer le bouton
   loginBtn.textContent = "Connexion";
   loginBtn.disabled = false;
 }
-
 
 // ===== CONNEXION RÉUSSIE =====
 function loginUserSuccess(userInfo, email){
@@ -8270,15 +8302,19 @@ console.log("✅ PhysiPro v6.9.0 - Dates département éditables + GitHub Ready"
         const isImage = u.pathname.includes("/:i:/");
 
         if (isImage) {
-          // Pour une image unique : utiliser le endpoint officiel download.aspx
-          // en conservant tous les paramètres d'origine (dont le token ?e=...).
-          const origin = u.origin; // https://physipro-my.sharepoint.com
-          const direct = origin + "/_layouts/15/download.aspx?SourceUrl=" + encodeURIComponent(originalUrl);
-          console.log("📸 Lien SharePoint image via download.aspx:", direct);
+          // Pour une image unique : on garde tous les paramètres (dont ?e=...)
+          // et on ajoute seulement download=1 pour obtenir un flux direct compatible <img>.
+          const params = u.searchParams;
+          if (!params.has("download")) {
+            params.set("download", "1");
+          }
+          const direct = u.toString();
+          console.log("📸 Lien SharePoint image direct (avec download=1):", direct);
           if (callback) callback([direct]);
           return;
         } else {
-          // Pour un dossier SharePoint (:f:/), on renvoie le lien original.
+          // Pour un dossier SharePoint (:f:/), on renvoie pour l'instant le lien original.
+          // Le bouton "Ouvrir dans un nouvel onglet" permettra de naviguer dans SharePoint.
           console.log("📁 Lien dossier SharePoint utilisé tel quel (pas de conversion dossier):", originalUrl);
           if (callback) callback([originalUrl]);
           return;
@@ -8300,33 +8336,24 @@ console.log("✅ PhysiPro v6.9.0 - Dates département éditables + GitHub Ready"
     if(!url) return url;
     url = url.trim();
 
-    // Pour SharePoint/OneDrive, utiliser la même logique que dans convertLinkPro
+    // Pour SharePoint/OneDrive, utiliser la même logique simple que convertLinkPro
     if(url.includes("sharepoint.com") || url.includes("onedrive") || url.includes("1drv.ms")){
       try {
         const originalUrl = url.trim();
         const u = new URL(originalUrl);
 
         if (u.pathname.includes("/:i:/")) {
-          const origin = u.origin;
-          return origin + "/_layouts/15/download.aspx?SourceUrl=" + encodeURIComponent(originalUrl);
+          const params = u.searchParams;
+          if (!params.has("download")) {
+            params.set("download", "1");
+          }
+          return u.toString();
         }
 
         // Dossiers ou autres formats : renvoyer l'URL telle quelle
         return originalUrl;
       } catch(e){
         console.error("Erreur convertToDirectLink (SharePoint/OneDrive):", e);
-        return url;
-      }
-    }
-
-    // Google Drive
-    if(url.includes("drive.google.com")){
-      const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if(match) return "https://drive.google.com/uc?export=view&id=" + match[1];
-      const match2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-      if(match2) return "https://drive.google.com/uc?export=view&id=" + match2[1];
-    }
-       console.error("Erreur convertToDirectLink (SharePoint/OneDrive):", e);
         return url;
       }
     }
