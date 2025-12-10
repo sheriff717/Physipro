@@ -3616,13 +3616,13 @@ async function attemptLogin(){
   const password = document.getElementById("loginPassword").value.trim();
   const errorEl = document.getElementById("loginError");
   const loginBtn = document.getElementById("loginBtn");
-  
+
   if(!password){
     errorEl.textContent = "Veuillez entrer un mot de passe";
     return;
   }
-  
-  // Trouver l'email correspondant au mot de passe
+
+  // Trouver l'email correspondant au mot de passe (auth locale)
   const email = PASSWORD_TO_EMAIL[password];
   if(!email){
     errorEl.textContent = "Mot de passe incorrect";
@@ -3630,59 +3630,43 @@ async function attemptLogin(){
     document.getElementById("loginPassword").focus();
     return;
   }
-  
-  // Afficher un indicateur de chargement
+
+  // Préparer le bouton
   loginBtn.textContent = "Connexion...";
   loginBtn.disabled = true;
   errorEl.textContent = "";
-  
+
   try{
-    // Connexion via Firebase Authentication
-    const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
-    console.log("✅ Firebase Auth: Connexion réussie pour " + email);
-    
-    // Récupérer les infos utilisateur
     const userInfo = USERS[email];
-    if(userInfo){
-      loginUserSuccess(userInfo, email);
-    } else {
+    if(!userInfo){
       throw new Error("Utilisateur non trouvé dans la configuration");
     }
-    
-  } catch(error){
-    console.error("❌ Erreur Firebase Auth:", error.code, error.message);
-    
-    // Messages d'erreur en français
-    let errorMessage = "Erreur de connexion";
-    switch(error.code){
-      case "auth/wrong-password":
-        errorMessage = "Mot de passe incorrect";
-        break;
-      case "auth/user-not-found":
-        errorMessage = "Utilisateur non trouvé";
-        break;
-      case "auth/too-many-requests":
-        errorMessage = "Trop de tentatives. Réessayez plus tard.";
-        break;
-      case "auth/network-request-failed":
-        errorMessage = "Erreur réseau. Vérifiez votre connexion.";
-        break;
-      case "auth/invalid-credential":
-        errorMessage = "Mot de passe incorrect";
-        break;
-      default:
-        errorMessage = "Erreur: " + error.message;
+
+    // Essayer Firebase Auth si disponible, mais ne jamais bloquer le login si ça échoue
+    if(typeof firebaseAuth !== "undefined" && firebaseAuth){
+      try{
+        const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
+        console.log("✅ Firebase Auth: Connexion réussie pour " + email);
+      } catch(error){
+        console.warn("⚠️ Firebase Auth a échoué, on continue en mode local:", error.code || error.message || error);
+      }
     }
-    
-    errorEl.textContent = errorMessage;
+
+    // Connexion locale réussie
+    loginUserSuccess(userInfo, email);
+
+  } catch(error){
+    console.error("❌ Erreur lors de la connexion locale:", error);
+    errorEl.textContent = "Erreur de connexion";
     document.getElementById("loginPassword").value = "";
     document.getElementById("loginPassword").focus();
   }
-  
+
   // Restaurer le bouton
   loginBtn.textContent = "Connexion";
   loginBtn.disabled = false;
 }
+
 
 // ===== CONNEXION RÉUSSIE =====
 function loginUserSuccess(userInfo, email){
