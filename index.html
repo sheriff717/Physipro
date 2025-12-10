@@ -8286,19 +8286,15 @@ console.log("✅ PhysiPro v6.9.0 - Dates département éditables + GitHub Ready"
         const isImage = u.pathname.includes("/:i:/");
 
         if (isImage) {
-          // Pour une image unique : on garde tous les paramètres (dont ?e=...)
-          // et on ajoute seulement download=1 pour obtenir un flux direct compatible <img>.
-          const params = u.searchParams;
-          if (!params.has("download")) {
-            params.set("download", "1");
-          }
-          const direct = u.toString();
-          console.log("📸 Lien SharePoint image direct (avec download=1):", direct);
+          // Pour une image unique : utiliser le endpoint officiel download.aspx
+          // en conservant tous les paramètres d'origine (dont le token ?e=...).
+          const origin = u.origin; // https://physipro-my.sharepoint.com
+          const direct = origin + "/_layouts/15/download.aspx?SourceUrl=" + encodeURIComponent(originalUrl);
+          console.log("📸 Lien SharePoint image via download.aspx:", direct);
           if (callback) callback([direct]);
           return;
         } else {
-          // Pour un dossier SharePoint (:f:/), on renvoie pour l'instant le lien original.
-          // Le bouton "Ouvrir dans un nouvel onglet" permettra de naviguer dans SharePoint.
+          // Pour un dossier SharePoint (:f:/), on renvoie le lien original.
           console.log("📁 Lien dossier SharePoint utilisé tel quel (pas de conversion dossier):", originalUrl);
           if (callback) callback([originalUrl]);
           return;
@@ -8320,24 +8316,33 @@ console.log("✅ PhysiPro v6.9.0 - Dates département éditables + GitHub Ready"
     if(!url) return url;
     url = url.trim();
 
-    // Pour SharePoint/OneDrive, utiliser la même logique simple que convertLinkPro
+    // Pour SharePoint/OneDrive, utiliser la même logique que dans convertLinkPro
     if(url.includes("sharepoint.com") || url.includes("onedrive") || url.includes("1drv.ms")){
       try {
         const originalUrl = url.trim();
         const u = new URL(originalUrl);
 
         if (u.pathname.includes("/:i:/")) {
-          const params = u.searchParams;
-          if (!params.has("download")) {
-            params.set("download", "1");
-          }
-          return u.toString();
+          const origin = u.origin;
+          return origin + "/_layouts/15/download.aspx?SourceUrl=" + encodeURIComponent(originalUrl);
         }
 
         // Dossiers ou autres formats : renvoyer l'URL telle quelle
         return originalUrl;
       } catch(e){
         console.error("Erreur convertToDirectLink (SharePoint/OneDrive):", e);
+        return url;
+      }
+    }
+
+    // Google Drive
+    if(url.includes("drive.google.com")){
+      const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if(match) return "https://drive.google.com/uc?export=view&id=" + match[1];
+      const match2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if(match2) return "https://drive.google.com/uc?export=view&id=" + match2[1];
+    }
+       console.error("Erreur convertToDirectLink (SharePoint/OneDrive):", e);
         return url;
       }
     }
