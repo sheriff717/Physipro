@@ -29,13 +29,7 @@ Votre application sera disponible à:
 
 L'application utilise Firebase pour la synchronisation. La configuration est intégrée dans le fichier.
 
-### Utilisateurs par défaut
 
-| Rôle | Mot de passe |
-|------|--------------|
-| Admin | physipro2024 |
-| Éditeur | edit2024 |
-| Viewer | view2024 |
 
 ---
 
