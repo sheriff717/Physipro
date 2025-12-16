@@ -22,8 +22,7 @@ Application web de gestion des moulages pour Physipro.
 5. Choisir la branche **main** et le dossier **/ (root)**
 6. Cliquer sur **Save**
 
-Votre application sera disponible à:
-`https://VOTRE-USERNAME.github.io/NOM-DU-REPO/`
+
 
 ### Configuration Firebase
 
