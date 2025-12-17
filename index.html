@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PhysiPro Moulage – v294 – Import JSON Atelier</title>
+  <title>PhysiPro Moulage – v306 – Sécurité hashage passwords</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -1342,14 +1342,14 @@ html, body { margin: 0; padding: 0; }
 .mcard {
   position: relative;
   margin: 2px 3px;
-  padding: 4px 8px 3px 8px;
+  padding: 6px 8px 3px 8px;
   border-radius: 10px;
   background: linear-gradient(to bottom, #051020 0%, #0a1e38 35%, #5a8ac9 100%);
   border: 2px solid #000;
   box-shadow: 0 2px 4px rgba(0,0,0,0.4);
   color: #fff;
   font-size: 8px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Couleurs par région - dégradé métallique glossy */
@@ -1522,16 +1522,17 @@ html, body { margin: 0; padding: 0; }
 
 .mcard-title-line {
   width: 100%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mcard-title {
   font-size: 15px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
   cursor: text;
-  display: block;
   border: none;
   background: transparent;
   padding: 0;
@@ -1561,9 +1562,10 @@ html, body { margin: 0; padding: 0; }
   color: #fff;
   position: relative;
   width: 100%;
+  height: 22px;
 }
 
-/* Pastille région (Québec, Ontario, Maritime) */
+/* Pastille région (Québec, Ontario, Maritime) - ancien style */
 .mcard-region-pill {
   position: absolute;
   left: 2px;
@@ -1578,6 +1580,52 @@ html, body { margin: 0; padding: 0; }
   line-height: 1.1;
 }
 
+/* Nouvelle pastille région en haut à droite du titre */
+.mcard-region-pill-top {
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+  font-size: 6px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  text-align: center;
+  line-height: 1.1;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* Petit bouton priorité à gauche du numéro de commande */
+.mcard-btn-priority-small {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1;
+  opacity: 0.4;
+}
+
+.mcard-btn-priority-small:hover {
+  background: linear-gradient(to bottom, #f59e0b, #d97706);
+  transform: translateY(-50%) scale(1.1);
+  opacity: 1;
+  border: 1px solid rgba(0,0,0,0.5);
+}
+
+/* Quand une priorité est active, le bouton devient visible et coloré */
+.mcard.priority .mcard-btn-priority-small {
+  background: linear-gradient(to bottom, #f59e0b, #d97706);
+  border: 1px solid rgba(0,0,0,0.5);
+  opacity: 1;
+}
+
 /* Pastille région Ontario - texte blanc avec bordure noire */
 .mcard.region-on .mcard-region-pill {
   color: #ffffff;
@@ -1589,11 +1637,11 @@ html, body { margin: 0; padding: 0; }
   border: none;
   background: transparent;
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   font-family: inherit;
   font-weight: 600;
   padding: 0;
-  width: 70px;
+  width: 65px;
   outline: none;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
   text-align: center;
@@ -1609,10 +1657,10 @@ html, body { margin: 0; padding: 0; }
 /* Bouton toggle (ouvre fiche) - pastille à droite du numéro */
 .mcard-toggle-btn {
   position: absolute;
-  right: 0;
+  right: 3px;
   top: 50%;
   transform: translateY(-50%);
-  padding: 1px 6px;
+  padding: 2px 6px;
   font-size: 7px;
   font-weight: 600;
   border-radius: 999px;
@@ -1898,6 +1946,32 @@ html, body { margin: 0; padding: 0; }
 
 .move-overlay.hidden {
   display: none;
+}
+
+/* Menu de confirmation (suppression, etc.) */
+.move-menu {
+  background: linear-gradient(to bottom, #1a1a2e, #16213e);
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.85);
+  padding: 20px;
+  min-width: 280px;
+  max-width: 350px;
+  text-align: center;
+}
+
+.move-menu-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.move-menu-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .move-panel {
@@ -8237,45 +8311,48 @@ input.cmd-pill-input {
 
 /* ===== CARTES PRIORITAIRES ===== */
 .mcard.priority {
-  animation: priorityPulse 1.5s ease-in-out infinite;
-  border: 2px solid #fbbf24 !important;
+  animation: priorityBorderPulse 1.5s ease-in-out infinite;
   box-shadow: 0 0 15px rgba(251, 191, 36, 0.5) !important;
 }
 
-@keyframes priorityPulse {
+@keyframes priorityBorderPulse {
   0%, 100% { 
-    background: linear-gradient(to bottom, #0b2343, #0a3a5c);
-    border-color: #fbbf24;
+    border: 2px solid #fbbf24;
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
   }
   50% { 
-    background: linear-gradient(to bottom, #4a3000, #3d2800);
-    border-color: #f59e0b;
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.7);
   }
 }
 
 .priority-badge {
   position: absolute;
-  top: -8px;
-  left: -8px;
-  width: 28px;
-  height: 28px;
+  top: -2px;
+  left: -2px;
+  width: 18px;
+  height: 18px;
   background: linear-gradient(to bottom, #ef4444, #dc2626);
-  border-radius: 50%;
+  border-radius: 10px 0 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: bold;
   color: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
   z-index: 10;
-  border: 2px solid #fff;
+  border: 2px solid #000;
+  border-right: 1px solid rgba(255,255,255,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  pointer-events: none;
 }
 
 .priority-badge.p1 { background: linear-gradient(to bottom, #ef4444, #dc2626); }
 .priority-badge.p2 { background: linear-gradient(to bottom, #f97316, #ea580c); }
 .priority-badge.p3 { background: linear-gradient(to bottom, #eab308, #ca8a04); }
 .priority-badge.p4 { background: linear-gradient(to bottom, #22c55e, #16a34a); }
+.priority-badge.p5 { background: linear-gradient(to bottom, #3b82f6, #2563eb); }
 
 /* Menu contextuel priorité */
 .priority-menu {
@@ -8320,6 +8397,7 @@ input.cmd-pill-input {
 .priority-dot.p2 { background: #f97316; }
 .priority-dot.p3 { background: #eab308; }
 .priority-dot.p4 { background: #22c55e; }
+.priority-dot.p5 { background: #3b82f6; }
 .priority-dot.none { background: #6b7280; }
 
 .login-signature {
@@ -9495,29 +9573,39 @@ const FIREBASE_CONFIG = {
 // Table des utilisateurs avec vrais emails d'entreprise
 const USERS = {
   // Admin
-  "atelieratp@physipro.com": { name: "Daniel Charest", role: "admin", tempPassword: "028500" },
+  "atelieratp@physipro.com": { name: "Daniel Charest", role: "admin", tempHash: "997a5fb50ce12b5619bdb2ecc2dc05f216af0ab61bb3f2609017c3fcb62da2ae" },
   
   // Editors
-  "simdut@physipro.com": { name: "Cassie Valois", role: "editor", tempPassword: "047700" },
-  "mplanguedoc@physipro.com": { name: "Marie-Pier Languedoc", role: "editor", tempPassword: "045600" },
-  "marie-soleil.riverin@physipro.com": { name: "Marie-Soleil Riverin", role: "editor", tempPassword: "035100" },
-  "michelle.bouchard@physipro.com": { name: "Michelle Bouchard", role: "editor", tempPassword: "010400" },
-  "ngagne@physipro.com": { name: "Nadia Gagne", role: "editor", tempPassword: "089655" },
-  "cncatp@physipro.com": { name: "Sina Lotfollah", role: "editor", tempPassword: "067700" },
-  "magasinatp3@physipro.com": { name: "Stéphane Delorme", role: "editor", tempPassword: "078900" },
-  "sroy@physipro.com": { name: "Stephanie Roy", role: "editor", tempPassword: "047800" },
-  "magasinatp2@physipro.com": { name: "Sylvain Carrier", role: "editor", tempPassword: "028586" },
-  "mario.jacques@physipro.com": { name: "Mario Jacques", role: "editor", tempPassword: "007000" },
-  "valerie18@videotron.ca": { name: "Valérie Fréchette", role: "editor", tempPassword: "063900" },
+  "simdut@physipro.com": { name: "Cassie Valois", role: "editor", tempHash: "b36e5a61cadecc891b457429048e44133cf8dae501a9cfc4c423bcf00715da30" },
+  "mplanguedoc@physipro.com": { name: "Marie-Pier Languedoc", role: "editor", tempHash: "ff5cfebfb49c5213aa2304f15e19c3147f48d55aa26ea299f7457c0209f804e0" },
+  "marie-soleil.riverin@physipro.com": { name: "Marie-Soleil Riverin", role: "editor", tempHash: "722d36562183c87fa53ce5c44d424c63c6c3b2b27c72c7a233663d9f568fecc2" },
+  "michelle.bouchard@physipro.com": { name: "Michelle Bouchard", role: "editor", tempHash: "a899253b54dd6c800f9513919186a55948f9ff0d6162b9fdb200bdaf60a500f3" },
+  "ngagne@physipro.com": { name: "Nadia Gagne", role: "editor", tempHash: "cb2a7765e640d51841f9aa8dfc335e19bcbd894b0c8cc096d97a073c9a4b548d" },
+  "cncatp@physipro.com": { name: "Sina Lotfollah", role: "editor", tempHash: "1d537709c14a89facf0704bd2c091d9da8b48fe69b0c65de5741db0b9ad7919d" },
+  "magasinatp3@physipro.com": { name: "Stéphane Delorme", role: "editor", tempHash: "5042c15596f4aad0f612d50e0c013476f84a1d709527eca42821cf423f6092c0" },
+  "sroy@physipro.com": { name: "Stephanie Roy", role: "editor", tempHash: "eeff8c3b9ae24e6a2d8b3c8766c0a7bf927bf479da0aa94e21061ded39c6ce6d" },
+  "magasinatp2@physipro.com": { name: "Sylvain Carrier", role: "editor", tempHash: "ffdebc076a622154180f479624c9a9e1c4ff4c832f62aca8f15341d16cfda6ef" },
+  "mario.jacques@physipro.com": { name: "Mario Jacques", role: "editor", tempHash: "15d700ad21280a8c2fa03075c55c70a766ea8c9db5b5d8f7a850835e67514357" },
+  "valerie18@videotron.ca": { name: "Valérie Fréchette", role: "editor", tempHash: "3277ff046b6d07eb1ff818f1a54ef1a7d40d72cb151fd29058efc54bfbe84d1a" },
   
   // Viewers
-  "fabrys.frechette@physipro.com": { name: "Fabrys Fréchette", role: "viewer", tempPassword: "099600" },
-  "rh@physipro.com": { name: "Roxanne Valois", role: "viewer", tempPassword: "056786" },
-  "sonia.boulanger@physipro.com": { name: "Sonia Boulanger", role: "viewer", tempPassword: "045633" },
-  "magasinatp1@physipro.com": { name: "Stéphane Duchesneau", role: "viewer", tempPassword: "056844" },
-  "marioouellette@physipro.com": { name: "Mario Ouellette", role: "viewer", tempPassword: "001730" },
-  "service3@physipro.com": { name: "Jacynthe Gaumond", role: "viewer", tempPassword: "087456" }
+  "fabrys.frechette@physipro.com": { name: "Fabrys Fréchette", role: "viewer", tempHash: "2815e7664309c9785471fe9dba0c2ed4f97dd52a89f5e2b17fa695187d07c34e" },
+  "rh@physipro.com": { name: "Roxanne Valois", role: "viewer", tempHash: "47fb2d990d95be18c1e0206e1f3640bcaf5ed0345bbb220757556d0fd3424f07" },
+  "sonia.boulanger@physipro.com": { name: "Sonia Boulanger", role: "viewer", tempHash: "847267f5801f9d09b17995593d69db5a4b6a425c3d8594d8cdf81227c80e1fec" },
+  "magasinatp1@physipro.com": { name: "Stéphane Duchesneau", role: "viewer", tempHash: "bbca07c4246a26a6c438c325d29329b90693a5d26ccc166dd30ae755c9cfc540" },
+  "marioouellette@physipro.com": { name: "Mario Ouellette", role: "viewer", tempHash: "71b5601cad7b61f8a9bbf42546303b4676990f07d8ecee70a89c464b36553c4a" },
+  "service3@physipro.com": { name: "Jacynthe Gaumond", role: "viewer", tempHash: "fd9f31c199a09b28b4d0eafe0dd63713f219141c2723a62ec68106079c3b10b5" }
 };
+
+// Fonction pour hasher un mot de passe (SHA-256)
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashHex;
+}
 
 // Descriptions des rôles
 const ROLE_DESCRIPTIONS = {
@@ -10613,7 +10701,9 @@ async function attemptLogin() {
     console.log("✅ Connexion réussie pour " + email);
     
     // Vérifier si c'est le mot de passe temporaire (premier login)
-    const isFirstLogin = password === userInfo.tempPassword;
+    // On compare le hash du mot de passe entré avec le hash stocké
+    const passwordHash = await hashPassword(password);
+    const isFirstLogin = passwordHash === userInfo.tempHash;
     
     if (isFirstLogin) {
       // Afficher le popup de changement de mot de passe
@@ -11025,9 +11115,9 @@ function createCard(name, order, region, columnIndex) {
           <input type="text" class="mcard-title" value="${name}" data-field="name">
         </div>
         <div class="mcard-order-line">
-          <span class="mcard-region-pill">${region || '--'}</span>
+          <button class="mcard-btn-priority-small" title="Définir priorité">⭐</button>
           <input type="text" class="mcard-order" value="${order}" data-field="order" maxlength="6">
-          <button class="mcard-toggle-btn" onclick="openFicheById('${cardId}')">Fiche</button>
+          <button class="mcard-toggle-btn">Fiche</button>
         </div>
       </div>
     </div>
@@ -11035,7 +11125,6 @@ function createCard(name, order, region, columnIndex) {
     <div class="${delayClass}" onclick="openDelaiMenu('${cardId}', event)"><span>${delayText}</span></div>
     <div class="mcard-footer-buttons">
       <button class="mcard-btn mcard-btn-move">Déplacer</button>
-      <button class="mcard-btn mcard-btn-priority">⭐ Priorité</button>
       <button class="mcard-btn mcard-btn-delete">Supprimer</button>
     </div>
   `;
@@ -11196,8 +11285,8 @@ function attachCardEvents(card) {
     showMoveMenu(card);
   });
   
-  // Bouton priorité
-  card.querySelector('.mcard-btn-priority')?.addEventListener('click', (e) => {
+  // Bouton priorité (petit bouton ⭐)
+  card.querySelector('.mcard-btn-priority-small')?.addEventListener('click', (e) => {
     e.stopPropagation();
     showPriorityMenu(card, cardId, e);
   });
@@ -11234,6 +11323,10 @@ function showPriorityMenu(card, cardId, event) {
     <div class="priority-menu-item" data-priority="4">
       <span class="priority-dot p4">4</span>
       <span>🟢 Priorité #4 - Normal+</span>
+    </div>
+    <div class="priority-menu-item" data-priority="5">
+      <span class="priority-dot p5">5</span>
+      <span>🔵 Priorité #5 - Basse</span>
     </div>
     <div class="priority-menu-item" data-priority="0" style="border-top: 1px solid rgba(255,255,255,0.2); margin-top: 5px; padding-top: 10px;">
       <span class="priority-dot none">✕</span>
@@ -11287,7 +11380,8 @@ function setPriority(cardId, priority) {
     1: 'URGENT (#1)',
     2: 'Important (#2)',
     3: 'À surveiller (#3)',
-    4: 'Normal+ (#4)'
+    4: 'Normal+ (#4)',
+    5: 'Basse (#5)'
   };
   addLogEntry('Priorité', `"${cardsData[cardId].name}" → ${priorityLabels[priority]}`);
 }
@@ -11295,13 +11389,13 @@ function setPriority(cardId, priority) {
 function updateCardPriorityDisplay(card, priority) {
   const badge = card.querySelector('.priority-badge');
   
-  if (priority > 0 && priority <= 4) {
+  if (priority > 0 && priority <= 5) {
     // Afficher le badge
     badge.textContent = priority;
     badge.className = `priority-badge p${priority}`;
     badge.classList.remove('hidden');
     
-    // Ajouter l'effet clignotant à la carte
+    // Ajouter l'effet clignotant à la carte (bordure seulement)
     card.classList.add('priority');
   } else {
     // Cacher le badge
@@ -11318,6 +11412,13 @@ function refreshAllPriorities() {
     updateCardPriorityDisplay(card, priority);
   });
 }
+
+// Gérer le changement de priorité depuis la fiche
+function handlePriorityChange(selectEl, cardId) {
+  const priority = parseInt(selectEl.value) || 0;
+  setPriority(cardId, priority);
+}
+window.handlePriorityChange = handlePriorityChange;
 
 // Menu des délais régionaux (original)
 function showDelaiRegionsMenu(event, cardId) {
@@ -11532,11 +11633,13 @@ function showMoveMenu(card) {
     // Positions disponibles: 1 à (nombre de cartes + 1)
     const maxPos = isCurrent ? cardsInCol : cardsInCol + 1;
     for (let pos = 1; pos <= maxPos; pos++) {
+      const isLast = (pos === maxPos && maxPos > 1);
+      const posLabel = isLast ? `${pos} (dernier)` : pos;
       if (isCurrent) {
         // Colonne actuelle - boutons désactivés
-        html += `<div class="move-position-btn" style="opacity:0.4;cursor:default;">${pos}</div>`;
+        html += `<div class="move-position-btn" style="opacity:0.4;cursor:default;">${posLabel}</div>`;
       } else {
-        html += `<button class="move-position-btn" data-col="${i}" data-pos="${pos}">${pos}</button>`;
+        html += `<button class="move-position-btn" data-col="${i}" data-pos="${pos}">${posLabel}</button>`;
       }
     }
     
@@ -12205,15 +12308,16 @@ function loadCardsFromFirebase() {
           const regionText = cardData.region || '--';
           
           card.innerHTML = `
+            <div class="priority-badge hidden" data-priority="0"></div>
             <div class="mcard-header">
               <div class="mcard-info">
                 <div class="mcard-title-line">
                   <input type="text" class="mcard-title" value="${cardData.name || 'Nom du moulage'}" data-field="name">
                 </div>
                 <div class="mcard-order-line">
-                  <span class="mcard-region-pill">${regionText}</span>
+                  <button class="mcard-btn-priority-small" title="Définir priorité">⭐</button>
                   <input type="text" class="mcard-order" value="${cardData.order || '000000'}" data-field="order" maxlength="6">
-                  <button class="mcard-toggle-btn" onclick="openFicheById('${cardId}')">Fiche</button>
+                  <button class="mcard-toggle-btn">Fiche</button>
                 </div>
               </div>
             </div>
@@ -13240,6 +13344,20 @@ function generateFicheHTML(card) {
             <div class="fiche-label">Date rendez-vous essayage</div>
             <div class="fiche-date-pill" data-fiche-field="dateEssayage">${data.dateEssayage || 'AAAA-MM-JJ'}</div>
           </div>
+        </div>
+        <div class="fiche-grid-2" style="margin-top:6px;">
+          <div class="fiche-field">
+            <div class="fiche-label">⭐ Priorité</div>
+            <select class="fiche-select fiche-priority-select" data-fiche-field="priority" onchange="handlePriorityChange(this, '${cardId}')">
+              <option value="0" ${(data.priority || 0) === 0 ? 'selected' : ''}>-- Aucune --</option>
+              <option value="1" ${data.priority === 1 ? 'selected' : ''}>🔴 #1 - URGENT</option>
+              <option value="2" ${data.priority === 2 ? 'selected' : ''}>🟠 #2 - Important</option>
+              <option value="3" ${data.priority === 3 ? 'selected' : ''}>🟡 #3 - À surveiller</option>
+              <option value="4" ${data.priority === 4 ? 'selected' : ''}>🟢 #4 - Normal+</option>
+              <option value="5" ${data.priority === 5 ? 'selected' : ''}>🔵 #5 - Basse</option>
+            </select>
+          </div>
+          <div class="fiche-field"></div>
         </div>
       </div>
       
