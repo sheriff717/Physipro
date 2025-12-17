@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PhysiPro Moulage – v291.3 – Sauvegarde Complète Commandes + Mobile</title>
+  <title>PhysiPro Moulage – v292 – Auth Email Niveau 2</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -293,6 +293,152 @@ html, body { margin: 0; padding: 0; }
 
 .settings-icon {
   font-size: 18px;
+}
+
+/* Menu Import/Export */
+.import-export-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+
+.import-export-overlay.hidden {
+  display: none;
+}
+
+.import-export-popup {
+  background: linear-gradient(to bottom, #1e3a5f, #0a1628);
+  border: 2px solid #4a8ef5;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.import-export-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to bottom, #2a4a7f, #1e3a5f);
+  border-bottom: 1px solid #4a8ef5;
+  border-radius: 10px 10px 0 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.import-export-close-btn {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.import-export-close-btn:hover {
+  filter: brightness(1.2);
+}
+
+.import-export-content {
+  padding: 20px;
+}
+
+.import-export-section {
+  margin-bottom: 15px;
+}
+
+.import-export-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+  color: #4ade80;
+}
+
+.import-export-section p {
+  margin: 0 0 15px 0;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.import-export-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter 0.2s;
+}
+
+.import-export-btn:hover {
+  filter: brightness(1.1);
+}
+
+.export-btn {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  color: white;
+}
+
+.import-btn {
+  background: linear-gradient(to bottom, #3b82f6, #2563eb);
+  color: white;
+}
+
+.export-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.import-export-btn-small {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #4a8ef5;
+  border-radius: 6px;
+  background: rgba(74,142,245,0.1);
+  color: #4a8ef5;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.import-export-btn-small:hover {
+  background: rgba(74,142,245,0.3);
+}
+
+.import-export-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #4a8ef5, transparent);
+  margin: 20px 0;
+}
+
+.import-warning {
+  margin-top: 15px;
+  padding: 10px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 6px;
+  font-size: 11px;
+  color: #fca5a5;
+  text-align: center;
 }
 
 .tb-right {
@@ -7948,6 +8094,115 @@ input.cmd-pill-input {
   min-height: 20px;
 }
 
+.login-success {
+  color: #22c55e;
+  font-size: 12px;
+  margin-top: 10px;
+  min-height: 20px;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.login-success.hidden {
+  display: none;
+}
+
+.login-input-email {
+  letter-spacing: normal !important;
+  text-align: left !important;
+  padding-left: 14px !important;
+}
+
+.login-forgot-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  cursor: pointer;
+  margin-top: 5px;
+  text-decoration: underline;
+}
+
+.login-forgot-btn:hover {
+  color: #00aaff;
+}
+
+.change-password-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.change-password-subtitle {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.change-password-user {
+  background: rgba(0,170,255,0.2);
+  border: 1px solid rgba(0,170,255,0.4);
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.password-requirements {
+  text-align: left;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+}
+
+.password-requirements .req {
+  font-size: 12px;
+  margin: 5px 0;
+  opacity: 0.8;
+}
+
+.password-requirements .req.valid {
+  color: #22c55e;
+}
+
+.password-requirements .req.invalid {
+  color: #ff6666;
+}
+
+/* Badge de rôle utilisateur */
+.user-role-badge {
+  display: inline-block;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.user-role-badge.admin {
+  background: linear-gradient(to bottom, #f59e0b, #d97706);
+  color: #fff;
+}
+
+.user-role-badge.editor {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  color: #fff;
+}
+
+.user-role-badge.operator {
+  background: linear-gradient(to bottom, #3b82f6, #2563eb);
+  color: #fff;
+}
+
+.user-role-badge.viewer {
+  background: linear-gradient(to bottom, #6b7280, #4b5563);
+  color: #fff;
+}
+
 .login-signature {
   margin-top: 25px;
   font-family: 'Brush Script MT', 'Segoe Script', 'Bradley Hand', cursive;
@@ -8790,6 +9045,10 @@ input.cmd-pill-input {
             <button class="settings-close-btn" id="settingsCloseBtn">✕</button>
           </div>
           <div class="settings-menu-content">
+            <button class="settings-menu-item" id="settingsImportExportBtn">
+              <span class="settings-icon">📦</span>
+              <span>Importer / Exporter</span>
+            </button>
             <button class="settings-menu-item" id="settingsLogBtn">
               <span class="settings-icon">📋</span>
               <span>Log / Archives</span>
@@ -8798,6 +9057,41 @@ input.cmd-pill-input {
               <span class="settings-icon">🚪</span>
               <span>Déconnexion</span>
             </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- MENU IMPORT/EXPORT -->
+      <div class="import-export-overlay hidden" id="importExportOverlay">
+        <div class="import-export-popup">
+          <div class="import-export-header">
+            <span>📦 Importer / Exporter les données</span>
+            <button class="import-export-close-btn" onclick="closeImportExportMenu()">✕</button>
+          </div>
+          <div class="import-export-content">
+            <div class="import-export-section">
+              <h3>📤 Exporter les données</h3>
+              <p>Télécharger toutes vos données (moulages, commandes, paramètres) dans un fichier JSON.</p>
+              <button class="import-export-btn export-btn" onclick="exportAllData()">
+                <span>📥</span> Exporter toutes les données
+              </button>
+              <div class="export-options">
+                <button class="import-export-btn-small" onclick="exportMoulagesOnly()">Moulages seulement</button>
+                <button class="import-export-btn-small" onclick="exportCommandesOnly()">Commandes seulement</button>
+              </div>
+            </div>
+            <div class="import-export-divider"></div>
+            <div class="import-export-section">
+              <h3>📥 Importer les données</h3>
+              <p>Charger des données depuis un fichier JSON exporté précédemment.</p>
+              <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)">
+              <button class="import-export-btn import-btn" onclick="document.getElementById('importFileInput').click()">
+                <span>📤</span> Importer un fichier
+              </button>
+              <div class="import-warning">
+                ⚠️ L'importation remplacera les données existantes. Exportez d'abord vos données actuelles!
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -9000,10 +9294,48 @@ input.cmd-pill-input {
       <div class="login-title">Outil de gestion</div>
       <div class="login-author">par Daniel Charest</div>
     </div>
-    <div class="login-subtitle">Entrez votre mot de passe pour accéder</div>
-    <input type="password" id="loginPassword" class="login-input" placeholder="Mot de passe" maxlength="20">
+    <div class="login-subtitle">Connectez-vous avec votre email d'entreprise</div>
+    <input type="email" id="loginEmail" class="login-input login-input-email" placeholder="Email d'entreprise" autocomplete="email">
+    <input type="password" id="loginPassword" class="login-input" placeholder="Mot de passe" maxlength="50" autocomplete="current-password">
     <button class="login-btn" id="loginBtn">Se connecter</button>
+    <button class="login-forgot-btn" id="forgotPasswordBtn">Mot de passe oublié?</button>
     <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- Modal Changement de Mot de Passe (premier login) -->
+<div id="changePasswordOverlay" class="login-overlay hidden">
+  <div class="login-panel">
+    <div class="change-password-icon">🔐</div>
+    <div class="login-title-container">
+      <div class="login-title">Bienvenue!</div>
+      <div class="change-password-subtitle">Pour votre sécurité, veuillez créer votre mot de passe personnel</div>
+    </div>
+    <div class="change-password-user" id="changePasswordUser"></div>
+    <input type="password" id="newPassword1" class="login-input" placeholder="Nouveau mot de passe (min. 8 caractères)" maxlength="50">
+    <input type="password" id="newPassword2" class="login-input" placeholder="Confirmer le mot de passe" maxlength="50">
+    <div class="password-requirements">
+      <div class="req" id="reqLength">❌ Au moins 8 caractères</div>
+      <div class="req" id="reqMatch">❌ Les mots de passe correspondent</div>
+    </div>
+    <button class="login-btn" id="changePasswordBtn" disabled>Créer mon mot de passe</button>
+    <div class="login-error" id="changePasswordError"></div>
+  </div>
+</div>
+
+<!-- Modal Mot de Passe Oublié -->
+<div id="forgotPasswordOverlay" class="login-overlay hidden">
+  <div class="login-panel">
+    <div class="change-password-icon">📧</div>
+    <div class="login-title-container">
+      <div class="login-title">Mot de passe oublié</div>
+      <div class="change-password-subtitle">Entrez votre email pour recevoir un lien de réinitialisation</div>
+    </div>
+    <input type="email" id="forgotEmail" class="login-input login-input-email" placeholder="Votre email d'entreprise" autocomplete="email">
+    <button class="login-btn" id="sendResetBtn">Envoyer le lien</button>
+    <button class="login-forgot-btn" id="backToLoginBtn">← Retour à la connexion</button>
+    <div class="login-error" id="forgotPasswordError"></div>
+    <div class="login-success hidden" id="forgotPasswordSuccess"></div>
   </div>
 </div>
 
@@ -9019,55 +9351,41 @@ const FIREBASE_CONFIG = {
   appId: "1:24566847562:web:db492bdd33116373e0eeb3"
 };
 
-// Table de correspondance mot de passe -> email Firebase
-const PASSWORD_TO_EMAIL = {
-  "007000": "mario@physipro.local",
-  "067700": "sina@physipro.local",
-  "047700": "cassie@physipro.local",
-  "047800": "stephanie@physipro.local",
-  "063900": "valerie@physipro.local",
-  "028500": "daniel@physipro.local",
-  "010400": "michelle@physipro.local",
-  "062100": "francine@physipro.local",
-  "035100": "mariesoleil@physipro.local",
-  "045600": "mariepier@physipro.local",
-  "066600": "multipass@physipro.local",
-  "099600": "fabrys@physipro.local",
-  "Lecture202500": "visiteur@physipro.local"
-};
+// ===== SYSTÈME D'AUTHENTIFICATION NIVEAU 2 - EMAIL RÉEL =====
 
-// Mapping code -> nom et email (pour notes et logs)
-const USER_CODES = {
-  "007000": { name: "Mario", email: "mario@physipro.local" },
-  "067700": { name: "Sina", email: "sina@physipro.local" },
-  "047700": { name: "Cassie", email: "cassie@physipro.local" },
-  "047800": { name: "Stéphanie", email: "stephanie@physipro.local" },
-  "063900": { name: "Valérie", email: "valerie@physipro.local" },
-  "028500": { name: "Daniel", email: "daniel@physipro.local" },
-  "010400": { name: "Michelle", email: "michelle@physipro.local" },
-  "062100": { name: "Francine", email: "francine@physipro.local" },
-  "035100": { name: "Marie-Soleil", email: "mariesoleil@physipro.local" },
-  "045600": { name: "Marie-Pier", email: "mariepier@physipro.local" },
-  "066600": { name: "Multipass", email: "multipass@physipro.local" },
-  "099600": { name: "Fabrys", email: "fabrys@physipro.local" },
-  "Lecture202500": { name: "Visiteur", email: "visiteur@physipro.local" }
-};
-
-// Informations des utilisateurs
+// Table des utilisateurs avec vrais emails d'entreprise
 const USERS = {
-  "mario@physipro.local": { name: "Mario", role: "editor" },
-  "sina@physipro.local": { name: "Sina", role: "editor" },
-  "cassie@physipro.local": { name: "Cassie", role: "editor" },
-  "stephanie@physipro.local": { name: "Stéphanie", role: "editor" },
-  "valerie@physipro.local": { name: "Valérie", role: "editor" },
-  "daniel@physipro.local": { name: "Daniel", role: "editor" },
-  "michelle@physipro.local": { name: "Michelle", role: "editor" },
-  "francine@physipro.local": { name: "Francine", role: "editor" },
-  "mariesoleil@physipro.local": { name: "Marie-Soleil", role: "editor" },
-  "mariepier@physipro.local": { name: "Marie-Pier", role: "editor" },
-  "multipass@physipro.local": { name: "Multipass", role: "editor" },
-  "fabrys@physipro.local": { name: "Fabrys", role: "editor" },
-  "visiteur@physipro.local": { name: "Visiteur", role: "viewer" }
+  // Admin
+  "atelieratp@physipro.com": { name: "Daniel Charest", role: "admin", tempPassword: "028500" },
+  
+  // Editors
+  "simdut@physipro.com": { name: "Cassie Valois", role: "editor", tempPassword: "047700" },
+  "mplanguedoc@physipro.com": { name: "Marie-Pier Languedoc", role: "editor", tempPassword: "045600" },
+  "marie-soleil.riverin@physipro.com": { name: "Marie-Soleil Riverin", role: "editor", tempPassword: "035100" },
+  "michelle.bouchard@physipro.com": { name: "Michelle Bouchard", role: "editor", tempPassword: "010400" },
+  "ngagne@physipro.com": { name: "Nadia Gagne", role: "editor", tempPassword: "089655" },
+  "cncatp@physipro.com": { name: "Sina Lotfollah", role: "editor", tempPassword: "067700" },
+  "magasinatp3@physipro.com": { name: "Stéphane Delorme", role: "editor", tempPassword: "078900" },
+  "sroy@physipro.com": { name: "Stephanie Roy", role: "editor", tempPassword: "047800" },
+  "magasinatp2@physipro.com": { name: "Sylvain Carrier", role: "editor", tempPassword: "028586" },
+  "mario.jacques@physipro.com": { name: "Mario Jacques", role: "editor", tempPassword: "007000" },
+  "valerie18@videotron.ca": { name: "Valérie Fréchette", role: "editor", tempPassword: "063900" },
+  
+  // Viewers
+  "fabrys.frechette@physipro.com": { name: "Fabrys Fréchette", role: "viewer", tempPassword: "099600" },
+  "rh@physipro.com": { name: "Roxanne Valois", role: "viewer", tempPassword: "056786" },
+  "sonia.boulanger@physipro.com": { name: "Sonia Boulanger", role: "viewer", tempPassword: "045633" },
+  "magasinatp1@physipro.com": { name: "Stéphane Duchesneau", role: "viewer", tempPassword: "056844" },
+  "marioouellette@physipro.com": { name: "Mario Ouellette", role: "viewer", tempPassword: "001730" },
+  "service3@physipro.com": { name: "Jacynthe Gaumond", role: "viewer", tempPassword: "087456" }
+};
+
+// Descriptions des rôles
+const ROLE_DESCRIPTIONS = {
+  admin: "Administrateur - Tout faire + gérer les utilisateurs + voir les logs + supprimer",
+  editor: "Éditeur - Modifier, ajouter, déplacer les cartes",
+  operator: "Opérateur - Modifier seulement certaines colonnes",
+  viewer: "Lecteur - Lecture seule"
 };
 
 // Variables globales
@@ -9954,39 +10272,153 @@ function calculerJoursOuvrables(dateDebut, dateFin) {
   return joursOuvrables;
 }
 
-// ===== SYSTÈME DE LOGIN =====
+// ===== SYSTÈME DE LOGIN NIVEAU 2 - EMAIL + MOT DE PASSE =====
 const loginOverlay = document.getElementById('loginOverlay');
+const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
 const loginBtn = document.getElementById('loginBtn');
 const loginError = document.getElementById('loginError');
 const userStatusEl = document.getElementById('userStatus');
 const btnAuth = document.getElementById('btnAuth');
 
-// Focus sur le champ mot de passe au chargement
-setTimeout(() => loginPassword?.focus(), 100);
+// Éléments changement de mot de passe
+const changePasswordOverlay = document.getElementById('changePasswordOverlay');
+const changePasswordUser = document.getElementById('changePasswordUser');
+const newPassword1 = document.getElementById('newPassword1');
+const newPassword2 = document.getElementById('newPassword2');
+const changePasswordBtn = document.getElementById('changePasswordBtn');
+const changePasswordError = document.getElementById('changePasswordError');
+const reqLength = document.getElementById('reqLength');
+const reqMatch = document.getElementById('reqMatch');
+
+// Éléments mot de passe oublié
+const forgotPasswordOverlay = document.getElementById('forgotPasswordOverlay');
+const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+const forgotEmail = document.getElementById('forgotEmail');
+const sendResetBtn = document.getElementById('sendResetBtn');
+const backToLoginBtn = document.getElementById('backToLoginBtn');
+const forgotPasswordError = document.getElementById('forgotPasswordError');
+const forgotPasswordSuccess = document.getElementById('forgotPasswordSuccess');
+
+// Variable pour stocker les infos pendant le changement de mot de passe
+let pendingUserInfo = null;
+let pendingUserEmail = null;
+
+// Focus sur le champ email au chargement
+setTimeout(() => loginEmail?.focus(), 100);
 
 // Event listeners login
 loginBtn?.addEventListener('click', attemptLogin);
+loginEmail?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') loginPassword?.focus();
+});
 loginPassword?.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') attemptLogin();
 });
 
-// Tentative de connexion
-async function attemptLogin() {
-  const password = loginPassword.value.trim();
+// Event listeners mot de passe oublié
+forgotPasswordBtn?.addEventListener('click', () => {
+  loginOverlay.classList.add('hidden');
+  forgotPasswordOverlay.classList.remove('hidden');
+  forgotEmail.value = loginEmail.value || '';
+  forgotEmail.focus();
+  forgotPasswordError.textContent = '';
+  forgotPasswordSuccess.classList.add('hidden');
+});
+
+backToLoginBtn?.addEventListener('click', () => {
+  forgotPasswordOverlay.classList.add('hidden');
+  loginOverlay.classList.remove('hidden');
+  loginEmail.focus();
+});
+
+sendResetBtn?.addEventListener('click', sendPasswordReset);
+forgotEmail?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') sendPasswordReset();
+});
+
+// Event listeners changement de mot de passe
+newPassword1?.addEventListener('input', validateNewPassword);
+newPassword2?.addEventListener('input', validateNewPassword);
+changePasswordBtn?.addEventListener('click', changePassword);
+newPassword2?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !changePasswordBtn.disabled) changePassword();
+});
+
+// Validation du nouveau mot de passe en temps réel
+function validateNewPassword() {
+  const pwd1 = newPassword1.value;
+  const pwd2 = newPassword2.value;
   
-  if (!password) {
-    loginError.textContent = "Veuillez entrer un mot de passe";
+  const lengthOk = pwd1.length >= 8;
+  const matchOk = pwd1 === pwd2 && pwd2.length > 0;
+  
+  reqLength.textContent = lengthOk ? '✅ Au moins 8 caractères' : '❌ Au moins 8 caractères';
+  reqLength.className = 'req ' + (lengthOk ? 'valid' : 'invalid');
+  
+  reqMatch.textContent = matchOk ? '✅ Les mots de passe correspondent' : '❌ Les mots de passe correspondent';
+  reqMatch.className = 'req ' + (matchOk ? 'valid' : 'invalid');
+  
+  changePasswordBtn.disabled = !(lengthOk && matchOk);
+}
+
+// Envoyer email de réinitialisation
+async function sendPasswordReset() {
+  const email = forgotEmail.value.trim().toLowerCase();
+  
+  if (!email) {
+    forgotPasswordError.textContent = "Veuillez entrer votre email";
     return;
   }
   
-  // Trouver l'email correspondant au mot de passe
-  const email = PASSWORD_TO_EMAIL[password];
+  sendResetBtn.textContent = "Envoi en cours...";
+  sendResetBtn.disabled = true;
+  forgotPasswordError.textContent = '';
+  
+  try {
+    await firebaseAuth.sendPasswordResetEmail(email);
+    forgotPasswordSuccess.textContent = "✅ Un email de réinitialisation a été envoyé à " + email + ". Vérifiez votre boîte de réception (et les spams).";
+    forgotPasswordSuccess.classList.remove('hidden');
+    forgotPasswordError.textContent = '';
+  } catch(error) {
+    console.error("Erreur reset password:", error);
+    let errorMsg = "Erreur lors de l'envoi";
+    if (error.code === 'auth/user-not-found') {
+      errorMsg = "Aucun compte n'existe avec cet email";
+    } else if (error.code === 'auth/invalid-email') {
+      errorMsg = "Format d'email invalide";
+    }
+    forgotPasswordError.textContent = errorMsg;
+  }
+  
+  sendResetBtn.textContent = "Envoyer le lien";
+  sendResetBtn.disabled = false;
+}
+
+// Tentative de connexion avec email + mot de passe
+async function attemptLogin() {
+  const email = loginEmail.value.trim().toLowerCase();
+  const password = loginPassword.value;
   
   if (!email) {
-    loginError.textContent = "Mot de passe incorrect";
-    loginPassword.value = "";
+    loginError.textContent = "Veuillez entrer votre email";
+    loginEmail.focus();
+    return;
+  }
+  
+  if (!password) {
+    loginError.textContent = "Veuillez entrer votre mot de passe";
     loginPassword.focus();
+    return;
+  }
+  
+  // Vérifier si l'email est dans notre liste d'utilisateurs autorisés
+  const userInfo = USERS[email];
+  
+  if (!userInfo) {
+    loginError.textContent = "Cet email n'est pas autorisé";
+    loginEmail.value = "";
+    loginEmail.focus();
     return;
   }
   
@@ -10000,13 +10432,24 @@ async function attemptLogin() {
     await firebaseAuth.signInWithEmailAndPassword(email, password);
     console.log("✅ Connexion réussie pour " + email);
     
-    // Récupérer les infos utilisateur
-    const userInfo = USERS[email];
+    // Vérifier si c'est le mot de passe temporaire (premier login)
+    const isFirstLogin = password === userInfo.tempPassword;
     
-    if (userInfo) {
-      loginUserSuccess(userInfo, email);
+    if (isFirstLogin) {
+      // Afficher le popup de changement de mot de passe
+      pendingUserInfo = userInfo;
+      pendingUserEmail = email;
+      loginOverlay.classList.add('hidden');
+      changePasswordOverlay.classList.remove('hidden');
+      changePasswordUser.innerHTML = `<strong>${userInfo.name}</strong><br><small>${email}</small>`;
+      newPassword1.value = '';
+      newPassword2.value = '';
+      changePasswordError.textContent = '';
+      validateNewPassword();
+      newPassword1.focus();
     } else {
-      throw new Error("Utilisateur non trouvé");
+      // Connexion normale
+      loginUserSuccess(userInfo, email);
     }
     
   } catch(error) {
@@ -10016,16 +10459,19 @@ async function attemptLogin() {
     switch(error.code) {
       case "auth/wrong-password":
       case "auth/invalid-credential":
-        errorMessage = "Mot de passe incorrect";
+        errorMessage = "Email ou mot de passe incorrect";
         break;
       case "auth/user-not-found":
-        errorMessage = "Utilisateur non trouvé";
+        errorMessage = "Compte non trouvé. Contactez l'administrateur.";
         break;
       case "auth/too-many-requests":
-        errorMessage = "Trop de tentatives. Réessayez plus tard.";
+        errorMessage = "Trop de tentatives. Réessayez dans quelques minutes.";
         break;
       case "auth/network-request-failed":
         errorMessage = "Erreur réseau. Vérifiez votre connexion.";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Format d'email invalide";
         break;
     }
     
@@ -10039,37 +10485,115 @@ async function attemptLogin() {
   loginBtn.disabled = false;
 }
 
+// Changer le mot de passe (premier login)
+async function changePassword() {
+  const newPwd = newPassword1.value;
+  
+  if (newPwd.length < 8) {
+    changePasswordError.textContent = "Le mot de passe doit faire au moins 8 caractères";
+    return;
+  }
+  
+  if (newPwd !== newPassword2.value) {
+    changePasswordError.textContent = "Les mots de passe ne correspondent pas";
+    return;
+  }
+  
+  changePasswordBtn.textContent = "Mise à jour...";
+  changePasswordBtn.disabled = true;
+  changePasswordError.textContent = '';
+  
+  try {
+    // Mettre à jour le mot de passe dans Firebase
+    const user = firebaseAuth.currentUser;
+    await user.updatePassword(newPwd);
+    
+    console.log("✅ Mot de passe mis à jour pour " + pendingUserEmail);
+    
+    // Masquer le popup et continuer la connexion
+    changePasswordOverlay.classList.add('hidden');
+    loginUserSuccess(pendingUserInfo, pendingUserEmail);
+    
+  } catch(error) {
+    console.error("❌ Erreur changement mot de passe:", error);
+    
+    let errorMsg = "Erreur lors du changement de mot de passe";
+    if (error.code === 'auth/weak-password') {
+      errorMsg = "Mot de passe trop faible. Utilisez au moins 8 caractères.";
+    } else if (error.code === 'auth/requires-recent-login') {
+      errorMsg = "Session expirée. Veuillez vous reconnecter.";
+      setTimeout(() => location.reload(), 2000);
+    }
+    
+    changePasswordError.textContent = errorMsg;
+  }
+  
+  changePasswordBtn.textContent = "Créer mon mot de passe";
+  changePasswordBtn.disabled = false;
+}
+
 // Connexion réussie
 function loginUserSuccess(userInfo, email) {
-  currentUser = userInfo;
+  currentUser = { ...userInfo, email: email };
   _sessionValid = true;
   
   // Stocker le nom de l'utilisateur pour les notes
   window._sessionUserName = userInfo.name;
   
-  // Masquer l'écran de login
+  // Masquer tous les overlays de login
   loginOverlay.classList.add('hidden');
+  changePasswordOverlay.classList.add('hidden');
+  forgotPasswordOverlay.classList.add('hidden');
   
-  // Mettre à jour le badge utilisateur
+  // Mettre à jour le badge utilisateur avec le rôle
   const statusDot = userStatusEl?.querySelector('.status-dot');
   const userName = userStatusEl?.querySelector('.user-name');
   
   if (statusDot) statusDot.classList.remove('offline');
-  if (userName) userName.textContent = userInfo.name;
+  if (userName) {
+    const roleBadge = getRoleBadge(userInfo.role);
+    userName.innerHTML = userInfo.name + roleBadge;
+  }
   if (btnAuth) {
     btnAuth.textContent = 'Déconnexion';
     btnAuth.classList.remove('login');
   }
   
-  console.log("🔐 Session établie pour " + userInfo.name);
+  console.log("🔐 Session établie pour " + userInfo.name + " (" + userInfo.role + ")");
   
   // Charger les cartes depuis Firebase
   loadCardsFromFirebase();
   
-  // BACKUP AUTOMATIQUE pour Daniel
-  if (userInfo.name === 'Daniel') {
+  // BACKUP AUTOMATIQUE pour les admins
+  if (userInfo.role === 'admin') {
     performAutoBackup(userInfo.name);
   }
+}
+
+// Générer le badge de rôle HTML
+function getRoleBadge(role) {
+  const labels = {
+    admin: 'Admin',
+    editor: 'Éditeur',
+    operator: 'Opérateur',
+    viewer: 'Lecteur'
+  };
+  return `<span class="user-role-badge ${role}">${labels[role] || role}</span>`;
+}
+
+// Vérifier les permissions de l'utilisateur
+function userCan(action) {
+  if (!currentUser) return false;
+  
+  const permissions = {
+    admin: ['view', 'edit', 'add', 'delete', 'move', 'manage_users', 'view_logs', 'export', 'import'],
+    editor: ['view', 'edit', 'add', 'delete', 'move', 'export'],
+    operator: ['view', 'edit', 'move'],
+    viewer: ['view']
+  };
+  
+  const userPermissions = permissions[currentUser.role] || [];
+  return userPermissions.includes(action);
 }
 
 // Déconnexion
@@ -10083,6 +10607,8 @@ async function logout() {
   
   _sessionValid = false;
   currentUser = null;
+  pendingUserInfo = null;
+  pendingUserEmail = null;
   location.reload();
 }
 
@@ -10098,6 +10624,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const settingsCloseBtn = document.getElementById('settingsCloseBtn');
   const settingsLogBtn = document.getElementById('settingsLogBtn');
   const settingsLogoutBtn = document.getElementById('settingsLogoutBtn');
+  const settingsImportExportBtn = document.getElementById('settingsImportExportBtn');
   
   // Ouvrir le menu Settings
   if (btnSettings) {
@@ -10120,6 +10647,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === settingsMenuOverlay) {
         settingsMenuOverlay.classList.add('hidden');
       }
+    });
+  }
+  
+  // Bouton Import/Export dans Settings
+  if (settingsImportExportBtn) {
+    settingsImportExportBtn.addEventListener('click', () => {
+      settingsMenuOverlay?.classList.add('hidden');
+      openImportExportMenu();
     });
   }
   
@@ -10150,15 +10685,10 @@ closeLogModal?.addEventListener('click', () => logModal?.classList.remove('activ
 function addLogEntry(action, details) {
   // Utiliser le nom de l'utilisateur connecté
   let userName = 'Anonyme';
-  if (currentUser?.email) {
-    // Chercher le nom dans USER_CODES
-    const userEmail = currentUser.email;
-    for (const [code, data] of Object.entries(USER_CODES)) {
-      if (data.email === userEmail) {
-        userName = data.name;
-        break;
-      }
-    }
+  if (currentUser?.name) {
+    userName = currentUser.name;
+  } else if (currentUser?.email && USERS[currentUser.email]) {
+    userName = USERS[currentUser.email].name;
   }
   
   const entry = {
@@ -10198,9 +10728,16 @@ const confirmAdd = document.getElementById('confirmAdd');
 btnAddMoulage.addEventListener('click', () => {
   if (!_sessionValid) {
     loginOverlay.classList.remove('hidden');
-    loginPassword.focus();
+    loginEmail.focus();
     return;
   }
+  
+  // Vérifier les permissions
+  if (!userCan('add')) {
+    alert("⛔ Vous n'avez pas la permission d'ajouter des moulages.\nVotre rôle: " + (currentUser?.role || 'inconnu'));
+    return;
+  }
+  
   addModal.classList.add('active');
   document.getElementById('addName').focus();
 });
@@ -11145,6 +11682,12 @@ searchClear.addEventListener('click', () => {
 function saveCardToFirebase(cardId) {
   if (!firebaseInitialized) return;
   
+  // Vérifier les permissions
+  if (!userCan('edit')) {
+    console.warn("⚠️ Permission refusée: vous n'avez pas le droit de modifier");
+    return;
+  }
+  
   const data = cardsData[cardId];
   if (data) {
     firebase.database().ref('cards/' + cardId).set(data);
@@ -11153,7 +11696,15 @@ function saveCardToFirebase(cardId) {
 
 function deleteCardFromFirebase(cardId) {
   if (!firebaseInitialized) return;
+  
+  // Vérifier les permissions
+  if (!userCan('delete')) {
+    alert("⛔ Vous n'avez pas la permission de supprimer des cartes.");
+    return false;
+  }
+  
   firebase.database().ref('cards/' + cardId).remove();
+  return true;
 }
 
 function loadCardsFromFirebase() {
@@ -13106,13 +13657,10 @@ function attachFicheEvents(card) {
     
     // Utiliser le nom de l'utilisateur connecté
     let userName = 'Anonyme';
-    if (currentUser?.email) {
-      for (const [code, data] of Object.entries(USER_CODES)) {
-        if (data.email === currentUser.email) {
-          userName = data.name;
-          break;
-        }
-      }
+    if (currentUser?.name) {
+      userName = currentUser.name;
+    } else if (currentUser?.email && USERS[currentUser.email]) {
+      userName = USERS[currentUser.email].name;
     }
     
     const now = new Date();
@@ -13539,13 +14087,12 @@ function saveMoulageNote(cardId) {
 let currentUserName = 'Anonyme';
 
 function getCurrentUserName() {
-  // D'abord vérifier si on a un utilisateur Firebase connecté
-  if (currentUser?.email) {
-    for (const [code, data] of Object.entries(USER_CODES)) {
-      if (data.email === currentUser.email) {
-        return data.name;
-      }
-    }
+  // D'abord vérifier si on a un utilisateur connecté
+  if (currentUser?.name) {
+    return currentUser.name;
+  }
+  if (currentUser?.email && USERS[currentUser.email]) {
+    return USERS[currentUser.email].name;
   }
   // Sinon utiliser le nom de session
   if (window._sessionUserName) {
@@ -13601,15 +14148,15 @@ function markNoteAsUnread(cardId) {
   if (!cardsData[cardId]) return;
   
   // Marquer comme non lu pour tous sauf l'auteur
-  const allUsers = Object.values(USER_CODES).map(u => u.name);
-  const currentUser = getCurrentUserName();
+  const allUsers = Object.values(USERS).map(u => u.name);
+  const currentUserName = getCurrentUserName();
   
   if (!cardsData[cardId].notesUnread) {
     cardsData[cardId].notesUnread = {};
   }
   
   allUsers.forEach(user => {
-    if (user !== currentUser) {
+    if (user !== currentUserName) {
       cardsData[cardId].notesUnread[user] = true;
     }
   });
@@ -17389,6 +17936,189 @@ function saveCmdNotesPopup() {
 
 // Charger les recettes au démarrage
 setTimeout(loadCustomRecettes, 2000);
+
+// ===== FONCTIONS IMPORT/EXPORT =====
+
+function openImportExportMenu() {
+  document.getElementById('importExportOverlay')?.classList.remove('hidden');
+}
+
+function closeImportExportMenu() {
+  document.getElementById('importExportOverlay')?.classList.add('hidden');
+}
+
+// Fermer avec clic sur overlay
+document.getElementById('importExportOverlay')?.addEventListener('click', (e) => {
+  if (e.target.id === 'importExportOverlay') {
+    closeImportExportMenu();
+  }
+});
+
+// Exporter TOUTES les données
+function exportAllData() {
+  const exportData = {
+    version: 'PhysiPro_v291.4',
+    exportDate: new Date().toISOString(),
+    exportedBy: currentUser?.email || 'Anonyme',
+    
+    // Données des moulages
+    moulages: cardsData,
+    
+    // Données des commandes
+    commandes: commandesData,
+    
+    // Paramètres et listes
+    settings: {
+      MENU_DATA: MENU_DATA,
+      USERS: USERS,
+      RAISONS_ATTENTE: RAISONS_ATTENTE,
+      EMPLOYES_ATELIER: EMPLOYES_ATELIER,
+      EMPLOYES_COUTURE: EMPLOYES_COUTURE,
+      EXPEDITION_OPTIONS: EXPEDITION_OPTIONS
+    },
+    
+    // Logs et archives (si disponibles)
+    logs: typeof logEntries !== 'undefined' ? logEntries : [],
+    archives: typeof archivedCards !== 'undefined' ? archivedCards : []
+  };
+  
+  downloadJSON(exportData, `physipro_backup_${formatDateForFilename()}.json`);
+  console.log('✅ Export complet effectué');
+  alert('✅ Export complet effectué!\n\nFichier téléchargé avec toutes les données.');
+}
+
+// Exporter seulement les moulages
+function exportMoulagesOnly() {
+  const exportData = {
+    version: 'PhysiPro_v291.4',
+    exportDate: new Date().toISOString(),
+    exportType: 'moulages_only',
+    moulages: cardsData
+  };
+  
+  downloadJSON(exportData, `physipro_moulages_${formatDateForFilename()}.json`);
+  console.log('✅ Export moulages effectué');
+  alert('✅ Export des moulages effectué!');
+}
+
+// Exporter seulement les commandes
+function exportCommandesOnly() {
+  const exportData = {
+    version: 'PhysiPro_v291.4',
+    exportDate: new Date().toISOString(),
+    exportType: 'commandes_only',
+    commandes: commandesData
+  };
+  
+  downloadJSON(exportData, `physipro_commandes_${formatDateForFilename()}.json`);
+  console.log('✅ Export commandes effectué');
+  alert('✅ Export des commandes effectué!');
+}
+
+// Fonction utilitaire pour télécharger un JSON
+function downloadJSON(data, filename) {
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// Formater la date pour le nom de fichier
+function formatDateForFilename() {
+  const now = new Date();
+  return now.toISOString().slice(0,10).replace(/-/g, '') + '_' + 
+         now.toTimeString().slice(0,5).replace(':', '');
+}
+
+// Gérer l'importation d'un fichier
+function handleImportFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedData = JSON.parse(e.target.result);
+      
+      // Vérifier que c'est un fichier PhysiPro valide
+      if (!importedData.version || !importedData.version.startsWith('PhysiPro')) {
+        alert('❌ Fichier invalide!\n\nCe fichier ne semble pas être un export PhysiPro valide.');
+        return;
+      }
+      
+      // Confirmer l'importation
+      const confirmMsg = `⚠️ ATTENTION!\n\nVous êtes sur le point d'importer des données du ${new Date(importedData.exportDate).toLocaleString('fr-CA')}.\n\nType: ${importedData.exportType || 'Backup complet'}\n\nCette action remplacera vos données actuelles.\n\nÊtes-vous sûr de vouloir continuer?`;
+      
+      if (!confirm(confirmMsg)) {
+        return;
+      }
+      
+      // Importer les données selon le type
+      let importCount = { moulages: 0, commandes: 0, settings: false };
+      
+      // Importer les moulages
+      if (importedData.moulages) {
+        Object.keys(importedData.moulages).forEach(cardId => {
+          cardsData[cardId] = importedData.moulages[cardId];
+          saveCardToFirebase(cardId);
+          importCount.moulages++;
+        });
+      }
+      
+      // Importer les commandes
+      if (importedData.commandes) {
+        Object.keys(importedData.commandes).forEach(cmdId => {
+          commandesData[cmdId] = importedData.commandes[cmdId];
+          saveCommandeToFirebase(cmdId);
+          importCount.commandes++;
+        });
+      }
+      
+      // Importer les paramètres
+      if (importedData.settings) {
+        if (importedData.settings.MENU_DATA) {
+          Object.assign(MENU_DATA, importedData.settings.MENU_DATA);
+        }
+        if (importedData.settings.RAISONS_ATTENTE) {
+          RAISONS_ATTENTE = importedData.settings.RAISONS_ATTENTE;
+        }
+        if (importedData.settings.EMPLOYES_ATELIER) {
+          EMPLOYES_ATELIER = importedData.settings.EMPLOYES_ATELIER;
+        }
+        if (importedData.settings.EMPLOYES_COUTURE) {
+          EMPLOYES_COUTURE = importedData.settings.EMPLOYES_COUTURE;
+        }
+        importCount.settings = true;
+      }
+      
+      // Rafraîchir l'affichage
+      loadCardsFromFirebase();
+      renderCommandesBoard();
+      
+      // Message de succès
+      alert(`✅ Importation réussie!\n\n• ${importCount.moulages} moulages importés\n• ${importCount.commandes} commandes importées\n• Paramètres: ${importCount.settings ? 'Oui' : 'Non'}\n\nL'affichage a été rafraîchi.`);
+      
+      closeImportExportMenu();
+      console.log('✅ Import effectué:', importCount);
+      
+    } catch (error) {
+      console.error('Erreur d\'importation:', error);
+      alert('❌ Erreur lors de l\'importation!\n\n' + error.message);
+    }
+  };
+  
+  reader.readAsText(file);
+  
+  // Réinitialiser l'input file pour permettre de réimporter le même fichier
+  event.target.value = '';
+}
 </script>
 </body>
 </html>
