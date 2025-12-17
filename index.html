@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>PhysiPro Moulage – v306 – Sécurité hashage passwords</title>
+  <title>PhysiPro Moulage – v316 – Bouton Fiche + Menu Déplacer + Priorité vue horizontale</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -40,8 +40,8 @@ html, body { margin: 0; padding: 0; }
   flex: 0 0 auto;
   width: 100%;
   box-sizing: border-box;
-  padding: 4px 20px;
-  min-height: 72px;
+  padding: 6px 20px 12px 20px;
+  min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -58,8 +58,8 @@ html, body { margin: 0; padding: 0; }
 
 /* ========== ANIMATION FLIP 3D LOGO ========== */
 .logo-flip-container {
-  width: 180px;
-  height: 64px;
+  width: 240px;
+  height: 78px;
   perspective: 1000px;
   cursor: pointer;
   position: relative;
@@ -124,8 +124,8 @@ html, body { margin: 0; padding: 0; }
 
 .logo-flip-front img,
 .logo-flip-back img {
-  max-width: 95%;
-  max-height: 90%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   filter: brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
@@ -138,20 +138,6 @@ html, body { margin: 0; padding: 0; }
 .logo-flip-container.flipping-to-front .logo-flip-front,
 .logo-flip-container.flipping-to-front .logo-flip-back {
   box-shadow: none;
-}
-
-/* Indicateur de page active */
-.logo-flip-container::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #60a5fa, transparent);
-  border-radius: 2px;
-  opacity: 0.8;
 }
 
 /* État actif sans glow visible */
@@ -1092,7 +1078,7 @@ html, body { margin: 0; padding: 0; }
 .top-search-row {
   position: absolute;
   left: 50%;
-  bottom: 0;
+  bottom: 4px;
   transform: translateX(-50%);
   width: auto;
   display: flex;
@@ -1111,7 +1097,7 @@ html, body { margin: 0; padding: 0; }
   box-shadow: 0 2px 4px rgba(0,0,0,0.55);
   width: 460px;
   min-width: 460px;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   pointer-events: auto;
 }
 
@@ -1602,20 +1588,26 @@ html, body { margin: 0; padding: 0; }
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
-  border: none;
-  border-radius: 4px;
-  padding: 2px 4px;
-  font-size: 9px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 3px 6px;
+  font-size: 8px;
   cursor: pointer;
   transition: all 0.2s;
   line-height: 1;
-  opacity: 0.4;
+  width: 28px;
+  height: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .mcard-btn-priority-small:hover {
   background: linear-gradient(to bottom, #f59e0b, #d97706);
-  transform: translateY(-50%) scale(1.1);
-  opacity: 1;
+  transform: translateY(-50%) scale(1.05);
   border: 1px solid rgba(0,0,0,0.5);
 }
 
@@ -1623,7 +1615,6 @@ html, body { margin: 0; padding: 0; }
 .mcard.priority .mcard-btn-priority-small {
   background: linear-gradient(to bottom, #f59e0b, #d97706);
   border: 1px solid rgba(0,0,0,0.5);
-  opacity: 1;
 }
 
 /* Pastille région Ontario - texte blanc avec bordure noire */
@@ -1654,26 +1645,46 @@ html, body { margin: 0; padding: 0; }
   margin: -2px -4px;
 }
 
-/* Bouton toggle (ouvre fiche) - pastille à droite du numéro */
+/* Bouton toggle (ouvre fiche) - IDENTIQUE au bouton étoile */
 .mcard-toggle-btn {
   position: absolute;
   right: 3px;
   top: 50%;
   transform: translateY(-50%);
-  padding: 2px 6px;
-  font-size: 7px;
-  font-weight: 600;
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: 999px;
-  border: 1px solid #000;
-  background: linear-gradient(to bottom, #6b7fa8, #4a5a7a);
-  color: #fff;
+  padding: 3px 6px;
+  font-size: 8px;
+  font-weight: 600;
   cursor: pointer;
-  white-space: nowrap;
+  transition: all 0.2s;
+  line-height: 1;
+  width: 28px;
+  height: 16px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: auto;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  background: linear-gradient(to bottom, #6b7fa8, #4a5a7a);
+  border: 1px solid rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.18), 0 1px 2px rgba(0,0,0,0.6);
 }
 
 .mcard-toggle-btn:hover {
   transform: translateY(-50%) scale(1.05);
   filter: brightness(1.2);
+}
+
+/* Bouton fiche des COMMANDES (pas de bouton étoile, donc peut être plus large) */
+#commandesBoard .mcard-toggle-btn {
+  width: auto;
+  min-width: 28px;
+  padding: 3px 8px;
 }
 
 /* Bouton fiche par région - couleurs métalliques */
@@ -2461,6 +2472,12 @@ html, body { margin: 0; padding: 0; }
 .table-select-cell {
   padding: 2px !important;
   text-align: center;
+}
+
+/* Cellule priorité dans la vue horizontale */
+.priority-cell .priority-select {
+  font-weight: 600;
+  min-width: 100px;
 }
 
 /* Cellule notes */
@@ -3722,6 +3739,84 @@ html, body { margin: 0; padding: 0; }
   font-size: 14px;
   font-weight: 700;
   color: #0f172a;
+}
+
+/* Bouton Priorité dans le header de la fiche */
+.fiche-priority-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: all 0.2s;
+  border: none;
+}
+
+.fiche-priority-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+}
+
+.fiche-priority-emoji {
+  font-size: 12px;
+}
+
+.fiche-priority-text {
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+}
+
+/* Menu déroulant priorité dans la fiche */
+.fiche-priority-menu {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  z-index: 10001;
+  min-width: 180px;
+  overflow: hidden;
+}
+
+.fiche-priority-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #333;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.fiche-priority-menu-item:last-child {
+  border-bottom: none;
+}
+
+.fiche-priority-menu-item:hover {
+  background: #f1f5f9;
+}
+
+.fiche-priority-menu-item.selected {
+  background: #e0f2fe;
+  font-weight: 600;
+}
+
+.fiche-priority-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #fff;
+  font-weight: bold;
 }
 
 .fiche-header .fiche-subtitle {
@@ -5579,6 +5674,46 @@ input.cmd-pill-input {
   overflow-y: auto;
 }
 
+/* Total Matériaux en haut de Magasin */
+.cmd-materiaux-total-section-top {
+  padding: 8px 10px;
+  background: linear-gradient(to bottom, #ffffff, #f8fafc);
+  border-bottom: 2px solid #3b82f6;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.cmd-materiaux-total-section-top .cmd-materiaux-total {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.cmd-materiaux-total-section-top .cmd-materiaux-total-header {
+  color: #1e3a5f;
+  font-size: 10px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.cmd-materiaux-total-section-top .cmd-materiaux-total-item {
+  background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-bottom: 2px;
+}
+
+.cmd-materiaux-total-section-top .cmd-materiaux-total-item .code,
+.cmd-materiaux-total-section-top .cmd-materiaux-total-item .name {
+  color: #374151;
+}
+
+.cmd-materiaux-total-section-top .cmd-materiaux-total-item .qty {
+  color: #1e3a5f;
+  font-weight: 700;
+}
+
 /* Vue Tableau - 100% de la fenêtre (sans entête) */
 .cmd-view-tableau {
   display: none;
@@ -5602,6 +5737,44 @@ input.cmd-pill-input {
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+}
+
+/* Barre header du tableau avec logo et bouton import */
+.cmd-tableau-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: linear-gradient(to bottom, #1e3a5f, #0f2744);
+  border-bottom: 2px solid #3b82f6;
+}
+
+.cmd-tableau-logo img {
+  height: 30px;
+}
+
+.cmd-import-json-btn {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  background: linear-gradient(to bottom, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cmd-import-json-btn:hover {
+  background: linear-gradient(to bottom, #a78bfa, #8b5cf6);
+  transform: scale(1.02);
+}
+
+.cmd-header-actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 15px;
 }
 
 .cmd-tableau-header h4 {
@@ -6563,7 +6736,7 @@ input.cmd-pill-input {
 .cmd-items-table th.section-header {
   background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
   color: white;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   padding: 2px 4px;
   text-align: center;
@@ -6582,7 +6755,7 @@ input.cmd-pill-input {
 .cmd-items-table th.col-header {
   background: #e2e8f0;
   color: #1f2937;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 700;
   padding: 0;
   text-align: center;
@@ -6713,7 +6886,7 @@ input.cmd-pill-input {
   border-radius: 2px;
   height: 12px;
   width: 100%;
-  font-size: 7px;
+  font-size: 8px;
   font-weight: 600;
   cursor: pointer;
   padding: 0 1px;
@@ -6732,7 +6905,7 @@ input.cmd-pill-input {
   border-radius: 2px;
   height: 12px;
   width: 100%;
-  font-size: 7px;
+  font-size: 8px;
   font-weight: 600;
   cursor: pointer;
   padding: 0 1px;
@@ -6751,7 +6924,7 @@ input.cmd-pill-input {
   border-radius: 2px;
   height: 12px;
   width: 100%;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -6783,7 +6956,7 @@ input.cmd-pill-input {
 
 /* Grandeur readonly - BLANC avec texte noir */
 .cmd-table-grandeur-readonly {
-  font-size: 7px;
+  font-size: 8px;
   font-weight: 600;
   color: #1f2937;
   background: linear-gradient(to bottom, #ffffff, #f1f5f9);
@@ -6804,7 +6977,7 @@ input.cmd-pill-input {
 
 /* Quantité readonly - BLANC */
 .cmd-table-qty-readonly {
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 600;
   color: #1f2937;
   background: linear-gradient(to bottom, #ffffff, #f1f5f9);
@@ -6826,7 +6999,7 @@ input.cmd-pill-input {
   border: 1px solid #cbd5e1;
   border-radius: 2px;
   text-align: center;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 600;
   padding: 0;
   -moz-appearance: textfield;
@@ -6847,7 +7020,7 @@ input.cmd-pill-input {
   border: 1px solid #cbd5e1;
   border-radius: 2px;
   text-align: center;
-  font-size: 7px;
+  font-size: 8px;
   padding: 0;
   line-height: 10px;
   box-sizing: border-box;
@@ -6879,7 +7052,7 @@ input.cmd-pill-input {
   border: none;
   background: transparent;
   text-align: center;
-  font-size: 7px;
+  font-size: 8px;
   font-weight: 600;
   padding: 0;
   -moz-appearance: textfield;
@@ -6897,13 +7070,13 @@ input.cmd-pill-input {
 }
 
 .cmd-table-fait-separator {
-  font-size: 7px;
+  font-size: 8px;
   color: #6b7280;
   margin: 0 1px;
 }
 
 .cmd-table-fait-total {
-  font-size: 7px;
+  font-size: 8px;
   color: #6b7280;
 }
 
@@ -6925,7 +7098,7 @@ input.cmd-pill-input {
   height: 14px;
   width: 100%;
   border-radius: 3px;
-  font-size: 7px;
+  font-size: 8px;
   font-weight: 700;
   color: white;
   border: none;
@@ -6958,7 +7131,7 @@ input.cmd-pill-input {
   border-radius: 2px;
   height: 12px;
   width: 100%;
-  font-size: 6px;
+  font-size: 7px;
   cursor: pointer;
   padding: 0;
   overflow: hidden;
@@ -6976,7 +7149,7 @@ input.cmd-pill-input {
   border-radius: 3px;
   height: 14px;
   width: 100%;
-  font-size: 7px;
+  font-size: 8px;
   cursor: pointer;
   padding: 0;
   box-sizing: border-box;
@@ -6997,7 +7170,7 @@ input.cmd-pill-input {
   border-radius: 3px;
   height: 14px;
   width: 100%;
-  font-size: 7px;
+  font-size: 8px;
   cursor: pointer;
   padding: 0;
   line-height: 14px;
@@ -7032,7 +7205,7 @@ input.cmd-pill-input {
   border-radius: 3px;
   height: 14px;
   width: 100%;
-  font-size: 7px;
+  font-size: 8px;
   cursor: pointer;
   padding: 0;
   box-sizing: border-box;
@@ -8328,23 +8501,21 @@ input.cmd-pill-input {
 
 .priority-badge {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  width: 18px;
-  height: 18px;
+  top: 0px;
+  left: 0px;
+  width: 20px;
+  height: 20px;
   background: linear-gradient(to bottom, #ef4444, #dc2626);
-  border-radius: 10px 0 10px 0;
+  border-radius: 8px 0 8px 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   color: #fff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.4);
   z-index: 10;
-  border: 2px solid #000;
-  border-right: 1px solid rgba(255,255,255,0.3);
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+  border: none;
   pointer-events: none;
 }
 
@@ -8474,6 +8645,284 @@ input.cmd-pill-input {
 .btn-cancel-modal {
   background: linear-gradient(to bottom, #6b7280, #4b5563);
   color: #fff;
+}
+
+/* ===== DATE PICKER FIELD ===== */
+.date-picker-field {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  font-size: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.date-picker-field:hover {
+  border-color: rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.4);
+}
+.date-picker-value {
+  color: #ccc;
+}
+.date-picker-field.has-value .date-picker-value {
+  color: #fff;
+}
+.date-picker-icon {
+  font-size: 14px;
+}
+
+/* ===== LIST MANAGE BUTTON ===== */
+.list-manage-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0 4px;
+  margin-left: 4px;
+}
+.list-manage-btn:hover {
+  color: #fff;
+}
+
+/* ===== ADD MODAL CALENDAR POPUP ===== */
+.add-modal-calendar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 60000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-modal-calendar-overlay.hidden {
+  display: none;
+}
+.add-modal-calendar-popup {
+  background: linear-gradient(to bottom, #1e3a5f, #0d2137);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  min-width: 280px;
+}
+.add-modal-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #fff;
+  font-weight: 600;
+}
+.cal-nav-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.cal-nav-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+.add-modal-calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 5px;
+}
+.add-modal-calendar-weekdays span {
+  text-align: center;
+  font-size: 10px;
+  color: #888;
+  padding: 5px 0;
+}
+.add-modal-calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.add-modal-calendar-days .cal-day {
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 12px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+}
+.add-modal-calendar-days .cal-day:hover {
+  background: rgba(74,142,245,0.4);
+}
+.add-modal-calendar-days .cal-day.today {
+  border: 1px solid #4a8ef5;
+}
+.add-modal-calendar-days .cal-day.selected {
+  background: #4a8ef5;
+  font-weight: bold;
+}
+.add-modal-calendar-days .cal-day.other-month {
+  color: #555;
+}
+.add-modal-calendar-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: center;
+}
+.btn-today-small, .btn-clear-small, .btn-close-small {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 11px;
+  cursor: pointer;
+}
+.btn-today-small {
+  background: linear-gradient(to bottom, #4a8ef5, #2563eb);
+  color: #fff;
+}
+.btn-clear-small {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+  color: #fff;
+}
+.btn-close-small {
+  background: linear-gradient(to bottom, #6b7280, #4b5563);
+  color: #fff;
+}
+
+/* ===== LIST MANAGER POPUP ===== */
+.list-manager-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 60000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.list-manager-overlay.hidden {
+  display: none;
+}
+.list-manager-popup {
+  background: linear-gradient(to bottom, #1e3a5f, #0d2137);
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  min-width: 320px;
+  max-width: 400px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.list-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.list-manager-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+}
+.list-manager-content {
+  padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+}
+.list-manager-items {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.list-manager-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 6px;
+  margin-bottom: 6px;
+  color: #fff;
+  font-size: 12px;
+}
+.list-manager-item:hover {
+  background: rgba(255,255,255,0.1);
+}
+.list-manager-item .item-name {
+  flex: 1;
+}
+.list-manager-item .btn-remove-item {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+  border: none;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.list-manager-item .btn-remove-item:hover {
+  filter: brightness(1.2);
+}
+.list-manager-add {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.list-manager-add input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(0,0,0,0.3);
+  color: #fff;
+  font-size: 12px;
+}
+.btn-add-small {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
+.btn-add-small:hover {
+  filter: brightness(1.2);
+}
+.list-manager-footer {
+  padding: 15px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-save-list {
+  padding: 8px 20px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(to bottom, #4a8ef5, #2563eb);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-save-list:hover {
+  filter: brightness(1.1);
 }
 
 /* ===== AUTH MODAL ===== */
@@ -9365,6 +9814,7 @@ input.cmd-pill-input {
                 <th class="resizable-th">Nom moulage<div class="resize-handle"></div></th>
                 <th class="resizable-th">Client<div class="resize-handle"></div></th>
                 <th class="resizable-th">N° Commande<div class="resize-handle"></div></th>
+                <th class="resizable-th">Priorité<div class="resize-handle"></div></th>
                 <th class="resizable-th">Rang Robot<div class="resize-handle"></div></th>
                 <th class="resizable-th">Région<div class="resize-handle"></div></th>
                 <th class="resizable-th">Item<div class="resize-handle"></div></th>
@@ -9462,30 +9912,100 @@ input.cmd-pill-input {
 
 <!-- Modal Ajouter Moulage -->
 <div class="modal-overlay" id="addModal">
-  <div class="modal-content">
+  <div class="modal-content" style="max-width: 520px;">
     <div class="modal-header">
       <h3>➕ Ajouter un moulage</h3>
       <button class="modal-close" id="closeAddModal">×</button>
     </div>
-    <div class="add-modal-field">
-      <label>Nom du moulage</label>
-      <input type="text" id="addName" placeholder="Ex: Dupont Jean">
-    </div>
-    <div class="add-modal-field">
-      <label>Numéro de commande</label>
-      <input type="text" id="addOrder" placeholder="Ex: 123456">
-    </div>
-    <div class="add-modal-field">
-      <label>Région</label>
-      <select id="addRegion">
-        <option value="Québec">Québec</option>
-        <option value="Ontario">Ontario</option>
-        <option value="Maritime">Maritime</option>
-      </select>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div class="add-modal-field">
+        <label>Client <button class="list-manage-btn" onclick="openListManager('moulageClients', 'Client')">⚙</button></label>
+        <select id="addClient"></select>
+      </div>
+      <div class="add-modal-field">
+        <label>Nom du moulage</label>
+        <input type="text" id="addName" placeholder="Ex: Dupont Jean">
+      </div>
+      <div class="add-modal-field">
+        <label>Date reçue</label>
+        <div class="date-picker-field" id="addDateRecueField" onclick="openAddModalCalendar('addDateRecue')">
+          <span class="date-picker-value" id="addDateRecueDisplay">-- Sélectionner --</span>
+          <span class="date-picker-icon">📅</span>
+        </div>
+        <input type="hidden" id="addDateRecue">
+      </div>
+      <div class="add-modal-field">
+        <label>Date fabriquée au robot</label>
+        <div class="date-picker-field" id="addDateRobotField" onclick="openAddModalCalendar('addDateRobot')">
+          <span class="date-picker-value" id="addDateRobotDisplay">-- Sélectionner --</span>
+          <span class="date-picker-icon">📅</span>
+        </div>
+        <input type="hidden" id="addDateRobot">
+      </div>
+      <div class="add-modal-field">
+        <label>Numéro de commande</label>
+        <input type="text" id="addOrder" placeholder="000000" maxlength="6">
+      </div>
+      <div class="add-modal-field">
+        <label>Numéro PO</label>
+        <input type="text" id="addNumeroPO" placeholder="000000" maxlength="6">
+      </div>
+      <div class="add-modal-field">
+        <label>Région <button class="list-manage-btn" onclick="openListManager('regions', 'Région')">⚙</button></label>
+        <select id="addRegion"></select>
+      </div>
+      <div class="add-modal-field">
+        <label>Intervenant <button class="list-manage-btn" onclick="openListManager('intervenants', 'Intervenant')">⚙</button></label>
+        <select id="addIntervenant"></select>
+      </div>
+      <div class="add-modal-field" style="grid-column: 1 / -1;">
+        <label>Représentante <button class="list-manage-btn" onclick="openListManager('representantes', 'Représentante')">⚙</button></label>
+        <select id="addRepresentant"></select>
+      </div>
     </div>
     <div class="add-modal-buttons">
       <button class="btn-cancel-modal" id="cancelAdd">Annuler</button>
       <button class="btn-add" id="confirmAdd">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Calendrier popup pour modales d'ajout -->
+<div class="add-modal-calendar-overlay hidden" id="addModalCalendarOverlay">
+  <div class="add-modal-calendar-popup">
+    <div class="add-modal-calendar-header">
+      <button class="cal-nav-btn" onclick="addModalCalendarPrev()">◀</button>
+      <span id="addModalCalendarTitle">Décembre 2025</span>
+      <button class="cal-nav-btn" onclick="addModalCalendarNext()">▶</button>
+    </div>
+    <div class="add-modal-calendar-weekdays">
+      <span>Dim</span><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span>
+    </div>
+    <div class="add-modal-calendar-days" id="addModalCalendarDays"></div>
+    <div class="add-modal-calendar-footer">
+      <button class="btn-today-small" onclick="addModalCalendarToday()">Aujourd'hui</button>
+      <button class="btn-clear-small" onclick="addModalCalendarClear()">Effacer</button>
+      <button class="btn-close-small" onclick="closeAddModalCalendar()">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Gestionnaire de listes -->
+<div class="list-manager-overlay hidden" id="listManagerOverlay">
+  <div class="list-manager-popup">
+    <div class="list-manager-header">
+      <h3 id="listManagerTitle">Gérer les valeurs</h3>
+      <button class="modal-close" onclick="closeListManager()">×</button>
+    </div>
+    <div class="list-manager-content">
+      <div class="list-manager-items" id="listManagerItems"></div>
+      <div class="list-manager-add">
+        <input type="text" id="listManagerNewItem" placeholder="Nouvelle valeur...">
+        <button class="btn-add-small" onclick="addListItem()">+</button>
+      </div>
+    </div>
+    <div class="list-manager-footer">
+      <button class="btn-save-list" onclick="saveListManager()">Enregistrer</button>
     </div>
   </div>
 </div>
@@ -9637,9 +10157,53 @@ try {
 let MENU_DATA = {
   regions: ["Québec", "Ontario", "Maritime"],
   delays: { "Québec": 90, "Ontario": 30, "Maritime": 45 },
-  clients: ["MEDPLUS", "METRO HEALTH", "TLC medical", "Lucie Bruneau.", "CMR", "Ciss Laurentides bouclier"],
-  intervenants: ["Anna", "Jenny Jackson", "Pam", "Maryse Bernard", "Anna Caufield", "Lee Ann Best", "Charles Larose"],
-  representantes: ["Marie-Soleil", "Marie-Pier"],
+  clients: [
+    "SAT IRDPQ Hamel",
+    "SAT CRDPCA",
+    "SAT Jonquiere Saguenay Lac Saint Jean",
+    "SAT Gaspésie Saint Anne des Monts",
+    "SAT Baie Comeau",
+    "SAT Sept Iles",
+    "SAT Trois Rivieres",
+    "SAT Joliette",
+    "SAT Mont Joli",
+    "SAT CRE Sherbrooke",
+    "Stan Cassidy Nouveau Brunswick",
+    "Metro Health Nouveau Brunswick",
+    "IWK Nouvelle Écosse",
+    "MED +",
+    "TLC Medical"
+  ],
+  intervenants: [
+    "Joelle Bourdages",
+    "Judith Lagimonière",
+    "Camille Morel",
+    "Anne Sophie Montminy",
+    "Josianne Labrecque",
+    "Eric Gagnon",
+    "Nadyne Gobeil",
+    "Marie Michelle Hamel",
+    "Lisa Houde",
+    "Stéphanie D'Astou",
+    "Annie Bourgeois",
+    "Mireille Lefebvre",
+    "Louis Matton",
+    "Isabelle Neault",
+    "Cindy Audet",
+    "Josée Bédard",
+    "Martine Comeau",
+    "Ysabelle Fugere",
+    "Julie Lefebvre",
+    "Godefroy Neault",
+    "Pam McKaskill",
+    "Tabitha Knowles",
+    "Marie Smith",
+    "Anna Caulfield",
+    "Maggie MCCann",
+    "Jenny Jackson",
+    "Mario Lebouthiller"
+  ],
+  representantes: ["Marie-Soleil", "Marie-Pier", "Multipass", "Fabrys"],
   items: ["HP2", "HP2 Ultra", "EasyFit", "Coussin Brio", "Coquille 2Sizer", "Siège", "Dossier", "Siège + Dossier"],
   employees: {
     robot: ["Mario Jaques", "Sina", "Zakaria"],
@@ -10843,6 +11407,9 @@ function loginUserSuccess(userInfo, email) {
   // Charger les cartes depuis Firebase
   loadCardsFromFirebase();
   
+  // Charger les listes personnalisées
+  loadCustomLists();
+  
   // BACKUP AUTOMATIQUE pour les admins
   if (userInfo.role === 'admin') {
     performAutoBackup(userInfo.name);
@@ -10897,6 +11464,25 @@ const closeLogModal = document.getElementById('closeLogModal');
 
 // Attendre que le DOM soit prêt pour les boutons
 document.addEventListener('DOMContentLoaded', () => {
+  // ===== DÉLÉGATION D'ÉVÉNEMENTS GLOBALE POUR BOUTONS FICHE =====
+  // Cette approche capture les clics au niveau du document et les délègue
+  // C'est plus fiable que les onclick ou addEventListener sur chaque bouton
+  document.addEventListener('click', function(e) {
+    // Vérifier si le clic est sur un bouton Fiche moulage
+    const ficheBtn = e.target.closest('.mcard-toggle-btn[data-action="open-fiche"]');
+    if (ficheBtn) {
+      e.stopPropagation();
+      e.preventDefault();
+      const cardId = ficheBtn.dataset.cardId;
+      if (cardId) {
+        openMoulageFiche(cardId);
+      }
+      return;
+    }
+  }, true); // true = capture phase, se déclenche AVANT les autres handlers
+  
+  console.log('✅ Délégation globale pour boutons Fiche activée');
+
   // ===== MENU SETTINGS =====
   const btnSettings = document.getElementById('btnSettings');
   const settingsMenuOverlay = document.getElementById('settingsMenuOverlay');
@@ -11017,6 +11603,29 @@ btnAddMoulage.addEventListener('click', () => {
     return;
   }
   
+  // Initialiser les selects avec les listes personnalisées
+  updateAllSelectsFromLists();
+  
+  // Reset les champs de date
+  document.getElementById('addDateRecue').value = '';
+  document.getElementById('addDateRobot').value = '';
+  const dateRecueDisplay = document.getElementById('addDateRecueDisplay');
+  const dateRobotDisplay = document.getElementById('addDateRobotDisplay');
+  const dateRecueField = document.getElementById('addDateRecueField');
+  const dateRobotField = document.getElementById('addDateRobotField');
+  if (dateRecueDisplay) dateRecueDisplay.textContent = '-- Sélectionner --';
+  if (dateRobotDisplay) dateRobotDisplay.textContent = '-- Sélectionner --';
+  if (dateRecueField) dateRecueField.classList.remove('has-value');
+  if (dateRobotField) dateRobotField.classList.remove('has-value');
+  
+  // Reset les autres champs
+  document.getElementById('addClient').value = '';
+  document.getElementById('addName').value = '';
+  document.getElementById('addOrder').value = '';
+  document.getElementById('addNumeroPO').value = '';
+  document.getElementById('addIntervenant').value = '';
+  document.getElementById('addRepresentant').value = '';
+  
   addModal.classList.add('active');
   document.getElementById('addName').focus();
 });
@@ -11025,15 +11634,41 @@ closeAddModal.addEventListener('click', () => addModal.classList.remove('active'
 cancelAdd.addEventListener('click', () => addModal.classList.remove('active'));
 
 confirmAdd.addEventListener('click', () => {
+  const client = document.getElementById('addClient').value || '';
   const name = document.getElementById('addName').value.trim() || 'Nom du moulage';
+  const dateRecue = document.getElementById('addDateRecue').value || new Date().toISOString().split('T')[0];
+  const dateRobot = document.getElementById('addDateRobot').value || '';
   const order = document.getElementById('addOrder').value.trim() || '000000';
-  const region = document.getElementById('addRegion').value;
+  const numeroPO = document.getElementById('addNumeroPO').value.trim() || '';
+  const region = document.getElementById('addRegion').value || 'Québec';
+  const intervenant = document.getElementById('addIntervenant').value || '';
+  const representant = document.getElementById('addRepresentant').value || '';
   
-  createCard(name, order, region, 0);
+  // Créer la carte avec les données additionnelles
+  const cardId = createCard(name, order, region, 0);
+  
+  // Mettre à jour les données supplémentaires
+  if (cardsData[cardId]) {
+    cardsData[cardId].client = client;
+    cardsData[cardId].dateRecue = dateRecue;
+    cardsData[cardId].dateRobot = dateRobot;
+    cardsData[cardId].numeroPO = numeroPO;
+    cardsData[cardId].intervenant = intervenant;
+    cardsData[cardId].representant = representant;
+    saveCardToFirebase(cardId);
+  }
   
   addModal.classList.remove('active');
+  
+  // Reset les champs
+  document.getElementById('addClient').value = '';
   document.getElementById('addName').value = '';
+  document.getElementById('addDateRecue').value = '';
+  document.getElementById('addDateRobot').value = '';
   document.getElementById('addOrder').value = '';
+  document.getElementById('addNumeroPO').value = '';
+  document.getElementById('addIntervenant').value = '';
+  document.getElementById('addRepresentant').value = '';
   
   addLogEntry('Ajout', `Moulage "${name}" créé`);
   
@@ -11042,6 +11677,379 @@ confirmAdd.addEventListener('click', () => {
     setTimeout(() => renderRobotTable(), 300);
   }
 });
+
+// ===== SYSTÈME DE GESTION DES LISTES PERSONNALISABLES =====
+// Listes par défaut (seront écrasées par Firebase si disponible)
+let customLists = {
+  moulageClients: [
+    'SAT IRDPQ Hamel',
+    'SAT CRDPCA',
+    'SAT Jonquiere Saguenay Lac Saint Jean',
+    'SAT Gaspésie Saint Anne des Monts',
+    'SAT Baie Comeau',
+    'SAT Sept Iles',
+    'SAT Trois Rivieres',
+    'SAT Joliette',
+    'SAT Mont Joli',
+    'SAT CRE Sherbrooke',
+    'Stan Cassidy Nouveau Brunswick',
+    'Metro Health Nouveau Brunswick',
+    'IWK Nouvelle Écosse',
+    'MED +',
+    'TLC Medical'
+  ],
+  commandeClients: ['Vermeiren', 'HME', 'C1SOUTH', 'Cubro', 'France'],
+  regions: ['Québec', 'Ontario', 'Maritime'],
+  intervenants: [
+    'Joelle Bourdages',
+    'Judith Lagimonière',
+    'Camille Morel',
+    'Anne Sophie Montminy',
+    'Josianne Labrecque',
+    'Eric Gagnon',
+    'Nadyne Gobeil',
+    'Marie Michelle Hamel',
+    'Lisa Houde',
+    'Stéphanie D\'Astou',
+    'Annie Bourgeois',
+    'Mireille Lefebvre',
+    'Louis Matton',
+    'Isabelle Neault',
+    'Cindy Audet',
+    'Josée Bédard',
+    'Martine Comeau',
+    'Ysabelle Fugere',
+    'Julie Lefebvre',
+    'Godefroy Neault',
+    'Pam McKaskill',
+    'Tabitha Knowles',
+    'Marie Smith',
+    'Anna Caulfield',
+    'Maggie MCCann',
+    'Jenny Jackson',
+    'Mario Lebouthiller'
+  ],
+  representantes: ['Marie-Soleil', 'Marie-Pier', 'Multipass', 'Fabrys'],
+  items: ['HP2', 'HP2 Ultra', 'EasyFit', 'Coussin Brio', 'Coquille 2Sizer', 'Siège', 'Dossier', 'Siège + Dossier'],
+  locations: ['Étagère Val', 'Étagère Dan', 'Donné à Michelle', 'Tablette A1', 'Tablette A2', 'Rack C1', 'Magasin'],
+  employeesRobot: ['Mario Jaques', 'Sina', 'Zakaria'],
+  employeesDegauchage: ['Pierre', 'Serge', 'Nestor', 'Mathieu', 'Daniel'],
+  employeesAtelier: ['Pierre', 'Serge', 'Nestor', 'Mathieu', 'Daniel', 'Valérie', 'Tommy', 'Saul', 'Checkna'],
+  employeesCouture: ['Stéphanie', 'Cassie', 'Thérèse', 'Louisette', 'Suave', 'Martine'],
+  employeesPeinture: ['Manuel', 'Cheickna', 'Saul', 'Pablo']
+};
+
+let currentListKey = null;
+let currentListTitle = null;
+
+// Charger les listes depuis Firebase
+function loadCustomLists() {
+  if (!database) return;
+  const listsRef = database.ref('customLists');
+  listsRef.once('value', snapshot => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      // Fusionner avec les listes par défaut
+      Object.keys(data).forEach(key => {
+        if (Array.isArray(data[key])) {
+          customLists[key] = data[key];
+        }
+      });
+      console.log('✅ Listes personnalisées chargées');
+      
+      // Synchroniser avec MENU_DATA pour compatibilité
+      syncCustomListsToMenuData();
+    }
+    // Mettre à jour tous les selects
+    updateAllSelectsFromLists();
+  });
+}
+
+// Synchroniser customLists vers MENU_DATA
+function syncCustomListsToMenuData() {
+  if (customLists.moulageClients) MENU_DATA.clients = [...customLists.moulageClients];
+  if (customLists.regions) MENU_DATA.regions = [...customLists.regions];
+  if (customLists.intervenants) MENU_DATA.intervenants = [...customLists.intervenants];
+  if (customLists.representantes) MENU_DATA.representantes = [...customLists.representantes];
+  if (customLists.items) MENU_DATA.items = [...customLists.items];
+  if (customLists.locations) MENU_DATA.locations = [...customLists.locations];
+}
+
+// Sauvegarder les listes dans Firebase
+function saveCustomLists() {
+  if (!database) return;
+  database.ref('customLists').set(customLists)
+    .then(() => console.log('✅ Listes sauvegardées'))
+    .catch(err => console.error('❌ Erreur sauvegarde listes:', err));
+}
+
+// Mettre à jour tous les selects avec les listes
+function updateAllSelectsFromLists() {
+  // Moulages - Client
+  const addClient = document.getElementById('addClient');
+  if (addClient) {
+    addClient.innerHTML = '<option value="">-- Sélectionner --</option>' +
+      customLists.moulageClients.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+  
+  // Moulages - Région
+  const addRegion = document.getElementById('addRegion');
+  if (addRegion) {
+    addRegion.innerHTML = customLists.regions.map(r => `<option value="${r}">${r}</option>`).join('');
+  }
+  
+  // Moulages - Intervenant
+  const addIntervenant = document.getElementById('addIntervenant');
+  if (addIntervenant) {
+    addIntervenant.innerHTML = '<option value="">-- Sélectionner --</option>' +
+      customLists.intervenants.map(i => `<option value="${i}">${i}</option>`).join('');
+  }
+  
+  // Moulages - Représentante
+  const addRepresentant = document.getElementById('addRepresentant');
+  if (addRepresentant) {
+    addRepresentant.innerHTML = '<option value="">-- Sélectionner --</option>' +
+      customLists.representantes.map(r => `<option value="${r}">${r}</option>`).join('');
+  }
+}
+
+// Ouvrir le gestionnaire de listes
+function openListManager(listKey, title) {
+  currentListKey = listKey;
+  currentListTitle = title;
+  
+  const overlay = document.getElementById('listManagerOverlay');
+  const titleEl = document.getElementById('listManagerTitle');
+  const itemsEl = document.getElementById('listManagerItems');
+  const inputEl = document.getElementById('listManagerNewItem');
+  
+  titleEl.textContent = `Gérer les ${title}s`;
+  inputEl.value = '';
+  
+  renderListItems();
+  
+  overlay.classList.remove('hidden');
+}
+
+// Rendre les items de la liste
+function renderListItems() {
+  const itemsEl = document.getElementById('listManagerItems');
+  const list = customLists[currentListKey] || [];
+  
+  // Si plus de 6 items, afficher sur 2 colonnes
+  const useColumns = list.length > 6;
+  
+  if (useColumns) {
+    itemsEl.style.display = 'grid';
+    itemsEl.style.gridTemplateColumns = '1fr 1fr';
+    itemsEl.style.gap = '6px';
+  } else {
+    itemsEl.style.display = 'block';
+    itemsEl.style.gridTemplateColumns = '';
+    itemsEl.style.gap = '';
+  }
+  
+  itemsEl.innerHTML = list.map((item, index) => `
+    <div class="list-manager-item">
+      <span class="item-name">${item}</span>
+      <button class="btn-remove-item" onclick="removeListItem(${index})" title="Supprimer">−</button>
+    </div>
+  `).join('');
+}
+
+// Ajouter un item à la liste
+function addListItem() {
+  const inputEl = document.getElementById('listManagerNewItem');
+  const value = inputEl.value.trim();
+  
+  if (!value) return;
+  
+  if (!customLists[currentListKey]) {
+    customLists[currentListKey] = [];
+  }
+  
+  // Vérifier si déjà existant
+  if (customLists[currentListKey].includes(value)) {
+    alert('Cette valeur existe déjà');
+    return;
+  }
+  
+  customLists[currentListKey].push(value);
+  inputEl.value = '';
+  renderListItems();
+}
+
+// Supprimer un item de la liste
+function removeListItem(index) {
+  if (!customLists[currentListKey]) return;
+  
+  const item = customLists[currentListKey][index];
+  if (confirm(`Supprimer "${item}" de la liste ?`)) {
+    customLists[currentListKey].splice(index, 1);
+    renderListItems();
+  }
+}
+
+// Fermer le gestionnaire
+function closeListManager() {
+  document.getElementById('listManagerOverlay').classList.add('hidden');
+}
+
+// Sauvegarder et fermer
+function saveListManager() {
+  saveCustomLists();
+  syncCustomListsToMenuData();
+  updateAllSelectsFromLists();
+  closeListManager();
+  
+  // Rafraîchir la fiche si ouverte
+  if (currentExpandedCard) {
+    const cardId = currentExpandedCard.dataset.cardId;
+    closeFiche();
+    const card = document.querySelector(`.mcard[data-card-id="${cardId}"]`);
+    if (card) setTimeout(() => openFiche(card), 100);
+  }
+  
+  // Rafraîchir la table robot si visible
+  if (isRobotViewActive) {
+    renderRobotTable();
+  }
+}
+
+// ===== CALENDRIER POPUP POUR MODALES D'AJOUT =====
+let addModalCalendarYear = new Date().getFullYear();
+let addModalCalendarMonth = new Date().getMonth();
+let addModalCalendarTarget = null; // ID du champ cible
+
+function openAddModalCalendar(targetId) {
+  addModalCalendarTarget = targetId;
+  
+  // Lire la date actuelle si existante
+  const hiddenInput = document.getElementById(targetId);
+  if (hiddenInput && hiddenInput.value) {
+    const parts = hiddenInput.value.split('-');
+    addModalCalendarYear = parseInt(parts[0]);
+    addModalCalendarMonth = parseInt(parts[1]) - 1;
+  } else {
+    addModalCalendarYear = new Date().getFullYear();
+    addModalCalendarMonth = new Date().getMonth();
+  }
+  
+  renderAddModalCalendar();
+  document.getElementById('addModalCalendarOverlay').classList.remove('hidden');
+}
+
+function closeAddModalCalendar() {
+  document.getElementById('addModalCalendarOverlay').classList.add('hidden');
+}
+
+function addModalCalendarPrev() {
+  addModalCalendarMonth--;
+  if (addModalCalendarMonth < 0) {
+    addModalCalendarMonth = 11;
+    addModalCalendarYear--;
+  }
+  renderAddModalCalendar();
+}
+
+function addModalCalendarNext() {
+  addModalCalendarMonth++;
+  if (addModalCalendarMonth > 11) {
+    addModalCalendarMonth = 0;
+    addModalCalendarYear++;
+  }
+  renderAddModalCalendar();
+}
+
+function addModalCalendarToday() {
+  const today = new Date();
+  selectAddModalDate(today.toISOString().split('T')[0]);
+}
+
+function addModalCalendarClear() {
+  if (addModalCalendarTarget) {
+    document.getElementById(addModalCalendarTarget).value = '';
+    const displayEl = document.getElementById(addModalCalendarTarget + 'Display');
+    const fieldEl = document.getElementById(addModalCalendarTarget + 'Field');
+    if (displayEl) displayEl.textContent = '-- Sélectionner --';
+    if (fieldEl) fieldEl.classList.remove('has-value');
+  }
+  closeAddModalCalendar();
+}
+
+function selectAddModalDate(dateStr) {
+  if (addModalCalendarTarget) {
+    document.getElementById(addModalCalendarTarget).value = dateStr;
+    const displayEl = document.getElementById(addModalCalendarTarget + 'Display');
+    const fieldEl = document.getElementById(addModalCalendarTarget + 'Field');
+    if (displayEl) {
+      // Format français
+      const d = new Date(dateStr + 'T12:00:00');
+      displayEl.textContent = d.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    if (fieldEl) fieldEl.classList.add('has-value');
+  }
+  closeAddModalCalendar();
+}
+
+function renderAddModalCalendar() {
+  const titleEl = document.getElementById('addModalCalendarTitle');
+  const daysEl = document.getElementById('addModalCalendarDays');
+  
+  const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+  
+  titleEl.textContent = `${monthNames[addModalCalendarMonth]} ${addModalCalendarYear}`;
+  
+  const firstDay = new Date(addModalCalendarYear, addModalCalendarMonth, 1);
+  const lastDay = new Date(addModalCalendarYear, addModalCalendarMonth + 1, 0);
+  const startDay = firstDay.getDay(); // 0 = Dimanche
+  const daysInMonth = lastDay.getDate();
+  
+  const today = new Date().toISOString().split('T')[0];
+  const selectedDate = addModalCalendarTarget ? document.getElementById(addModalCalendarTarget)?.value : '';
+  
+  let html = '';
+  
+  // Jours du mois précédent
+  const prevMonthLastDay = new Date(addModalCalendarYear, addModalCalendarMonth, 0).getDate();
+  for (let i = startDay - 1; i >= 0; i--) {
+    const day = prevMonthLastDay - i;
+    html += `<div class="cal-day other-month">${day}</div>`;
+  }
+  
+  // Jours du mois actuel
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${addModalCalendarYear}-${String(addModalCalendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    let classes = 'cal-day';
+    if (dateStr === today) classes += ' today';
+    if (dateStr === selectedDate) classes += ' selected';
+    html += `<div class="${classes}" onclick="selectAddModalDate('${dateStr}')">${day}</div>`;
+  }
+  
+  // Jours du mois suivant
+  const totalCells = startDay + daysInMonth;
+  const remainingCells = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remainingCells; i++) {
+    html += `<div class="cal-day other-month">${i}</div>`;
+  }
+  
+  daysEl.innerHTML = html;
+}
+
+// Exposer les fonctions globalement
+window.openListManager = openListManager;
+window.closeListManager = closeListManager;
+window.addListItem = addListItem;
+window.removeListItem = removeListItem;
+window.saveListManager = saveListManager;
+window.openAddModalCalendar = openAddModalCalendar;
+window.closeAddModalCalendar = closeAddModalCalendar;
+window.addModalCalendarPrev = addModalCalendarPrev;
+window.addModalCalendarNext = addModalCalendarNext;
+window.addModalCalendarToday = addModalCalendarToday;
+window.addModalCalendarClear = addModalCalendarClear;
+window.selectAddModalDate = selectAddModalDate;
 
 // ===== CRÉATION DE CARTE =====
 function generateCardId() {
@@ -11117,7 +12125,7 @@ function createCard(name, order, region, columnIndex) {
         <div class="mcard-order-line">
           <button class="mcard-btn-priority-small" title="Définir priorité">⭐</button>
           <input type="text" class="mcard-order" value="${order}" data-field="order" maxlength="6">
-          <button class="mcard-toggle-btn">Fiche</button>
+          <button class="mcard-toggle-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">📋</button>
         </div>
       </div>
     </div>
@@ -11167,17 +12175,14 @@ function createCard(name, order, region, columnIndex) {
   // Sauvegarder dans Firebase
   saveCardToFirebase(cardId);
   
-  return card;
+  return cardId;
 }
 
 function attachCardEvents(card) {
   const cardId = card.dataset.cardId;
   
-  // Bouton toggle (ouvre fiche)
-  card.querySelector('.mcard-toggle-btn')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    openFiche(card);
-  });
+  // Le bouton Fiche est maintenant géré par la délégation globale (DOMContentLoaded)
+  // Plus besoin d'attacher un événement ici
   
   // Input titre - sync avec fiche
   const titleInput = card.querySelector('.mcard-title');
@@ -11374,6 +12379,12 @@ function setPriority(cardId, priority) {
     updateCardPriorityDisplay(card, priority);
   }
   
+  // Synchroniser avec la vue horizontale si elle est visible
+  const tableSelect = document.querySelector(`#robotTableBody select[data-card-id="${cardId}"][data-field="priority"]`);
+  if (tableSelect) {
+    tableSelect.value = priority;
+  }
+  
   // Log
   const priorityLabels = {
     0: 'Aucune',
@@ -11417,8 +12428,116 @@ function refreshAllPriorities() {
 function handlePriorityChange(selectEl, cardId) {
   const priority = parseInt(selectEl.value) || 0;
   setPriority(cardId, priority);
+  
+  // Synchroniser avec la vue horizontale si elle existe
+  syncPriorityToTable(cardId, priority);
 }
 window.handlePriorityChange = handlePriorityChange;
+
+// Gérer le changement de priorité depuis la vue horizontale Robot
+function handlePriorityChangeFromTable(cardId, value) {
+  const priority = parseInt(value) || 0;
+  setPriority(cardId, priority);
+  
+  // Mettre à jour le select de priorité dans la fiche si elle est ouverte
+  const ficheSelect = document.querySelector(`.mcard[data-card-id="${cardId}"] .fiche-priority-select`);
+  if (ficheSelect) {
+    ficheSelect.value = priority;
+  }
+}
+window.handlePriorityChangeFromTable = handlePriorityChangeFromTable;
+
+// Synchroniser la priorité vers la table horizontale
+function syncPriorityToTable(cardId, priority) {
+  const tableSelect = document.querySelector(`#robotTableBody select[data-card-id="${cardId}"][data-field="priority"]`);
+  if (tableSelect) {
+    tableSelect.value = priority;
+  }
+}
+
+// Menu priorité dans la fiche (bouton dans le header)
+function showFichePriorityMenu(cardId, event) {
+  event.stopPropagation();
+  
+  // Fermer tout menu existant
+  document.querySelector('.fiche-priority-menu')?.remove();
+  
+  const currentPriority = cardsData[cardId]?.priority || 0;
+  
+  const menu = document.createElement('div');
+  menu.className = 'fiche-priority-menu';
+  menu.innerHTML = `
+    <div class="fiche-priority-menu-item ${currentPriority === 0 ? 'selected' : ''}" data-priority="0">
+      <span class="fiche-priority-dot" style="background: #6b7280;">-</span>
+      <span>Aucune priorité</span>
+    </div>
+    <div class="fiche-priority-menu-item ${currentPriority === 1 ? 'selected' : ''}" data-priority="1">
+      <span class="fiche-priority-dot" style="background: #ef4444;">1</span>
+      <span>🔴 #1 - URGENT</span>
+    </div>
+    <div class="fiche-priority-menu-item ${currentPriority === 2 ? 'selected' : ''}" data-priority="2">
+      <span class="fiche-priority-dot" style="background: #f97316;">2</span>
+      <span>🟠 #2 - Important</span>
+    </div>
+    <div class="fiche-priority-menu-item ${currentPriority === 3 ? 'selected' : ''}" data-priority="3">
+      <span class="fiche-priority-dot" style="background: #eab308;">3</span>
+      <span>🟡 #3 - À surveiller</span>
+    </div>
+    <div class="fiche-priority-menu-item ${currentPriority === 4 ? 'selected' : ''}" data-priority="4">
+      <span class="fiche-priority-dot" style="background: #22c55e;">4</span>
+      <span>🟢 #4 - Normal+</span>
+    </div>
+    <div class="fiche-priority-menu-item ${currentPriority === 5 ? 'selected' : ''}" data-priority="5">
+      <span class="fiche-priority-dot" style="background: #3b82f6;">5</span>
+      <span>🔵 #5 - Basse</span>
+    </div>
+  `;
+  
+  // Positionner le menu sous le bouton
+  const rect = event.target.closest('.fiche-priority-btn').getBoundingClientRect();
+  menu.style.position = 'fixed';
+  menu.style.left = Math.min(rect.left, window.innerWidth - 200) + 'px';
+  menu.style.top = (rect.bottom + 5) + 'px';
+  
+  document.body.appendChild(menu);
+  
+  // Événements de sélection
+  menu.querySelectorAll('.fiche-priority-menu-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const priority = parseInt(item.dataset.priority);
+      setPriority(cardId, priority);
+      
+      // Mettre à jour le bouton dans la fiche
+      const priorityLabels = {
+        0: { text: '-- Aucune --', color: '#6b7280', emoji: '⚪' },
+        1: { text: '#1 URGENT', color: '#ef4444', emoji: '🔴' },
+        2: { text: '#2 Important', color: '#f97316', emoji: '🟠' },
+        3: { text: '#3 À surveiller', color: '#eab308', emoji: '🟡' },
+        4: { text: '#4 Normal+', color: '#22c55e', emoji: '🟢' },
+        5: { text: '#5 Basse', color: '#3b82f6', emoji: '🔵' }
+      };
+      const info = priorityLabels[priority];
+      const btn = event.target.closest('.fiche-priority-btn');
+      if (btn) {
+        btn.style.background = info.color;
+        btn.querySelector('.fiche-priority-emoji').textContent = info.emoji;
+      }
+      
+      menu.remove();
+    });
+  });
+  
+  // Fermer au clic ailleurs
+  setTimeout(() => {
+    document.addEventListener('click', function closeFichePriorityMenu(e) {
+      if (!menu.contains(e.target)) {
+        menu.remove();
+        document.removeEventListener('click', closeFichePriorityMenu);
+      }
+    });
+  }, 10);
+}
+window.showFichePriorityMenu = showFichePriorityMenu;
 
 // Menu des délais régionaux (original)
 function showDelaiRegionsMenu(event, cardId) {
@@ -11630,22 +12749,24 @@ function showMoveMenu(card) {
         <div class="move-positions">
     `;
     
-    // Positions disponibles: 1 à (nombre de cartes + 1)
-    const maxPos = isCurrent ? cardsInCol : cardsInCol + 1;
-    for (let pos = 1; pos <= maxPos; pos++) {
-      const isLast = (pos === maxPos && maxPos > 1);
-      const posLabel = isLast ? `${pos} (dernier)` : pos;
-      if (isCurrent) {
-        // Colonne actuelle - boutons désactivés
-        html += `<div class="move-position-btn" style="opacity:0.4;cursor:default;">${posLabel}</div>`;
-      } else {
+    // Calculer le nombre de positions disponibles
+    // Si c'est la colonne actuelle, on ne peut pas déplacer vers elle-même
+    // Pour les autres colonnes: cartes actuelles + 1 nouvelle position
+    const maxPos = isCurrent ? 0 : cardsInCol + 1;
+    
+    if (isCurrent) {
+      // Colonne actuelle - afficher message
+      html += `<div class="move-position-btn" style="opacity:0.4;cursor:default;font-size:9px;">Colonne actuelle</div>`;
+    } else if (cardsInCol === 0) {
+      // Colonne vide - une seule position
+      html += `<button class="move-position-btn" data-col="${i}" data-pos="1">1</button>`;
+    } else {
+      // Colonne avec des cartes - positions de 1 à (cartes + 1)
+      for (let pos = 1; pos <= maxPos; pos++) {
+        const isLast = (pos === maxPos);
+        const posLabel = isLast ? `${pos} (dernier)` : pos;
         html += `<button class="move-position-btn" data-col="${i}" data-pos="${pos}">${posLabel}</button>`;
       }
-    }
-    
-    // Si colonne vide et pas la colonne actuelle
-    if (cardsInCol === 0 && !isCurrent) {
-      html += `<button class="move-position-btn" data-col="${i}" data-pos="1">1</button>`;
     }
     
     html += `
@@ -12317,7 +13438,7 @@ function loadCardsFromFirebase() {
                 <div class="mcard-order-line">
                   <button class="mcard-btn-priority-small" title="Définir priorité">⭐</button>
                   <input type="text" class="mcard-order" value="${cardData.order || '000000'}" data-field="order" maxlength="6">
-                  <button class="mcard-toggle-btn">Fiche</button>
+                  <button class="mcard-toggle-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">📋</button>
                 </div>
               </div>
             </div>
@@ -12573,8 +13694,11 @@ let cardOverlay = null;
 function initCardOverlay() {
   cardOverlay = document.getElementById('cardOverlay');
   if (cardOverlay) {
-    cardOverlay.addEventListener('click', () => {
-      if (currentExpandedCard) closeFiche();
+    cardOverlay.addEventListener('click', (e) => {
+      // Ne fermer que si on clique directement sur l'overlay
+      if (e.target === cardOverlay && currentExpandedCard) {
+        closeFiche();
+      }
     });
   }
 }
@@ -13051,6 +14175,20 @@ function addValueToList(listName, currentCardId) {
   const newValue = prompt(`Ajouter une valeur à ${listName}:`);
   if (newValue && newValue.trim()) {
     const value = newValue.trim();
+    
+    // Mapper les noms de listes vers customLists
+    const listMapping = {
+      'clients': 'moulageClients',
+      'regions': 'regions',
+      'intervenants': 'intervenants',
+      'representantes': 'representantes',
+      'items': 'items',
+      'locations': 'locations'
+    };
+    
+    const customListKey = listMapping[listName];
+    
+    // Ajouter à MENU_DATA pour compatibilité
     if (listName === 'clients' && !MENU_DATA.clients.includes(value)) {
       MENU_DATA.clients.push(value);
     } else if (listName === 'regions' && !MENU_DATA.regions.includes(value)) {
@@ -13065,6 +14203,16 @@ function addValueToList(listName, currentCardId) {
     } else if (listName === 'locations' && !MENU_DATA.locations.includes(value)) {
       MENU_DATA.locations.push(value);
     }
+    
+    // Ajouter à customLists et sauvegarder dans Firebase
+    if (customListKey && customLists[customListKey] && !customLists[customListKey].includes(value)) {
+      customLists[customListKey].push(value);
+      saveCustomLists();
+    }
+    
+    // Rafraîchir tous les selects
+    updateAllSelectsFromLists();
+    
     // Rafraîchir la fiche si ouverte
     if (currentCardId && currentExpandedCard) {
       const cardId = currentExpandedCard.dataset.cardId;
@@ -13076,6 +14224,16 @@ function addValueToList(listName, currentCardId) {
 }
 
 function removeValueFromList(listName, currentCardId) {
+  // Mapper les noms de listes vers customLists
+  const listMapping = {
+    'clients': 'moulageClients',
+    'regions': 'regions',
+    'intervenants': 'intervenants',
+    'representantes': 'representantes',
+    'items': 'items',
+    'locations': 'locations'
+  };
+  
   let list = [];
   if (listName === 'clients') list = MENU_DATA.clients;
   else if (listName === 'regions') list = MENU_DATA.regions;
@@ -13089,7 +14247,22 @@ function removeValueFromList(listName, currentCardId) {
   if (choice) {
     const index = parseInt(choice) - 1;
     if (index >= 0 && index < list.length) {
+      const removedValue = list[index];
       list.splice(index, 1);
+      
+      // Supprimer aussi de customLists et sauvegarder
+      const customListKey = listMapping[listName];
+      if (customListKey && customLists[customListKey]) {
+        const customIndex = customLists[customListKey].indexOf(removedValue);
+        if (customIndex >= 0) {
+          customLists[customListKey].splice(customIndex, 1);
+          saveCustomLists();
+        }
+      }
+      
+      // Rafraîchir tous les selects
+      updateAllSelectsFromLists();
+      
       // Rafraîchir la fiche si ouverte
       if (currentCardId && currentExpandedCard) {
         const cardId = currentExpandedCard.dataset.cardId;
@@ -13158,9 +14331,104 @@ function calcJoursAttente(dateAttente) {
   return diffDays;
 }
 
+// ===== NOUVELLE FONCTION - OUVRIR FICHE PAR ID (comme openCommandeFiche) =====
+// Cette fonction est appelée directement par onclick avec le cardId
+// C'est LA SOLUTION au problème du premier clic qui ne fonctionnait pas
+function openMoulageFiche(cardId) {
+  console.log('🟢 openMoulageFiche appelée pour:', cardId);
+  
+  if (!cardId) {
+    console.error('❌ openMoulageFiche: cardId manquant');
+    return;
+  }
+  
+  // Trouver la carte dans le DOM
+  const card = document.querySelector(`.mcard[data-card-id="${cardId}"]`);
+  if (!card) {
+    console.error('❌ openMoulageFiche: carte non trouvée dans le DOM');
+    return;
+  }
+  
+  // Si la carte est déjà ouverte, la fermer
+  if (card.classList.contains('mcard-expanded')) {
+    console.log('🔴 Fiche déjà ouverte, fermeture');
+    closeFiche();
+    return;
+  }
+  
+  // Fermer toute fiche précédente
+  if (currentExpandedCard && currentExpandedCard !== card) {
+    const prevCardId = currentExpandedCard.dataset.cardId;
+    if (prevCardId && cardsData[prevCardId]) {
+      saveCardToFirebase(prevCardId);
+    }
+    currentExpandedCard.classList.remove('mcard-expanded');
+    currentExpandedCard = null;
+  }
+  
+  // S'assurer que l'overlay existe
+  if (!cardOverlay) {
+    cardOverlay = document.getElementById('cardOverlay');
+  }
+  
+  // Générer la fiche si pas déjà fait
+  if (!card.querySelector('.mcard-fiche')) {
+    console.log('📝 Génération de la fiche HTML pour:', cardId);
+    card.insertAdjacentHTML('beforeend', generateFicheHTML(card));
+    attachFicheEvents(card);
+  } else {
+    // Mettre à jour la section En attente si nécessaire
+    const attenteSection = card.querySelector('.fiche-attente-section');
+    if (attenteSection) {
+      const data = cardsData[cardId] || {};
+      if (data.columnIndex === 7) {
+        attenteSection.classList.add('visible');
+        const badge = attenteSection.querySelector('.attente-badge-full');
+        const days = attenteSection.querySelector('.attente-days-full');
+        if (badge) badge.textContent = '⏳ EN ATTENTE: ' + (data.raisonAttente || 'Raison non spécifiée');
+        if (days) days.textContent = 'En attente depuis ' + (data.dateAttente || '---') + ' (' + calcJoursAttente(data.dateAttente) + ' jours)';
+      } else {
+        attenteSection.classList.remove('visible');
+      }
+    }
+  }
+  
+  // OUVRIR la fiche
+  card.classList.add('mcard-expanded');
+  if (cardOverlay) cardOverlay.classList.add('active');
+  currentExpandedCard = card;
+  
+  console.log('✅ Fiche moulage ouverte:', cardId);
+  
+  // Marquer les notes comme lues
+  markNoteAsRead(cardId);
+}
+window.openMoulageFiche = openMoulageFiche;
+
 function openFiche(card) {
-  if (!card) return;
-  if (currentExpandedCard) closeFiche();
+  if (!card) {
+    console.log('❌ openFiche: card est null');
+    return;
+  }
+  
+  console.log('🔵 openFiche appelée pour:', card.dataset.cardId);
+  
+  // Si c'est la même carte, ne rien faire
+  if (currentExpandedCard === card) {
+    console.log('⚠️ Même carte déjà ouverte');
+    return;
+  }
+  
+  // Fermer la fiche précédente SANS animation/délai
+  if (currentExpandedCard) {
+    console.log('🔴 Fermeture de la fiche précédente');
+    const prevCardId = currentExpandedCard.dataset.cardId;
+    if (prevCardId && cardsData[prevCardId]) {
+      saveCardToFirebase(prevCardId);
+    }
+    currentExpandedCard.classList.remove('mcard-expanded');
+    currentExpandedCard = null;
+  }
   
   // S'assurer que l'overlay existe
   if (!cardOverlay) {
@@ -13190,15 +14458,31 @@ function openFiche(card) {
     }
   }
   
+  // OUVRIR la nouvelle fiche
   card.classList.add('mcard-expanded');
   if (cardOverlay) cardOverlay.classList.add('active');
   currentExpandedCard = card;
+  
+  console.log('✅ Fiche ouverte:', cardId);
   
   // Marquer les notes comme lues
   if (cardId) {
     markNoteAsRead(cardId);
   }
 }
+
+// Fonction legacy pour compatibilité
+function openFicheFromBtn(btn) {
+  console.log('🟡 openFicheFromBtn (legacy) appelée');
+  const card = btn.closest('.mcard');
+  if (card) {
+    const cardId = card.dataset.cardId;
+    if (cardId) {
+      openMoulageFiche(cardId);
+    }
+  }
+}
+window.openFicheFromBtn = openFicheFromBtn;
 
 function closeFiche() {
   if (currentExpandedCard) {
@@ -13269,6 +14553,18 @@ function generateFicheHTML(card) {
   // Générer la sidebar de tracking
   const trackingSidebarHTML = generateTrackingSidebar(cardId, data);
   
+  // Générer le label de priorité pour le bouton
+  const priorityLabels = {
+    0: { text: '-- Aucune --', color: '#6b7280', emoji: '⚪' },
+    1: { text: '#1 URGENT', color: '#ef4444', emoji: '🔴' },
+    2: { text: '#2 Important', color: '#f97316', emoji: '🟠' },
+    3: { text: '#3 À surveiller', color: '#eab308', emoji: '🟡' },
+    4: { text: '#4 Normal+', color: '#22c55e', emoji: '🟢' },
+    5: { text: '#5 Basse', color: '#3b82f6', emoji: '🔵' }
+  };
+  const currentPriority = data.priority || 0;
+  const priorityInfo = priorityLabels[currentPriority] || priorityLabels[0];
+  
   return `
     <!-- SIDEBAR TRACKING À GAUCHE -->
     ${trackingSidebarHTML}
@@ -13279,13 +14575,16 @@ function generateFicheHTML(card) {
         <div class="fiche-title">
           <h3>Fiche Moulage</h3>
         </div>
-        <div style="width:40px;"></div>
+        <div class="fiche-priority-btn" onclick="showFichePriorityMenu('${cardId}', event)" style="background: ${priorityInfo.color};">
+          <span class="fiche-priority-emoji">${priorityInfo.emoji}</span>
+          <span class="fiche-priority-text">Priorité</span>
+        </div>
       </div>
       
       <div class="fiche-section">
         <div class="fiche-grid-2">
           <div class="fiche-field">
-            <div class="fiche-label">Client</div>
+            <div class="fiche-label">Client <button class="list-manage-btn" onclick="event.stopPropagation(); openListManager('moulageClients', 'Client')">⚙</button></div>
             <select class="fiche-select" data-fiche-field="client" onchange="handleSelectChange(this, 'clients', '${cardId}')">
               <option value="">-- Sélectionner --</option>
               ${clientOptions}
@@ -13318,14 +14617,14 @@ function generateFicheHTML(card) {
         </div>
         <div class="fiche-grid-2" style="margin-top:6px;">
           <div class="fiche-field">
-            <div class="fiche-label">Région</div>
+            <div class="fiche-label">Région <button class="list-manage-btn" onclick="event.stopPropagation(); openListManager('regions', 'Région')">⚙</button></div>
             <select class="fiche-select" data-fiche-field="region" onchange="handleSelectChange(this, 'regions', '${cardId}')">
               <option value="">-- Sélectionner --</option>
               ${regionOptions}
             </select>
           </div>
           <div class="fiche-field">
-            <div class="fiche-label">Intervenant</div>
+            <div class="fiche-label">Intervenant <button class="list-manage-btn" onclick="event.stopPropagation(); openListManager('intervenants', 'Intervenant')">⚙</button></div>
             <select class="fiche-select" data-fiche-field="intervenant" onchange="handleSelectChange(this, 'intervenants', '${cardId}')">
               <option value="">-- Sélectionner --</option>
               ${intervenantOptions}
@@ -13334,7 +14633,7 @@ function generateFicheHTML(card) {
         </div>
         <div class="fiche-grid-2" style="margin-top:6px;">
           <div class="fiche-field">
-            <div class="fiche-label">Représentante</div>
+            <div class="fiche-label">Représentante <button class="list-manage-btn" onclick="event.stopPropagation(); openListManager('representantes', 'Représentante')">⚙</button></div>
             <select class="fiche-select" data-fiche-field="representant" onchange="handleSelectChange(this, 'representantes', '${cardId}')">
               <option value="">-- Sélectionner --</option>
               ${representanteOptions}
@@ -13344,20 +14643,6 @@ function generateFicheHTML(card) {
             <div class="fiche-label">Date rendez-vous essayage</div>
             <div class="fiche-date-pill" data-fiche-field="dateEssayage">${data.dateEssayage || 'AAAA-MM-JJ'}</div>
           </div>
-        </div>
-        <div class="fiche-grid-2" style="margin-top:6px;">
-          <div class="fiche-field">
-            <div class="fiche-label">⭐ Priorité</div>
-            <select class="fiche-select fiche-priority-select" data-fiche-field="priority" onchange="handlePriorityChange(this, '${cardId}')">
-              <option value="0" ${(data.priority || 0) === 0 ? 'selected' : ''}>-- Aucune --</option>
-              <option value="1" ${data.priority === 1 ? 'selected' : ''}>🔴 #1 - URGENT</option>
-              <option value="2" ${data.priority === 2 ? 'selected' : ''}>🟠 #2 - Important</option>
-              <option value="3" ${data.priority === 3 ? 'selected' : ''}>🟡 #3 - À surveiller</option>
-              <option value="4" ${data.priority === 4 ? 'selected' : ''}>🟢 #4 - Normal+</option>
-              <option value="5" ${data.priority === 5 ? 'selected' : ''}>🔵 #5 - Basse</option>
-            </select>
-          </div>
-          <div class="fiche-field"></div>
         </div>
       </div>
       
@@ -14080,13 +15365,18 @@ function attachFicheEvents(card) {
   
   // ===== NOTES AVEC SIGNATURE DANS LE TEXTAREA =====
   const notesDiv = fiche.querySelector('.fiche-notes');
-  const notesText = fiche.querySelector('.fiche-notes-text');
+  const notesText = fiche.querySelector('.fiche-notes-text') || fiche.querySelector('.notes-page-textarea');
   const notesCloseBtn = fiche.querySelector('.fiche-notes-close-bottom');
+  
+  // Si pas de zone notes dans cette fiche, skip cette section
+  if (!notesText) {
+    console.log('⚠️ Pas de zone notes trouvée dans la fiche');
+  }
   
   let signatureAdded = false;
   
   function addSignatureToNotes() {
-    if (signatureAdded) return;
+    if (signatureAdded || !notesText) return;
     
     // Utiliser le nom de l'utilisateur connecté
     let userName = 'Anonyme';
@@ -14102,40 +15392,42 @@ function attachFicheEvents(card) {
     const signature = `\n\n— ${userName} (${dateStr} à ${timeStr}) —\n`;
     
     // Ajouter la signature à la fin du texte existant
-    const currentText = notesText.value;
-    notesText.value = currentText + signature;
-    
-    // Placer le curseur après la signature
-    notesText.selectionStart = notesText.value.length;
-    notesText.selectionEnd = notesText.value.length;
+    if (notesText) {
+      const currentText = notesText.value;
+      notesText.value = currentText + signature;
+      
+      // Placer le curseur après la signature
+      notesText.selectionStart = notesText.value.length;
+      notesText.selectionEnd = notesText.value.length;
+    }
     
     signatureAdded = true;
   }
   
   function openNotes() {
-    if (!notesDiv.classList.contains('expanded')) {
-      notesDiv.classList.add('expanded');
+    if (!notesDiv?.classList.contains('expanded')) {
+      notesDiv?.classList.add('expanded');
       signatureAdded = false;
-      notesText.focus();
+      notesText?.focus();
     }
   }
   
   function closeNotes() {
-    notesDiv.classList.remove('expanded');
+    notesDiv?.classList.remove('expanded');
     signatureAdded = false;
   }
   
-  notesText.addEventListener('click', (e) => {
+  notesText?.addEventListener('click', (e) => {
     e.stopPropagation();
     openNotes();
   });
   
-  notesText.addEventListener('focus', () => {
+  notesText?.addEventListener('focus', () => {
     openNotes();
   });
   
   // Ajouter signature au premier caractère tapé
-  notesText.addEventListener('keydown', (e) => {
+  notesText?.addEventListener('keydown', (e) => {
     if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
       addSignatureToNotes();
     }
@@ -14144,14 +15436,14 @@ function attachFicheEvents(card) {
   notesCloseBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     if (cardsData[cardId]) {
-      cardsData[cardId].notes = notesText.value;
+      cardsData[cardId].notes = notesText?.value || '';
       saveCardToFirebase(cardId);
     }
     closeNotes();
   });
   
-  notesText.addEventListener('blur', () => {
-    if (cardsData[cardId] && notesText.value !== cardsData[cardId].notes) {
+  notesText?.addEventListener('blur', () => {
+    if (cardsData[cardId] && notesText && notesText.value !== cardsData[cardId].notes) {
       cardsData[cardId].notes = notesText.value;
       saveCardToFirebase(cardId);
     }
@@ -14682,28 +15974,39 @@ function renderRobotTable() {
   console.log(`📊 ${robotCards.length} cartes Robot trouvées`);
   
   if (robotCards.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="14" style="text-align:center;padding:20px;">Aucune carte dans Robot</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;padding:20px;">Aucune carte dans Robot</td></tr>';
     return;
   }
   
-  // Options pour les menus déroulants (mêmes que la fiche)
-  const clientsList = window.CLIENTS_LIST || MENU_DATA.clients || [];
-  const intervenantsList = window.INTERVENANTS_LIST || MENU_DATA.intervenants || [];
-  const representantesList = ['Marie-Soleil', 'Marie-Pier'];
-  const itemsList = ['Siège', 'Dossier', 'Siège + Dossier'];
-  const regionsList = ['Québec', 'Ontario', 'Maritime'];
+  // Options pour les menus déroulants (utiliser customLists si disponible)
+  const clientsList = customLists.moulageClients || MENU_DATA.clients || [];
+  const intervenantsList = customLists.intervenants || MENU_DATA.intervenants || [];
+  const representantesList = customLists.representantes || ['Marie-Soleil', 'Marie-Pier'];
+  const itemsList = customLists.items || MENU_DATA.items || ['Siège', 'Dossier', 'Siège + Dossier'];
+  const regionsList = customLists.regions || MENU_DATA.regions || ['Québec', 'Ontario', 'Maritime'];
   const rushList = ['Oui', 'Non'];
   
   robotCards.forEach(([cardId, card]) => {
     const tr = document.createElement('tr');
     tr.setAttribute('data-card-id', cardId);
     
-    // 14 COLONNES - MAPPING AVEC LA FICHE
+    // 15 COLONNES - MAPPING AVEC LA FICHE (incluant Priorité)
     // Calculer le rang actuel dans Robot
     const robotCol = document.querySelector('#mainBoard .col[data-col="0"]');
     const cardsInRobot = robotCol ? Array.from(robotCol.querySelectorAll('.mcard')) : [];
     const currentRang = cardsInRobot.findIndex(c => c.dataset.cardId === cardId) + 1;
     const rangText = currentRang > 0 ? `Position ${currentRang}` : 'Non au Robot';
+    
+    // Priorité (1-5 ou 0 pour aucune)
+    const priorityValue = card.priority || 0;
+    const priorityOptions = [
+      { value: 0, label: '☆ Aucune', emoji: '☆' },
+      { value: 1, label: '1️⃣ Priorité 1', emoji: '1️⃣' },
+      { value: 2, label: '2️⃣ Priorité 2', emoji: '2️⃣' },
+      { value: 3, label: '3️⃣ Priorité 3', emoji: '3️⃣' },
+      { value: 4, label: '4️⃣ Priorité 4', emoji: '4️⃣' },
+      { value: 5, label: '5️⃣ Priorité 5', emoji: '5️⃣' }
+    ];
     
     tr.innerHTML = `
       <td class="editable" data-field="name" contenteditable="true">${card.name || ''}</td>
@@ -14716,6 +16019,11 @@ function renderRobotTable() {
         </select>
       </td>
       <td class="editable" data-field="order" contenteditable="true">${card.order || ''}</td>
+      <td class="table-select-cell priority-cell" data-field="priority">
+        <select class="table-select priority-select" data-field="priority" data-card-id="${cardId}" onchange="handlePriorityChangeFromTable('${cardId}', this.value)">
+          ${priorityOptions.map(p => `<option value="${p.value}" ${priorityValue == p.value ? 'selected' : ''}>${p.label}</option>`).join('')}
+        </select>
+      </td>
       <td class="rang-robot-cell">
         <button class="rang-robot-btn" onclick="openRangRobotMenu('${cardId}', event)">${rangText}</button>
       </td>
@@ -16028,22 +17336,120 @@ function updateCommandesCounts() {
 }
 
 function addNewCommande() {
+  // Créer ou afficher le modal
+  let modal = document.getElementById('addCommandeModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'addCommandeModal';
+    modal.innerHTML = `
+      <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+          <h3>➕ Ajouter une commande</h3>
+          <button class="modal-close" onclick="document.getElementById('addCommandeModal').classList.remove('active')">×</button>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="add-modal-field">
+            <label>Client <button class="list-manage-btn" onclick="openListManager('commandeClients', 'Client')">⚙</button></label>
+            <select id="addCmdClient"></select>
+          </div>
+          <div class="add-modal-field">
+            <label>N° Commande</label>
+            <input type="text" id="addCmdOrder" placeholder="000000" maxlength="6">
+          </div>
+          <div class="add-modal-field">
+            <label>Date reçue</label>
+            <div class="date-picker-field" id="addCmdDateRecueField" onclick="openAddModalCalendar('addCmdDateRecue')">
+              <span class="date-picker-value" id="addCmdDateRecueDisplay">-- Sélectionner --</span>
+              <span class="date-picker-icon">📅</span>
+            </div>
+            <input type="hidden" id="addCmdDateRecue">
+          </div>
+          <div class="add-modal-field">
+            <label>Date livraison</label>
+            <div class="date-picker-field" id="addCmdDateLivraisonField" onclick="openAddModalCalendar('addCmdDateLivraison')">
+              <span class="date-picker-value" id="addCmdDateLivraisonDisplay">-- Sélectionner --</span>
+              <span class="date-picker-icon">📅</span>
+            </div>
+            <input type="hidden" id="addCmdDateLivraison">
+          </div>
+          <div class="add-modal-field" style="grid-column: 1 / -1;">
+            <label>N° PO</label>
+            <input type="text" id="addCmdPO" placeholder="000000" maxlength="6">
+          </div>
+        </div>
+        <div class="add-modal-buttons">
+          <button class="btn-cancel-modal" onclick="document.getElementById('addCommandeModal').classList.remove('active')">Annuler</button>
+          <button class="btn-add" onclick="confirmAddCommande()">Ajouter</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  
+  // Remplir le select avec les clients de la liste personnalisée
+  const clientSelect = document.getElementById('addCmdClient');
+  if (clientSelect) {
+    clientSelect.innerHTML = customLists.commandeClients.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+  
+  // Reset les champs
+  if (clientSelect && customLists.commandeClients.length > 0) {
+    clientSelect.value = customLists.commandeClients[0];
+  }
+  document.getElementById('addCmdOrder').value = '';
+  document.getElementById('addCmdPO').value = '';
+  document.getElementById('addCmdDateRecue').value = '';
+  document.getElementById('addCmdDateLivraison').value = '';
+  
+  // Reset les affichages de date
+  const dateRecueDisplay = document.getElementById('addCmdDateRecueDisplay');
+  const dateLivraisonDisplay = document.getElementById('addCmdDateLivraisonDisplay');
+  const dateRecueField = document.getElementById('addCmdDateRecueField');
+  const dateLivraisonField = document.getElementById('addCmdDateLivraisonField');
+  
+  if (dateRecueDisplay) dateRecueDisplay.textContent = '-- Sélectionner --';
+  if (dateLivraisonDisplay) dateLivraisonDisplay.textContent = '-- Sélectionner --';
+  if (dateRecueField) dateRecueField.classList.remove('has-value');
+  if (dateLivraisonField) dateLivraisonField.classList.remove('has-value');
+  
+  modal.classList.add('active');
+}
+
+function confirmAddCommande() {
+  const client = document.getElementById('addCmdClient').value;
+  const order = document.getElementById('addCmdOrder').value.trim() || '000000';
+  const numeroPO = document.getElementById('addCmdPO').value.trim() || '';
+  const dateRecue = document.getElementById('addCmdDateRecue').value || '';
+  const dateLivraison = document.getElementById('addCmdDateLivraison').value || '';
+  
+  // Déterminer la colonne selon le client (basé sur la liste dynamique)
+  const columnIndex = customLists.commandeClients.indexOf(client);
+  const finalColumnIndex = columnIndex >= 0 ? columnIndex : 0;
+  
   const cmdId = 'cmd_' + Date.now();
   const newCmd = {
-    client: 'Vermeiren',
-    order: '000000',
+    client: client,
+    order: order,
+    numeroPO: numeroPO,
+    dateRecue: dateRecue,
+    dateLivraison: dateLivraison,
     item: 'Article',
     region: 'Québec',
-    columnIndex: 0, // Vermeiren = colonne 0
+    columnIndex: finalColumnIndex,
     dateCreated: new Date().toISOString(),
-    notes: ''
+    notes: '',
+    items: []
   };
   
   commandesData[cmdId] = newCmd;
   saveCommandeToFirebase(cmdId);
   renderCommandesBoard();
+  
+  document.getElementById('addCommandeModal').classList.remove('active');
   console.log(`✅ Nouvelle commande ajoutée: ${cmdId}`);
 }
+window.confirmAddCommande = confirmAddCommande;
 
 function showCommandeMoveMenu(cmdId) {
   const cmd = commandesData[cmdId];
@@ -16342,6 +17748,12 @@ function openCommandeFiche(cmdId) {
           <button class="cmd-main-tab tab-info-magasin active" id="tabBtnInfoMag_${cmdId}" onclick="switchCmdMainTab('${cmdId}', 'info-magasin')">📋 Info / Magasin</button>
           <button class="cmd-main-tab tab-tableau" id="tabBtnTableau_${cmdId}" onclick="switchCmdMainTab('${cmdId}', 'tableau')">📊 Tableau</button>
         </div>
+        <div class="cmd-header-actions">
+          <button class="cmd-import-json-btn" onclick="document.getElementById('importAtelierFileCmd_${cmdId}').click()">
+            📥 Importer JSON
+          </button>
+          <input type="file" id="importAtelierFileCmd_${cmdId}" accept=".json" style="display:none" onchange="handleImportAtelierFileCmd(event, '${cmdId}')">
+        </div>
         <button class="cmd-close-x" onclick="closeCmdFiche()">✕</button>
       </div>
       
@@ -16359,14 +17771,10 @@ function openCommandeFiche(cmdId) {
               <!-- Ligne 1: Client + N° Commande -->
               <div class="cmd-info-row" style="margin-bottom: 8px;">
                 <div class="cmd-info-field half">
-                  <label style="font-size: 10px;">Client</label>
+                  <label style="font-size: 10px;">Client <button class="list-manage-btn" onclick="event.stopPropagation(); openListManager('commandeClients', 'Client')">⚙</button></label>
                   <select id="cmdClient" onchange="updateCmdClientFromFiche('${cmdId}', this.value)" class="cmd-pill-input">
                     <option value="">-- Sélectionner --</option>
-                    <option value="Vermeiren" ${cmd.client === 'Vermeiren' ? 'selected' : ''}>Vermeiren</option>
-                    <option value="HME" ${cmd.client === 'HME' ? 'selected' : ''}>HME</option>
-                    <option value="France" ${cmd.client === 'France' ? 'selected' : ''}>France</option>
-                    <option value="Cubro" ${cmd.client === 'Cubro' ? 'selected' : ''}>Cubro</option>
-                    <option value="C1SOUTH" ${cmd.client === 'C1SOUTH' ? 'selected' : ''}>C1SOUTH</option>
+                    ${customLists.commandeClients.map(c => `<option value="${c}" ${cmd.client === c ? 'selected' : ''}>${c}</option>`).join('')}
                   </select>
                 </div>
                 <div class="cmd-info-field half">
@@ -16414,14 +17822,6 @@ function openCommandeFiche(cmdId) {
                   </div>
                 </div>
               </div>
-              
-              <!-- Spacer -->
-              <div style="flex: 1; min-height: 10px;"></div>
-              
-              <!-- Total Matériaux - EN BAS À GAUCHE -->
-              <div class="cmd-materiaux-total-section-left" id="cmdMateriauxTotalLeft">
-                <!-- Généré par updateMateriauxSection -->
-              </div>
             </div>
           </div>
           
@@ -16433,6 +17833,10 @@ function openCommandeFiche(cmdId) {
                 <button class="cmd-recettes-btn" onclick="openRecettesPopup()" style="font-size: 8px; padding: 3px 8px; background: linear-gradient(to bottom, #3f6eb8, #1d3560); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">⚙ Recettes</button>
                 <button onclick="printMateriaux('${cmdId}')" style="font-size: 8px; padding: 3px 8px; background: linear-gradient(to bottom, #3b82f6, #2563eb); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600;">🖨 Imprimer</button>
               </div>
+            </div>
+            <!-- Total Matériaux - EN HAUT juste après le header -->
+            <div class="cmd-materiaux-total-section-top" id="cmdMateriauxTotalTop">
+              <!-- Généré par updateMateriauxSection -->
             </div>
             <!-- Zone scrollable pour les recettes - prend tout l'espace -->
             <div class="cmd-panel-body" style="flex: 1; overflow-y: auto; padding: 8px;">
@@ -16652,14 +18056,14 @@ function renderDeptItems(items, cmdId, dept) {
             <!-- ATELIER -->
             <td class="col-plus"></td>
             <td class="col-item"><button class="cmd-table-grandeur-pill" onclick="openCmdGrandeurMenu('${cmdId}', ${itemIdx}, ${gIdx}, event)">${g.name || 'Grandeur'}</button></td>
-            <td class="col-qty"><input type="number" class="cmd-table-qty-input" value="${qtyTotal}" min="0" onchange="updateCmdGrandeurQty('${cmdId}', ${itemIdx}, ${gIdx}, this.value)"></td>
-            <td class="col-total"><div class="cmd-table-fait-container"><input type="number" class="cmd-table-fait-input-top" value="${atelierQtyFait}" min="0" onchange="updateCmdQtyFait('${cmdId}', ${itemIdx}, ${gIdx}, 'atelier', this.value)"><span class="cmd-table-fait-separator">/</span><span class="cmd-table-fait-total">${qtyTotal}</span></div></td>
+            <td class="col-qty"><input type="text" class="cmd-table-qty-input" value="${qtyTotal}" maxlength="3" onfocus="this.select()" oninput="this.value=this.value.replace(/[^0-9]/g,'')" onchange="updateCmdGrandeurQty('${cmdId}', ${itemIdx}, ${gIdx}, this.value)"></td>
+            <td class="col-total"><div class="cmd-table-fait-container"><input type="text" class="cmd-table-fait-input-top" value="${atelierQtyFait}" maxlength="${String(qtyTotal).length}" onfocus="this.select()" oninput="limitQtyInputText(this, ${qtyTotal})" onchange="updateCmdQtyFait('${cmdId}', ${itemIdx}, ${gIdx}, 'atelier', this.value)"><span class="cmd-table-fait-separator">/</span><span class="cmd-table-fait-total">${qtyTotal}</span></div></td>
             <td class="col-status"><button class="cmd-table-status ${atelierStatusClass}">${atelierStatusText}</button></td>
             <td class="col-notes border-right-solid"><button class="${atelierNoteClass}" onclick="openCmdGrandeurNoteDept('${cmdId}', ${itemIdx}, ${gIdx}, 'atelier', event)">Notes</button></td>
             <!-- COUTURE -->
             <td class="col-item"><span class="cmd-table-grandeur-readonly">${g.name || 'Grandeur'}</span></td>
             <td class="col-qty"><span class="cmd-table-qty-readonly">${qtyTotal}</span></td>
-            <td class="col-total"><div class="cmd-table-fait-container"><input type="number" class="cmd-table-fait-input-top" value="${coutureQtyFait}" min="0" onchange="updateCmdQtyFait('${cmdId}', ${itemIdx}, ${gIdx}, 'couture', this.value)"><span class="cmd-table-fait-separator">/</span><span class="cmd-table-fait-total">${qtyTotal}</span></div></td>
+            <td class="col-total"><div class="cmd-table-fait-container"><input type="text" class="cmd-table-fait-input-top" value="${coutureQtyFait}" maxlength="${String(qtyTotal).length}" onfocus="this.select()" oninput="limitQtyInputText(this, ${qtyTotal})" onchange="updateCmdQtyFait('${cmdId}', ${itemIdx}, ${gIdx}, 'couture', this.value)"><span class="cmd-table-fait-separator">/</span><span class="cmd-table-fait-total">${qtyTotal}</span></div></td>
             <td class="col-status"><button class="cmd-table-status ${coutureStatusClass}">${coutureStatusText}</button></td>
             <td class="col-emp">
               <select class="cmd-table-emp-select" onchange="handleCmdEmployeSelect(this, '${cmdId}', ${itemIdx}, ${gIdx}, 'couture')">
@@ -16673,7 +18077,7 @@ function renderDeptItems(items, cmdId, dept) {
             <!-- INSPECTION -->
             <td class="col-item"><span class="cmd-table-grandeur-readonly">${g.name || 'Grandeur'}</span></td>
             <td class="col-qty"><span class="cmd-table-qty-readonly">${qtyTotal}</span></td>
-            <td class="col-total"><div class="cmd-table-fait-container"><input type="number" class="cmd-table-fait-input-top" value="${inspQtyFait}" min="0" onchange="updateCmdQtyFait('${cmdId}', ${itemIdx}, ${gIdx}, 'inspection', this.value)"><span class="cmd-table-fait-separator">/</span><span class="cmd-table-fait-total">${qtyTotal}</span></div></td>
+            <td class="col-total"><div class="cmd-table-fait-container"><input type="text" class="cmd-table-fait-input-top" value="${inspQtyFait}" maxlength="${String(qtyTotal).length}" onfocus="this.select()" oninput="limitQtyInputText(this, ${qtyTotal})" onchange="updateCmdQtyFait('${cmdId}', ${itemIdx}, ${gIdx}, 'inspection', this.value)"><span class="cmd-table-fait-separator">/</span><span class="cmd-table-fait-total">${qtyTotal}</span></div></td>
             <td class="col-status"><button class="cmd-table-status ${inspStatusClass}">${inspStatusText}</button></td>
             <td class="col-exped">
               <select class="cmd-table-exped-select ${inspExpedClass}" onchange="handleCmdExpedSelect(this, '${cmdId}', ${itemIdx}, ${gIdx})">
@@ -16839,6 +18243,33 @@ function deleteCmdGrandeurDept(cmdId, itemIdx, gIdx) {
   refreshCmdDeptTables(cmdId);
   saveCommandeToFirebase(cmdId);
 }
+
+// Limiter l'input de quantité selon le maximum (pour type="text")
+function limitQtyInputText(input, maxQty) {
+  // Enlever tout sauf les chiffres
+  input.value = input.value.replace(/[^0-9]/g, '');
+  
+  // Convertir en nombre
+  let val = parseInt(input.value) || 0;
+  
+  // Ne pas dépasser le max
+  if (val > maxQty) {
+    input.value = maxQty;
+  }
+}
+window.limitQtyInputText = limitQtyInputText;
+
+// Ancienne fonction conservée pour compatibilité
+function limitQtyInput(input, maxQty) {
+  let val = parseInt(input.value) || 0;
+  if (val > maxQty) {
+    input.value = maxQty;
+  }
+  if (val < 0) {
+    input.value = 0;
+  }
+}
+window.limitQtyInput = limitQtyInput;
 
 // Mettre à jour Qté fait (format X/Y, on garde seulement X)
 function updateCmdQtyFait(cmdId, itemIdx, gIdx, dept, value) {
@@ -17862,10 +19293,16 @@ function updateMateriauxSection(cmdId) {
     totalHtml += '</div></div>';
   }
   
-  // Mettre à jour la section Total Matériaux à GAUCHE (dans Information seulement)
+  // Mettre à jour la section Total Matériaux EN HAUT de Magasin
+  const totalContainerTop = document.getElementById('cmdMateriauxTotalTop');
+  if (totalContainerTop) {
+    totalContainerTop.innerHTML = totalHtml;
+  }
+  
+  // Aussi mettre à jour dans Information (si existe encore)
   const totalContainerLeft = document.getElementById('cmdMateriauxTotalLeft');
   if (totalContainerLeft) {
-    totalContainerLeft.innerHTML = totalHtml;
+    totalContainerLeft.innerHTML = '';
   }
 }
 
@@ -18650,6 +20087,86 @@ function handleImportAtelierFile(event) {
   reader.readAsText(file);
   event.target.value = '';
 }
+
+// Import JSON directement dans le tableau de la commande ouverte
+function handleImportAtelierFileCmd(event, cmdId) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  // Vérifier les permissions
+  if (!userCan('edit')) {
+    alert("⛔ Vous n'avez pas la permission d'importer des données.");
+    event.target.value = '';
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedData = JSON.parse(e.target.result);
+      
+      // Vérifier que c'est un tableau
+      if (!Array.isArray(importedData)) {
+        alert('❌ Format invalide!\n\nLe fichier doit contenir un tableau JSON.\n\nExemple:\n[\n  { "item": "HP2", "grandeur": "M", "qty": 2 }\n]');
+        return;
+      }
+      
+      // S'assurer que la commande existe
+      if (!commandesData[cmdId]) {
+        alert('❌ Commande non trouvée!');
+        return;
+      }
+      
+      // Initialiser items si nécessaire
+      if (!commandesData[cmdId].items) {
+        commandesData[cmdId].items = [];
+      }
+      
+      let itemsAdded = 0;
+      let grandeursAdded = 0;
+      
+      importedData.forEach((entry) => {
+        const itemName = entry.item || 'Item';
+        const grandeurName = entry.grandeur || entry.size || 'Grandeur';
+        const qty = parseInt(entry.qty) || parseInt(entry.quantity) || 1;
+        
+        // Chercher si l'item existe déjà
+        let itemFound = commandesData[cmdId].items.find(i => i.name === itemName);
+        
+        if (!itemFound) {
+          // Créer un nouvel item
+          itemFound = { name: itemName, grandeurs: [] };
+          commandesData[cmdId].items.push(itemFound);
+          itemsAdded++;
+        }
+        
+        // Ajouter la grandeur
+        itemFound.grandeurs.push({
+          name: grandeurName,
+          qty: qty,
+          atelier: { status: 'todo', note: '', qtyFait: 0 },
+          couture: { status: 'todo', note: '', qtyFait: 0, employe: '' },
+          inspection: { status: 'todo', note: '', qtyFait: 0, exped: '' }
+        });
+        grandeursAdded++;
+      });
+      
+      // Sauvegarder et rafraîchir
+      saveCommandeToFirebase(cmdId);
+      refreshCmdDeptTables(cmdId);
+      
+      alert(`✅ Import terminé!\n\n• ${itemsAdded} item(s) créé(s)\n• ${grandeursAdded} grandeur(s) ajoutée(s)`);
+      
+    } catch (error) {
+      console.error('Erreur d\'importation:', error);
+      alert('❌ Erreur lors de l\'importation!\n\nVérifiez que le fichier est un JSON valide.\n\n' + error.message);
+    }
+  };
+  
+  reader.readAsText(file);
+  event.target.value = '';
+}
+window.handleImportAtelierFileCmd = handleImportAtelierFileCmd;
 </script>
 </body>
 </html>
