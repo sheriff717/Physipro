@@ -3741,6 +3741,21 @@ html, body { margin: 0; padding: 0; }
   color: #0f172a;
 }
 
+/* Ligne Numéro de soumission */
+.fiche-soumission-row {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  margin-bottom: 6px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.fiche-soumission-row .fiche-input {
+  background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);
+  border: 2px solid #0ea5e9;
+  font-size: 13px;
+}
+
 /* Bouton Priorité dans le header de la fiche */
 .fiche-priority-btn {
   display: flex;
@@ -9811,6 +9826,7 @@ input.cmd-pill-input {
           <table class="robot-horizontal-table" id="robotTable">
             <thead>
               <tr>
+                <th class="resizable-th">N° Soumission<div class="resize-handle"></div></th>
                 <th class="resizable-th">Nom moulage<div class="resize-handle"></div></th>
                 <th class="resizable-th">Client<div class="resize-handle"></div></th>
                 <th class="resizable-th">N° Commande<div class="resize-handle"></div></th>
@@ -9955,10 +9971,14 @@ input.cmd-pill-input {
         <select id="addRegion"></select>
       </div>
       <div class="add-modal-field">
+        <label>📋 N° Soumission</label>
+        <input type="text" id="addNumeroSoumission" placeholder="Numéro de soumission...">
+      </div>
+      <div class="add-modal-field">
         <label>Intervenant <button class="list-manage-btn" onclick="openListManager('intervenants', 'Intervenant')">⚙</button></label>
         <select id="addIntervenant"></select>
       </div>
-      <div class="add-modal-field" style="grid-column: 1 / -1;">
+      <div class="add-modal-field">
         <label>Représentante <button class="list-manage-btn" onclick="openListManager('representantes', 'Représentante')">⚙</button></label>
         <select id="addRepresentant"></select>
       </div>
@@ -11634,6 +11654,7 @@ closeAddModal.addEventListener('click', () => addModal.classList.remove('active'
 cancelAdd.addEventListener('click', () => addModal.classList.remove('active'));
 
 confirmAdd.addEventListener('click', () => {
+  const numeroSoumission = document.getElementById('addNumeroSoumission').value.trim() || '';
   const client = document.getElementById('addClient').value || '';
   const name = document.getElementById('addName').value.trim() || 'Nom du moulage';
   const dateRecue = document.getElementById('addDateRecue').value || new Date().toISOString().split('T')[0];
@@ -11649,6 +11670,7 @@ confirmAdd.addEventListener('click', () => {
   
   // Mettre à jour les données supplémentaires
   if (cardsData[cardId]) {
+    cardsData[cardId].numeroSoumission = numeroSoumission;
     cardsData[cardId].client = client;
     cardsData[cardId].dateRecue = dateRecue;
     cardsData[cardId].dateRobot = dateRobot;
@@ -11661,6 +11683,7 @@ confirmAdd.addEventListener('click', () => {
   addModal.classList.remove('active');
   
   // Reset les champs
+  document.getElementById('addNumeroSoumission').value = '';
   document.getElementById('addClient').value = '';
   document.getElementById('addName').value = '';
   document.getElementById('addDateRecue').value = '';
@@ -14581,6 +14604,14 @@ function generateFicheHTML(card) {
         </div>
       </div>
       
+      <!-- Numéro de soumission - sous le header -->
+      <div class="fiche-soumission-row">
+        <div class="fiche-field" style="flex:1;">
+          <div class="fiche-label">Numéro de soumission</div>
+          <input type="text" class="fiche-input" data-fiche-field="numeroSoumission" value="${data.numeroSoumission || ''}" placeholder="Numéro..." style="font-weight:600;">
+        </div>
+      </div>
+      
       <div class="fiche-section">
         <div class="fiche-grid-2">
           <div class="fiche-field">
@@ -15974,7 +16005,7 @@ function renderRobotTable() {
   console.log(`📊 ${robotCards.length} cartes Robot trouvées`);
   
   if (robotCards.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;padding:20px;">Aucune carte dans Robot</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="16" style="text-align:center;padding:20px;">Aucune carte dans Robot</td></tr>';
     return;
   }
   
@@ -16009,6 +16040,7 @@ function renderRobotTable() {
     ];
     
     tr.innerHTML = `
+      <td class="editable" data-field="numeroSoumission" contenteditable="true">${card.numeroSoumission || ''}</td>
       <td class="editable" data-field="name" contenteditable="true">${card.name || ''}</td>
       <td class="table-select-cell" data-field="client">
         <select class="table-select" data-field="client" onchange="handleTableSelectChange(this, '${cardId}', 'client', 'clients')">
