@@ -10195,17 +10195,18 @@ input.cmd-pill-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 15px;
+  padding: 12px 15px;
   background: linear-gradient(to bottom, #1e40af, #3b82f6);
   border-bottom: none;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  gap: 10px;
 }
 
 .mobile-fiche-back {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   background: rgba(255,255,255,0.2);
   border: none;
   color: #fff;
@@ -10214,6 +10215,7 @@ input.cmd-pill-input {
   cursor: pointer;
   padding: 8px 12px;
   border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .mobile-fiche-title {
@@ -10225,7 +10227,6 @@ input.cmd-pill-input {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 0 10px;
 }
 
 .mobile-fiche-order {
@@ -10235,6 +10236,7 @@ input.cmd-pill-input {
   background: rgba(255,255,255,0.2);
   padding: 6px 10px;
   border-radius: 6px;
+  flex-shrink: 0;
 }
 
 /* Indicateurs de page (dots) */
@@ -10279,6 +10281,24 @@ input.cmd-pill-input {
   width: 100%;
 }
 
+/* Wrapper pour 2 pages seulement */
+.mobile-fiche-swipe-wrapper-2pages {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+.mobile-fiche-swipe-wrapper-2pages.dragging {
+  transition: none;
+}
+
+.mobile-fiche-swipe-wrapper-2pages .mobile-fiche-page {
+  width: 50%;
+  min-width: 50%;
+}
+
 .mobile-fiche-swipe-wrapper {
   display: flex;
   width: 300%;
@@ -10305,15 +10325,39 @@ input.cmd-pill-input {
   flex-shrink: 0;
 }
 
-/* Marges plus grandes SEULEMENT sur la page Info */
+/* Marges 1 pouce (25px) SEULEMENT sur la page Info */
 .mobile-page-info {
-  padding: 15px 20px;
+  padding: 15px 25px;
 }
 
 @media (min-width: 600px) {
   .mobile-page-info {
-    padding: 20px 30px;
+    padding: 20px 40px;
   }
+}
+
+/* Textarea plein écran pour Notes */
+.mobile-notes-textarea-full {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 16px;
+  resize: none;
+  box-sizing: border-box;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.mobile-notes-textarea-full:focus {
+  outline: none;
+}
+
+.mobile-notes-textarea-full::placeholder {
+  color: #94a3b8;
 }
 
 /* Flèches de navigation */
@@ -10412,20 +10456,20 @@ input.cmd-pill-input {
   gap: 10px;
 }
 
-/* Grille des photos pour la page Notes (Photo 1-6) */
+/* Grille des photos pour la page Notes (Photo 1-6) - 6 sur une ligne */
 .mobile-photos-grid-notes {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
 }
 
 .mobile-photo-btn-note {
-  padding: 12px 8px;
+  padding: 8px 4px;
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  border-radius: 6px;
   color: #64748b;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
   text-align: center;
@@ -10534,6 +10578,27 @@ input.cmd-pill-input {
   border: 1px solid #e2e8f0;
 }
 
+/* Barre de statut en haut */
+.mobile-status-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.mobile-status-icon {
+  font-size: 24px;
+}
+
+.mobile-status-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
 .mobile-info-card-title {
   font-size: 14px;
   font-weight: 700;
@@ -10583,160 +10648,215 @@ input.cmd-pill-input {
 }
 
 .mobile-suivi-header {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 15px;
   text-align: center;
 }
 
-.mobile-suivi-step {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 12px;
+/* Grille de pastilles cliquables */
+.mobile-suivi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.mobile-suivi-timeline {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 40px;
-}
-
-.mobile-suivi-dot {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  color: #94a3b8;
-  flex-shrink: 0;
-  border: 3px solid #cbd5e1;
-}
-
-.mobile-suivi-dot.completed {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: #fff;
-  border-color: #15803d;
-}
-
-.mobile-suivi-dot.current {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #fff;
-  border-color: #b45309;
-  box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
-}
-
-.mobile-suivi-line {
-  width: 3px;
-  flex: 1;
-  background: #e2e8f0;
-  margin: 4px 0;
-  min-height: 20px;
-}
-
-.mobile-suivi-line.completed {
-  background: #22c55e;
-}
-
-.mobile-suivi-content {
-  flex: 1;
+.mobile-suivi-pastille {
   background: #f8fafc;
+  border: 2px solid #e2e8f0;
   border-radius: 12px;
-  padding: 12px 15px;
-  border: 1px solid #e2e8f0;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.mobile-suivi-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e293b;
+.mobile-suivi-pastille:active {
+  transform: scale(0.95);
+}
+
+.mobile-suivi-pastille.completed {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  border-color: #22c55e;
+}
+
+.mobile-suivi-pastille.current {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-color: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+}
+
+.mobile-pastille-icon {
+  font-size: 24px;
   margin-bottom: 4px;
 }
 
-.mobile-suivi-dates {
+.mobile-pastille-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.mobile-pastille-times {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.mobile-time-entry {
+  color: #16a34a;
+  display: block;
+}
+
+.mobile-time-exit {
+  color: #dc2626;
+  display: block;
+}
+
+.mobile-time-empty {
+  color: #94a3b8;
+}
+
+/* Résumé des temps */
+.mobile-suivi-summary {
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 10px;
+}
+
+.mobile-summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.mobile-summary-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-summary-label {
   font-size: 13px;
   color: #64748b;
 }
 
-.mobile-suivi-dates span {
-  display: block;
-  margin-top: 2px;
+.mobile-summary-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
 }
 
-.mobile-suivi-step {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.mobile-suivi-timeline {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 30px;
-}
-
-.mobile-suivi-dot {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
+/* Menu popup pour modifier les temps */
+.mobile-suivi-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  color: rgba(255,255,255,0.5);
-  flex-shrink: 0;
+  z-index: 200000;
+  padding: 20px;
 }
 
-.mobile-suivi-dot.completed {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
+.mobile-suivi-menu {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 350px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.mobile-suivi-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to bottom, #1e40af, #3b82f6);
   color: #fff;
+  font-size: 16px;
+  font-weight: 700;
 }
 
-.mobile-suivi-dot.current {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: #fff;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+.mobile-suivi-menu-content {
+  padding: 20px;
 }
 
-.mobile-suivi-line {
-  width: 2px;
-  flex: 1;
-  background: rgba(255,255,255,0.2);
-  margin: 4px 0;
+.mobile-suivi-menu-field {
+  margin-bottom: 15px;
 }
 
-.mobile-suivi-line.completed {
-  background: #22c55e;
-}
-
-.mobile-suivi-content {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border-radius: 10px;
-  padding: 12px;
-}
-
-.mobile-suivi-title {
-  font-size: 14px;
+.mobile-suivi-menu-field label {
+  display: block;
+  font-size: 13px;
   font-weight: 600;
-  color: #fff;
+  color: #64748b;
   margin-bottom: 6px;
 }
 
-.mobile-suivi-dates {
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
+.mobile-suivi-menu-field input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
-.mobile-suivi-dates span {
-  display: block;
-  margin-top: 2px;
+.mobile-suivi-menu-field input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.mobile-suivi-now-btn {
+  margin-top: 6px;
+  padding: 8px 12px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.mobile-suivi-now-btn:active {
+  background: #e2e8f0;
+}
+
+.mobile-suivi-menu-actions {
+  display: flex;
+  gap: 10px;
+  padding: 15px 20px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.mobile-suivi-save-btn {
+  flex: 1;
+  padding: 12px;
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mobile-suivi-clear-btn {
+  padding: 12px 15px;
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* Indicateurs swipe */
@@ -21954,7 +22074,7 @@ function createMobileHomeHTML() {
       </div>
     </div>
     
-    <!-- FICHE MOBILE AVEC SWIPE -->
+    <!-- FICHE MOBILE AVEC SWIPE - 2 PAGES SEULEMENT -->
     <div class="mobile-fiche-overlay" id="mobileFicheOverlay">
       <div class="mobile-fiche-header">
         <button class="mobile-fiche-back" onclick="closeMobileFiche()">
@@ -21964,54 +22084,17 @@ function createMobileHomeHTML() {
         <div class="mobile-fiche-order" id="mobileFicheOrder">#000000</div>
       </div>
       
-      <div class="mobile-fiche-dots">
-        <div class="mobile-fiche-dot" data-page="0" onclick="goToMobilePage(0)"></div>
-        <div class="mobile-fiche-dot active" data-page="1" onclick="goToMobilePage(1)"></div>
-        <div class="mobile-fiche-dot" data-page="2" onclick="goToMobilePage(2)"></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; padding: 0 30px; margin-top: -5px; background: #f1f5f9; padding-bottom: 8px;">
-        <span class="mobile-fiche-dot-label">Suivi</span>
-        <span class="mobile-fiche-dot-label">Info</span>
-        <span class="mobile-fiche-dot-label">Notes</span>
-      </div>
-      
       <div class="mobile-fiche-swipe-container" id="mobileFicheSwipeContainer">
-        <!-- Flèches de navigation -->
-        <button class="mobile-nav-arrow left hidden" id="mobileNavLeft" onclick="goToMobilePage(mobileSwipeCurrentPage - 1)">‹</button>
-        <button class="mobile-nav-arrow right" id="mobileNavRight" onclick="goToMobilePage(mobileSwipeCurrentPage + 1)">›</button>
-        
-        <div class="mobile-fiche-swipe-wrapper" id="mobileFicheSwipeWrapper">
+        <div class="mobile-fiche-swipe-wrapper-2pages" id="mobileFicheSwipeWrapper">
           
-          <!-- PAGE SUIVI (gauche - index 0) -->
-          <div class="mobile-fiche-page mobile-page-suivi" id="mobilePageSuivi">
+          <!-- PAGE INFO (gauche - index 0) -->
+          <div class="mobile-fiche-page mobile-page-info" id="mobilePageInfo">
             <!-- Contenu généré dynamiquement -->
           </div>
           
-          <!-- PAGE INFO (centre - index 1) -->
-          <div class="mobile-fiche-page mobile-page-info" id="mobilePageInfo">
-            <!-- Contenu généré dynamiquement avec photos -->
-          </div>
-          
-          <!-- PAGE NOTES (droite - index 2) -->
+          <!-- PAGE NOTES (droite - index 1) -->
           <div class="mobile-fiche-page mobile-page-notes" id="mobilePageNotes">
-            <div class="mobile-notes-section" style="flex: 1; display: flex; flex-direction: column;">
-              <!-- Boutons Photos 1-6 -->
-              <div style="margin-bottom: 12px;">
-                <div style="font-size: 14px; font-weight: 600; color: #64748b; margin-bottom: 8px;">📷 Photos</div>
-                <div class="mobile-photos-grid-notes" id="mobilePhotosGridNotes">
-                  <div class="mobile-photo-btn-note" data-photo="photo1" onclick="openMobilePhoto('photo1')">Photo 1</div>
-                  <div class="mobile-photo-btn-note" data-photo="photo2" onclick="openMobilePhoto('photo2')">Photo 2</div>
-                  <div class="mobile-photo-btn-note" data-photo="photo3" onclick="openMobilePhoto('photo3')">Photo 3</div>
-                  <div class="mobile-photo-btn-note" data-photo="photo4" onclick="openMobilePhoto('photo4')">Photo 4</div>
-                  <div class="mobile-photo-btn-note" data-photo="photo5" onclick="openMobilePhoto('photo5')">Photo 5</div>
-                  <div class="mobile-photo-btn-note" data-photo="photo6" onclick="openMobilePhoto('photo6')">Photo 6</div>
-                </div>
-              </div>
-              
-              <div class="mobile-notes-title">📝 Notes</div>
-              <textarea class="mobile-notes-textarea" id="mobileNotesTextarea" placeholder="Écrivez vos notes ici..." style="flex: 1; min-height: 200px;"></textarea>
-              <button class="mobile-save-notes-btn" onclick="saveMobileNotes()">💾 Sauvegarder les notes</button>
-            </div>
+            <textarea class="mobile-notes-textarea-full" id="mobileNotesTextarea" placeholder="Écrivez vos notes ici..."></textarea>
           </div>
           
         </div>
@@ -22019,7 +22102,7 @@ function createMobileHomeHTML() {
       
       <div class="mobile-swipe-hint" id="mobileSwipeHint">
         <span class="mobile-swipe-hint-arrow">←</span>
-        <span>Glissez pour naviguer</span>
+        <span>Glissez pour Notes</span>
         <span class="mobile-swipe-hint-arrow">→</span>
       </div>
     </div>
@@ -22203,34 +22286,112 @@ function openMobileFiche(cardId) {
   if (!card) return;
   
   currentMobileFicheId = cardId;
-  mobileSwipeCurrentPage = 1; // Commencer sur Info
+  mobileSwipeCurrentPage = 0; // Commencer sur Info (page 0)
   
   // Mettre à jour le header
   document.getElementById('mobileFicheTitle').textContent = card.name || 'Sans nom';
   document.getElementById('mobileFicheOrder').textContent = '#' + (card.order || '000000');
   
+  // Vérifier si notification Essayage pour représentante
+  checkEssayageNotification(card, cardId);
+  
   // Générer le contenu des pages
   renderMobilePageInfo(card);
-  renderMobilePageSuivi(card);
   renderMobilePageNotes(card);
   
   // Afficher la fiche
   document.getElementById('mobileFicheOverlay').classList.add('active');
   
-  // Positionner sur la page Info (centre)
-  updateMobileSwipePosition(1, false);
-  updateMobileDots(1);
-  updateMobileNavArrows(1);
+  // Positionner sur la page Info (page 0)
+  updateMobileSwipePosition2Pages(0, false);
   
   // Masquer le hint après 3 secondes
   setTimeout(() => {
     const hint = document.getElementById('mobileSwipeHint');
     if (hint) hint.style.opacity = '0';
   }, 3000);
+  
+  // Activer auto-save pour les notes
+  setupNotesAutoSave();
+}
+
+// Vérifier et afficher notification Essayage pour représentantes
+function checkEssayageNotification(card, cardId) {
+  // Vérifier si le moulage est en Essai (colonnes 2 ou 3)
+  const colIndex = card.columnIndex || 0;
+  if (colIndex !== 2 && colIndex !== 3) return;
+  
+  // Vérifier si c'est une représentante
+  const representantes = ['Marie-Soleil', 'Marie-Pier', ...(customLists.representantes || [])];
+  const currentUserName = currentUser ? (currentUser.displayName || currentUser.email.split('@')[0]) : '';
+  
+  const isRepresentante = representantes.some(rep => 
+    currentUserName.toLowerCase().includes(rep.toLowerCase()) ||
+    rep.toLowerCase().includes(currentUserName.toLowerCase())
+  );
+  
+  if (!isRepresentante) return;
+  
+  // Vérifier si déjà vu par cette représentante
+  const viewKey = `essayageVuPar_${currentUserName.replace(/\s/g, '_')}`;
+  if (card[viewKey]) return;
+  
+  // Afficher notification si raison d'attente
+  const raisonAttente = card.raisonAttente || card.noteAttente || '';
+  if (raisonAttente || colIndex === 2 || colIndex === 3) {
+    const message = raisonAttente 
+      ? `Le moulage "${card.name}" est maintenant en attente parce que: ${raisonAttente}`
+      : `Le moulage "${card.name}" est arrivé en Essayage`;
+    
+    // Afficher alert
+    setTimeout(() => {
+      alert(message);
+    }, 500);
+    
+    // Marquer comme vu et ajouter dans notes
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('fr-CA');
+    const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+    
+    cardsData[cardId][viewKey] = now.toISOString();
+    
+    // Ajouter "Vu par" dans les notes
+    const vuParText = `— Vu par ${currentUserName} (${dateStr} à ${timeStr}) —`;
+    const existingNotes = card.notes || '';
+    cardsData[cardId].notes = existingNotes + (existingNotes ? '\n' : '') + vuParText + '\n';
+    
+    saveCardToFirebase(cardId);
+  }
+}
+
+// Auto-save pour les notes
+function setupNotesAutoSave() {
+  const textarea = document.getElementById('mobileNotesTextarea');
+  if (!textarea) return;
+  
+  // Debounce pour éviter trop de sauvegardes
+  let saveTimeout;
+  textarea.addEventListener('input', () => {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+      if (currentMobileFicheId && cardsData[currentMobileFicheId]) {
+        cardsData[currentMobileFicheId].notes = textarea.value;
+        saveCardToFirebase(currentMobileFicheId);
+        console.log('📝 Notes auto-sauvegardées');
+      }
+    }, 1000); // Sauvegarder 1 seconde après arrêt de frappe
+  });
 }
 
 // Fermer la fiche mobile
 function closeMobileFiche() {
+  // Sauvegarder les notes avant de fermer
+  const textarea = document.getElementById('mobileNotesTextarea');
+  if (textarea && currentMobileFicheId && cardsData[currentMobileFicheId]) {
+    cardsData[currentMobileFicheId].notes = textarea.value;
+    saveCardToFirebase(currentMobileFicheId);
+  }
+  
   document.getElementById('mobileFicheOverlay').classList.remove('active');
   currentMobileFicheId = null;
   showMobileHome();
@@ -22240,9 +22401,37 @@ function closeMobileFiche() {
 function renderMobilePageInfo(card) {
   const container = document.getElementById('mobilePageInfo');
   
+  // Calculer le statut basé sur columnIndex
+  const colIndex = card.columnIndex || 0;
+  const colNames = ['Robot', 'Dégauchage', 'Essai', 'Essai', 'Atelier', 'Couture', 'Peinture', 'Expédition'];
+  const currentDept = colNames[colIndex] || 'Robot';
+  
+  // Trouver la date d'entrée dans le département actuel
+  const tracking = card.tracking || {};
+  const deptKey = currentDept.toLowerCase().replace('é', 'e');
+  const deptTracking = tracking[deptKey] || {};
+  let dateEntree = deptTracking.entree || '';
+  
+  // Formater la date si elle existe
+  let statutText = `À ${currentDept}`;
+  if (dateEntree) {
+    try {
+      const date = new Date(dateEntree.replace(' ', 'T'));
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      const formattedDate = date.toLocaleDateString('fr-CA', options);
+      statutText = `À ${currentDept} depuis le ${formattedDate}`;
+    } catch (e) {
+      statutText = `À ${currentDept}`;
+    }
+  }
+  
   container.innerHTML = `
     <div class="mobile-info-card" style="flex: 1;">
-      <div class="mobile-info-card-title">📋 FICHE MOULAGE</div>
+      <!-- Statut en haut -->
+      <div class="mobile-status-bar">
+        <span class="mobile-status-icon">${getColumnEmoji(colIndex)}</span>
+        <span class="mobile-status-text">${statutText}</span>
+      </div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">👤 Nom</span>
@@ -22261,7 +22450,7 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.region || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 12px 0;"></div>
+      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">👩‍⚕️ Intervenant</span>
@@ -22272,7 +22461,7 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.representant || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 12px 0;"></div>
+      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">📥 Date reçue</span>
@@ -22291,7 +22480,7 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 12px 0;"></div>
+      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">📑 N° PO</span>
@@ -22306,11 +22495,10 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.item || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 12px 0;"></div>
+      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
       
       <!-- Boutons Photos -->
-      <div style="margin-top: 8px;">
-        <div style="font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 8px;">📷 Photos</div>
+      <div style="margin-top: 5px;">
         <div class="mobile-photos-grid-small" id="mobilePhotosGrid">
           <div class="mobile-photo-btn-small ${card.photoClient ? 'has-photo' : ''}" data-photo="client" onclick="openMobilePhoto('client')">
             👤 Client
@@ -22327,19 +22515,24 @@ function renderMobilePageInfo(card) {
   `;
 }
 
+// Obtenir l'emoji de la colonne
+function getColumnEmoji(colIndex) {
+  const emojis = ['🤖', '📐', '🧪', '🧪', '🔧', '🧵', '🎨', '📦'];
+  return emojis[colIndex] || '📍';
+}
+
 // Générer la page Suivi
 function renderMobilePageSuivi(card) {
   const container = document.getElementById('mobilePageSuivi');
   const tracking = card.tracking || {};
   
   const steps = [
-    { key: 'robot', label: 'Robot', icon: '🤖' },
-    { key: 'degauchage', label: 'Dégauchage', icon: '📐' },
-    { key: 'atelier', label: 'Atelier', icon: '🔧' },
-    { key: 'couture', label: 'Couture', icon: '🧵' },
-    { key: 'peinture', label: 'Peinture', icon: '🎨' },
-    { key: 'expedition', label: 'Expédition', icon: '📦' },
-    { key: 'essayage', label: 'Essayage', icon: '👤' }
+    { key: 'robot', label: 'Robot', icon: '🤖', colIndex: 0 },
+    { key: 'degauchage', label: 'Dégau.', icon: '📐', colIndex: 1 },
+    { key: 'atelier', label: 'Atelier', icon: '🔧', colIndex: 4 },
+    { key: 'couture', label: 'Couture', icon: '🧵', colIndex: 5 },
+    { key: 'peinture', label: 'Peint.', icon: '🎨', colIndex: 6 },
+    { key: 'expedition', label: 'Expéd.', icon: '📦', colIndex: 7 }
   ];
   
   // Déterminer l'étape actuelle basée sur columnIndex
@@ -22347,49 +22540,161 @@ function renderMobilePageSuivi(card) {
   
   let html = `<div class="mobile-suivi-header">📊 SUIVI DE PRODUCTION</div>`;
   
-  html += steps.map((step, index) => {
+  // Grille de pastilles cliquables
+  html += `<div class="mobile-suivi-grid">`;
+  
+  steps.forEach((step, index) => {
     const stepTracking = tracking[step.key] || {};
-    const isCompleted = index < currentStep;
-    const isCurrent = index === currentStep;
+    const isCompleted = currentStep > step.colIndex;
+    const isCurrent = currentStep === step.colIndex;
     
-    return `
-      <div class="mobile-suivi-step">
-        <div class="mobile-suivi-timeline">
-          <div class="mobile-suivi-dot ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''}">
-            ${isCompleted ? '✓' : step.icon}
-          </div>
-          ${index < steps.length - 1 ? `<div class="mobile-suivi-line ${isCompleted ? 'completed' : ''}"></div>` : ''}
-        </div>
-        <div class="mobile-suivi-content">
-          <div class="mobile-suivi-title">${step.icon} ${step.label}</div>
-          <div class="mobile-suivi-dates">
-            ${stepTracking.entree ? `<span>Entrée: ${stepTracking.entree}</span>` : ''}
-            ${stepTracking.sortie ? `<span>Sortie: ${stepTracking.sortie}</span>` : ''}
-            ${!stepTracking.entree && !stepTracking.sortie ? '<span style="color: #94a3b8;">En attente</span>' : ''}
-          </div>
+    const entreeTime = stepTracking.entree || '';
+    const sortieTime = stepTracking.sortie || '';
+    
+    html += `
+      <div class="mobile-suivi-pastille ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''}" 
+           onclick="openMobileSuiviMenu('${step.key}', '${step.label}')">
+        <div class="mobile-pastille-icon">${step.icon}</div>
+        <div class="mobile-pastille-label">${step.label}</div>
+        <div class="mobile-pastille-times">
+          ${entreeTime ? `<span class="mobile-time-entry">↓ ${entreeTime}</span>` : '<span class="mobile-time-empty">-</span>'}
+          ${sortieTime ? `<span class="mobile-time-exit">↑ ${sortieTime}</span>` : ''}
         </div>
       </div>
     `;
-  }).join('');
+  });
+  
+  html += `</div>`;
+  
+  // Résumé des temps
+  const totalTime = calculateTotalProductionTime(card);
+  html += `
+    <div class="mobile-suivi-summary">
+      <div class="mobile-summary-item">
+        <span class="mobile-summary-label">Position actuelle</span>
+        <span class="mobile-summary-value">${COLUMN_NAMES[currentStep] || 'Robot'}</span>
+      </div>
+      <div class="mobile-summary-item">
+        <span class="mobile-summary-label">Temps total</span>
+        <span class="mobile-summary-value">${totalTime || '-'}</span>
+      </div>
+    </div>
+  `;
   
   container.innerHTML = html;
 }
 
+// Calculer le temps total de production
+function calculateTotalProductionTime(card) {
+  const tracking = card.tracking || {};
+  if (tracking.robot && tracking.robot.entree) {
+    const start = new Date(tracking.robot.entree);
+    const now = new Date();
+    const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+    return diff + ' jours';
+  }
+  return null;
+}
+
+// Menu pour modifier les temps d'un département
+function openMobileSuiviMenu(stepKey, stepLabel) {
+  if (!currentMobileFicheId) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  const tracking = card.tracking || {};
+  const stepTracking = tracking[stepKey] || {};
+  
+  const currentEntree = stepTracking.entree || '';
+  const currentSortie = stepTracking.sortie || '';
+  
+  // Créer le menu popup
+  const menuHTML = `
+    <div class="mobile-suivi-menu-overlay" id="mobileSuiviMenu" onclick="closeMobileSuiviMenu(event)">
+      <div class="mobile-suivi-menu" onclick="event.stopPropagation()">
+        <div class="mobile-suivi-menu-header">
+          <span>${stepLabel}</span>
+          <button onclick="closeMobileSuiviMenu()" style="background:none;border:none;font-size:20px;cursor:pointer;">✕</button>
+        </div>
+        <div class="mobile-suivi-menu-content">
+          <div class="mobile-suivi-menu-field">
+            <label>📥 Date/Heure Entrée</label>
+            <input type="datetime-local" id="mobileSuiviEntree" value="${currentEntree ? currentEntree.replace(' ', 'T') : ''}">
+            <button class="mobile-suivi-now-btn" onclick="setMobileSuiviNow('mobileSuiviEntree')">Maintenant</button>
+          </div>
+          <div class="mobile-suivi-menu-field">
+            <label>📤 Date/Heure Sortie</label>
+            <input type="datetime-local" id="mobileSuiviSortie" value="${currentSortie ? currentSortie.replace(' ', 'T') : ''}">
+            <button class="mobile-suivi-now-btn" onclick="setMobileSuiviNow('mobileSuiviSortie')">Maintenant</button>
+          </div>
+        </div>
+        <div class="mobile-suivi-menu-actions">
+          <button class="mobile-suivi-save-btn" onclick="saveMobileSuivi('${stepKey}')">💾 Sauvegarder</button>
+          <button class="mobile-suivi-clear-btn" onclick="clearMobileSuivi('${stepKey}')">🗑️ Effacer</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', menuHTML);
+}
+
+function closeMobileSuiviMenu(event) {
+  if (event && event.target.id !== 'mobileSuiviMenu') return;
+  const menu = document.getElementById('mobileSuiviMenu');
+  if (menu) menu.remove();
+}
+
+function setMobileSuiviNow(inputId) {
+  const input = document.getElementById(inputId);
+  if (input) {
+    const now = new Date();
+    const formatted = now.toISOString().slice(0, 16);
+    input.value = formatted;
+  }
+}
+
+function saveMobileSuivi(stepKey) {
+  if (!currentMobileFicheId) return;
+  
+  const entreeInput = document.getElementById('mobileSuiviEntree');
+  const sortieInput = document.getElementById('mobileSuiviSortie');
+  
+  const card = cardsData[currentMobileFicheId];
+  if (!card.tracking) card.tracking = {};
+  if (!card.tracking[stepKey]) card.tracking[stepKey] = {};
+  
+  if (entreeInput && entreeInput.value) {
+    card.tracking[stepKey].entree = entreeInput.value.replace('T', ' ');
+  }
+  if (sortieInput && sortieInput.value) {
+    card.tracking[stepKey].sortie = sortieInput.value.replace('T', ' ');
+  }
+  
+  saveCardToFirebase(currentMobileFicheId);
+  closeMobileSuiviMenu({ target: { id: 'mobileSuiviMenu' } });
+  renderMobilePageSuivi(card);
+}
+
+function clearMobileSuivi(stepKey) {
+  if (!currentMobileFicheId) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  if (card.tracking && card.tracking[stepKey]) {
+    delete card.tracking[stepKey];
+  }
+  
+  saveCardToFirebase(currentMobileFicheId);
+  closeMobileSuiviMenu({ target: { id: 'mobileSuiviMenu' } });
+  renderMobilePageSuivi(card);
+}
+
 // Générer la page Notes
 function renderMobilePageNotes(card) {
-  // Notes
+  // Notes seulement - les photos sont maintenant dans la page Info
   const textarea = document.getElementById('mobileNotesTextarea');
   if (textarea) {
     textarea.value = card.notes || '';
   }
-  
-  // Photos 1-6 dans la page Notes
-  const photoNoteBtns = document.querySelectorAll('.mobile-photo-btn-note');
-  photoNoteBtns.forEach(btn => {
-    const photoType = btn.dataset.photo; // photo1, photo2, etc.
-    const hasPhoto = card[photoType]; // Clé directe: photo1, photo2, etc.
-    btn.classList.toggle('has-photo', !!hasPhoto);
-  });
 }
 
 // Sauvegarder les notes mobile
@@ -22520,8 +22825,8 @@ function handleSwipeEnd(e) {
   if (diff > threshold && mobileSwipeCurrentPage > 0) {
     // Swipe vers la droite → page précédente
     newPage = mobileSwipeCurrentPage - 1;
-  } else if (diff < -threshold && mobileSwipeCurrentPage < 2) {
-    // Swipe vers la gauche → page suivante
+  } else if (diff < -threshold && mobileSwipeCurrentPage < 1) {
+    // Swipe vers la gauche → page suivante (max 1 pour 2 pages)
     newPage = mobileSwipeCurrentPage + 1;
   }
   
@@ -22529,14 +22834,21 @@ function handleSwipeEnd(e) {
 }
 
 function goToMobilePage(pageIndex) {
-  // Limiter entre 0 et 2
+  // Limiter entre 0 et 1 (2 pages seulement)
   if (pageIndex < 0) pageIndex = 0;
-  if (pageIndex > 2) pageIndex = 2;
+  if (pageIndex > 1) pageIndex = 1;
   
   mobileSwipeCurrentPage = pageIndex;
-  updateMobileSwipePosition(pageIndex, true);
-  updateMobileDots(pageIndex);
-  updateMobileNavArrows(pageIndex);
+  updateMobileSwipePosition2Pages(pageIndex, true);
+}
+
+// Position pour 2 pages (50% chaque)
+function updateMobileSwipePosition2Pages(pageIndex, animate) {
+  const wrapper = document.getElementById('mobileFicheSwipeWrapper');
+  if (wrapper) {
+    wrapper.style.transition = animate ? 'transform 0.3s ease-out' : 'none';
+    wrapper.style.transform = `translateX(${pageIndex * -50}%)`;
+  }
 }
 
 function updateMobileSwipePosition(pageIndex, animate) {
@@ -22555,17 +22867,7 @@ function updateMobileDots(pageIndex) {
 }
 
 function updateMobileNavArrows(pageIndex) {
-  const leftArrow = document.getElementById('mobileNavLeft');
-  const rightArrow = document.getElementById('mobileNavRight');
-  
-  if (leftArrow) {
-    leftArrow.classList.toggle('hidden', pageIndex === 0);
-    leftArrow.innerHTML = pageIndex === 1 ? '‹ Suivi' : '‹ Info';
-  }
-  if (rightArrow) {
-    rightArrow.classList.toggle('hidden', pageIndex === 2);
-    rightArrow.innerHTML = pageIndex === 1 ? 'Notes ›' : 'Info ›';
-  }
+  // Plus utilisé avec 2 pages
 }
 
 // Initialiser l'interface mobile au chargement de la page
