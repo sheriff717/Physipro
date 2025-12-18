@@ -22500,12 +22500,12 @@ function displayAllMobileCards() {
     return;
   }
   
-  // Trier par date de livraison
+  // Trier par ordre alphabétique du nom de moulage
   const sortedCards = Object.entries(cardsData)
     .sort((a, b) => {
-      const dateA = a[1].dateLivraison || '9999';
-      const dateB = b[1].dateLivraison || '9999';
-      return dateA.localeCompare(dateB);
+      const nameA = (a[1].name || '').toLowerCase();
+      const nameB = (b[1].name || '').toLowerCase();
+      return nameA.localeCompare(nameB, 'fr');
     });
   
   results.innerHTML = `
@@ -22646,6 +22646,13 @@ function performMobileSearch(query) {
     `;
     return;
   }
+  
+  // Trier les résultats par ordre alphabétique du nom
+  matches.sort((a, b) => {
+    const nameA = (a.card.name || '').toLowerCase();
+    const nameB = (b.card.name || '').toLowerCase();
+    return nameA.localeCompare(nameB, 'fr');
+  });
   
   results.innerHTML = `
     <div class="mobile-cards-count">${matches.length} résultat${matches.length > 1 ? 's' : ''}</div>
