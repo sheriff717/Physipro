@@ -1551,19 +1551,69 @@ html, body { margin: 0; padding: 0; }
   height: 22px;
 }
 
-/* Pastille région (Québec, Ontario, Maritime) - ancien style */
+/* Pastille région (Québec, Ontario, Maritime) - cliquable pour priorité */
 .mcard-region-pill {
   position: absolute;
-  left: 2px;
-  background: rgba(255,255,255,0.25);
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.3);
   color: #fff;
-  font-size: 6px;
+  font-size: 8px;
   font-weight: 700;
-  padding: 2px 4px;
-  border-radius: 3px;
+  padding: 3px 6px;
+  border-radius: 4px;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
   text-align: center;
   line-height: 1.1;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
+  min-width: 30px;
+}
+
+.mcard-region-pill:hover {
+  background: rgba(255,255,255,0.5);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Bouton Fiche à droite */
+.mcard-fiche-btn {
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(to bottom, #6b7fa8, #4a5a7a);
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1;
+  text-align: center;
+  z-index: 10;
+  pointer-events: auto;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.18), 0 1px 2px rgba(0,0,0,0.6);
+}
+
+.mcard-fiche-btn:hover {
+  transform: translateY(-50%) scale(1.05);
+  filter: brightness(1.2);
+}
+
+/* Bouton Fiche par région - couleurs métalliques */
+.mcard.region-qc .mcard-fiche-btn {
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
+}
+.mcard.region-on .mcard-fiche-btn {
+  background: linear-gradient(to bottom, #E8B97A, #704414);
+}
+.mcard.region-ma .mcard-fiche-btn {
+  background: linear-gradient(to bottom, #C7458C, #451238);
 }
 
 /* Nouvelle pastille région en haut à droite du titre */
@@ -8346,11 +8396,10 @@ input.cmd-pill-input {
   margin-bottom: 20px;
 }
 
-/* ===== LOGO ROTATIF LOGIN ===== */
+/* ===== LOGO LOGIN (FIXE) ===== */
 .login-logo-flip-container {
   width: 385px;
   height: 140px;
-  perspective: 1000px;
   margin: 15px auto 25px auto;
 }
 
@@ -8358,26 +8407,13 @@ input.cmd-pill-input {
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  animation: loginLogoSpin 5s linear infinite;
-}
-
-@keyframes loginLogoSpin {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(360deg);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-logo-flip-front,
 .login-logo-flip-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8391,7 +8427,7 @@ input.cmd-pill-input {
 }
 
 .login-logo-flip-back {
-  transform: rotateY(180deg);
+  display: none;
 }
 .login-title-container {
   text-align: center;
@@ -10571,32 +10607,31 @@ input.cmd-pill-input {
 }
 
 .mobile-info-card {
-  background: #f8fafc;
+  background: #ffffff;
   border-radius: 12px;
-  padding: 15px;
+  padding: 12px 15px;
   margin-bottom: 12px;
   border: 1px solid #e2e8f0;
 }
 
-/* Barre de statut en haut */
-.mobile-status-bar {
+/* Ligne de statut simple */
+.mobile-status-row {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 12px 15px;
-  background: linear-gradient(135deg, #3b82f6, #1e40af);
-  border-radius: 10px;
-  margin-bottom: 15px;
+  padding: 10px 0;
 }
 
-.mobile-status-icon {
-  font-size: 24px;
-}
-
-.mobile-status-text {
-  font-size: 14px;
+.mobile-status-label {
+  font-size: 15.5px;
   font-weight: 700;
-  color: #fff;
+  color: #64748b;
+}
+
+.mobile-status-value {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #1e40af;
 }
 
 .mobile-info-card-title {
@@ -10614,8 +10649,8 @@ input.cmd-pill-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 8px 0;
+  border-bottom: 1px solid #e8ecf0;
 }
 
 .mobile-info-row:last-child {
@@ -10623,13 +10658,14 @@ input.cmd-pill-input {
 }
 
 .mobile-info-label {
-  font-size: 14px;
+  font-size: 14.5px;
   color: #64748b;
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 .mobile-info-value {
-  font-size: 15px;
+  font-size: 15.5px;
   color: #1e293b;
   font-weight: 600;
   text-align: right;
@@ -10640,6 +10676,173 @@ input.cmd-pill-input {
 .mobile-info-value.highlight {
   color: #16a34a;
   font-weight: 700;
+}
+
+/* Séparateur de section subtil */
+.mobile-section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #cbd5e1, transparent);
+  margin: 8px 0;
+}
+
+/* Section photos */
+.mobile-photos-section {
+  margin-top: 8px;
+}
+
+.mobile-photos-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+/* Ligne des boutons photos */
+.mobile-photos-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-photo-icon {
+  font-size: 28px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.mobile-photo-icon:active {
+  transform: scale(0.95);
+  background: #f1f5f9;
+}
+
+/* Menu popup photos */
+.mobile-photo-menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200000;
+  padding: 20px;
+}
+
+.mobile-photo-menu {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 350px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.mobile-photo-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to bottom, #1e40af, #3b82f6);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mobile-photo-menu-content {
+  padding: 20px;
+}
+
+.mobile-photo-menu-field {
+  margin-bottom: 15px;
+}
+
+.mobile-photo-menu-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.mobile-photo-menu-field input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.mobile-photo-menu-field input:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.mobile-photo-menu-actions {
+  padding: 15px 20px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.mobile-photo-save-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Section photos dans Notes */
+.mobile-notes-photos-section {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.mobile-notes-photos-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-photo-icon-notes {
+  font-size: 26px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.mobile-photo-icon-notes:active {
+  transform: scale(0.95);
+  background: #e2e8f0;
+}
+
+.mobile-photo-btn-notes {
+  flex: 1;
+  padding: 10px 0;
+  background: #e2e8f0;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mobile-photo-btn-notes.has-photo {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  color: #fff;
+}
+
+.mobile-photo-btn-notes:active {
+  transform: scale(0.95);
 }
 
 /* Page Suivi (droite) - PLEINE PAGE BLANCHE */
@@ -11292,13 +11495,10 @@ input.cmd-pill-input {
         <div class="login-logo-flip-front">
           <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro1.png" alt="PhysiPro Moulage">
         </div>
-        <div class="login-logo-flip-back">
-          <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro2.png" alt="PhysiPro Série Plus">
-        </div>
       </div>
     </div>
     <div class="login-title-container">
-      <div class="login-title">Outil de gestion</div>
+      <div class="login-title">Moulage</div>
       <div class="login-author">par Daniel Charest</div>
     </div>
     <div class="login-subtitle">Connectez-vous avec votre email d'entreprise</div>
@@ -12755,8 +12955,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Cette approche capture les clics au niveau du document et les délègue
   // C'est plus fiable que les onclick ou addEventListener sur chaque bouton
   document.addEventListener('click', function(e) {
-    // Vérifier si le clic est sur un bouton Fiche moulage
-    const ficheBtn = e.target.closest('.mcard-toggle-btn[data-action="open-fiche"]');
+    // Vérifier si le clic est sur un bouton Fiche moulage (ancien ou nouveau)
+    const ficheBtn = e.target.closest('.mcard-toggle-btn[data-action="open-fiche"], .mcard-fiche-btn[data-action="open-fiche"]');
     if (ficheBtn) {
       e.stopPropagation();
       e.preventDefault();
@@ -13817,9 +14017,9 @@ function createCard(name, order, region, columnIndex) {
           <input type="text" class="mcard-title" value="${name}" data-field="name">
         </div>
         <div class="mcard-order-line">
-          <button class="mcard-btn-priority-small" title="Définir priorité">⭐</button>
+          <span class="mcard-region-pill" onclick="openPriorityMenu('${cardId}', event)" title="Cliquer pour définir priorité">${region}</span>
           <input type="text" class="mcard-order" value="${order}" data-field="order" maxlength="6">
-          <button class="mcard-toggle-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">📋</button>
+          <button class="mcard-fiche-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">Fiche</button>
         </div>
       </div>
     </div>
@@ -13992,6 +14192,16 @@ function attachCardEvents(card) {
 }
 
 // ===== SYSTÈME DE PRIORITÉS =====
+
+// Ouvrir le menu priorité depuis la pastille région
+function openPriorityMenu(cardId, event) {
+  event.stopPropagation();
+  const card = document.querySelector(`.mcard[data-card-id="${cardId}"]`);
+  if (card) {
+    showPriorityMenu(card, cardId, event);
+  }
+}
+
 function showPriorityMenu(card, cardId, event) {
   // Vérifier les permissions
   if (!userCan('edit')) {
@@ -15141,9 +15351,9 @@ function loadCardsFromFirebase() {
                   <input type="text" class="mcard-title" value="${cardData.name || 'Nom du moulage'}" data-field="name">
                 </div>
                 <div class="mcard-order-line">
-                  <button class="mcard-btn-priority-small" title="Définir priorité">⭐</button>
+                  <span class="mcard-region-pill" onclick="openPriorityMenu('${cardId}', event)" title="Cliquer pour définir priorité">${regionText}</span>
                   <input type="text" class="mcard-order" value="${cardData.order || '000000'}" data-field="order" maxlength="6">
-                  <button class="mcard-toggle-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">📋</button>
+                  <button class="mcard-fiche-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">Fiche</button>
                 </div>
               </div>
             </div>
@@ -17458,14 +17668,22 @@ function openMoulageNotesOverlay(cardId) {
   const dateStr = now.toLocaleDateString('fr-CA');
   const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
   
+  // Ajouter la signature dans les notes existantes
+  const signature = `— ${userName} (${dateStr} à ${timeStr}) —`;
+  const existingNotes = card.notes || '';
+  const newNotes = existingNotes + (existingNotes && !existingNotes.endsWith('\n') ? '\n' : '') + signature + '\n';
+  
   overlay.innerHTML = `
     <div class="moulage-notes-content">
-      <div class="moulage-notes-signature">— ${userName} (${dateStr} à ${timeStr}) —</div>
-      <textarea class="moulage-notes-textarea" id="notesTextarea_${cardId}" placeholder="Écrire votre note ici...">${card.notes || ''}</textarea>
+      <textarea class="moulage-notes-textarea" id="notesTextarea_${cardId}" placeholder="Écrire votre note ici...">${newNotes}</textarea>
     </div>
   `;
   
   overlay.style.display = 'flex';
+  
+  // Sauvegarder immédiatement la signature
+  cardsData[cardId].notes = newNotes;
+  saveCardToFirebase(cardId);
   
   // Focus sur le textarea et placer curseur à la fin
   setTimeout(() => {
@@ -22094,6 +22312,10 @@ function createMobileHomeHTML() {
           
           <!-- PAGE NOTES (droite - index 1) -->
           <div class="mobile-fiche-page mobile-page-notes" id="mobilePageNotes">
+            <!-- Section Photos 1-6 -->
+            <div class="mobile-notes-photos-section" id="mobileNotesPhotos">
+              <!-- Contenu généré dynamiquement -->
+            </div>
             <textarea class="mobile-notes-textarea-full" id="mobileNotesTextarea" placeholder="Écrivez vos notes ici..."></textarea>
           </div>
           
@@ -22369,6 +22591,41 @@ function setupNotesAutoSave() {
   const textarea = document.getElementById('mobileNotesTextarea');
   if (!textarea) return;
   
+  // Variable pour éviter d'ajouter plusieurs fois le nom
+  let signatureAdded = false;
+  
+  // Ajouter le nom de l'utilisateur quand on clique dans les notes
+  textarea.addEventListener('focus', () => {
+    if (signatureAdded) return;
+    signatureAdded = true;
+    
+    // Obtenir le nom de l'utilisateur connecté
+    const userName = currentUser ? (currentUser.displayName || currentUser.email.split('@')[0]) : 'Utilisateur';
+    
+    // Formater la date et l'heure
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('fr-CA');
+    const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+    
+    // Créer la signature
+    const signature = `— ${userName} (${dateStr} à ${timeStr}) —`;
+    
+    // Ajouter à la fin des notes existantes
+    const existingNotes = textarea.value;
+    const newNotes = existingNotes + (existingNotes && !existingNotes.endsWith('\n') ? '\n' : '') + signature + '\n';
+    
+    textarea.value = newNotes;
+    
+    // Positionner le curseur à la fin
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    
+    // Sauvegarder immédiatement
+    if (currentMobileFicheId && cardsData[currentMobileFicheId]) {
+      cardsData[currentMobileFicheId].notes = textarea.value;
+      saveCardToFirebase(currentMobileFicheId);
+    }
+  });
+  
   // Debounce pour éviter trop de sauvegardes
   let saveTimeout;
   textarea.addEventListener('input', () => {
@@ -22406,6 +22663,16 @@ function renderMobilePageInfo(card) {
   const colNames = ['Robot', 'Dégauchage', 'Essai', 'Essai', 'Atelier', 'Couture', 'Peinture', 'Expédition'];
   const currentDept = colNames[colIndex] || 'Robot';
   
+  // Déterminer le bon article (Au/À l'/À la)
+  let article = 'À ';
+  if (currentDept === 'Robot' || currentDept === 'Dégauchage') {
+    article = 'Au ';
+  } else if (currentDept === 'Atelier' || currentDept === 'Essai') {
+    article = "À l'";
+  } else if (currentDept === 'Couture' || currentDept === 'Peinture' || currentDept === 'Expédition') {
+    article = 'À la ';
+  }
+  
   // Trouver la date d'entrée dans le département actuel
   const tracking = card.tracking || {};
   const deptKey = currentDept.toLowerCase().replace('é', 'e');
@@ -22413,33 +22680,35 @@ function renderMobilePageInfo(card) {
   let dateEntree = deptTracking.entree || '';
   
   // Formater la date si elle existe
-  let statutText = `À ${currentDept}`;
+  let statutText = `${article}${currentDept}`;
   if (dateEntree) {
     try {
       const date = new Date(dateEntree.replace(' ', 'T'));
       const options = { day: 'numeric', month: 'long', year: 'numeric' };
       const formattedDate = date.toLocaleDateString('fr-CA', options);
-      statutText = `À ${currentDept} depuis le ${formattedDate}`;
+      statutText = `${article}${currentDept} depuis le ${formattedDate}`;
     } catch (e) {
-      statutText = `À ${currentDept}`;
+      statutText = `${article}${currentDept}`;
     }
   }
   
   container.innerHTML = `
     <div class="mobile-info-card" style="flex: 1;">
       <!-- Statut en haut -->
-      <div class="mobile-status-bar">
-        <span class="mobile-status-icon">${getColumnEmoji(colIndex)}</span>
-        <span class="mobile-status-text">${statutText}</span>
+      <div class="mobile-status-row">
+        <span class="mobile-status-label">Statut:</span>
+        <span class="mobile-status-value">${statutText}</span>
       </div>
+      
+      <div class="mobile-section-divider"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">👤 Nom</span>
-        <span class="mobile-info-value" style="font-size: 16px; font-weight: 700;">${card.name || '-'}</span>
+        <span class="mobile-info-value" style="font-weight: 700;">${card.name || '-'}</span>
       </div>
       <div class="mobile-info-row">
         <span class="mobile-info-label">🔢 N° Commande</span>
-        <span class="mobile-info-value highlight" style="font-size: 16px;">${card.order || '-'}</span>
+        <span class="mobile-info-value highlight">${card.order || '-'}</span>
       </div>
       <div class="mobile-info-row">
         <span class="mobile-info-label">🏢 Client</span>
@@ -22450,7 +22719,7 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.region || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
+      <div class="mobile-section-divider"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">👩‍⚕️ Intervenant</span>
@@ -22461,14 +22730,14 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.representant || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
+      <div class="mobile-section-divider"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">📥 Date reçue</span>
         <span class="mobile-info-value">${card.dateRecue || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">📦 Date livraison</span>
+        <span class="mobile-info-label">📦 Livraison</span>
         <span class="mobile-info-value highlight">${card.dateLivraison || '-'}</span>
       </div>
       <div class="mobile-info-row">
@@ -22476,18 +22745,18 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.dateRobot || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">📅 RDV Essayage</span>
+        <span class="mobile-info-label">📅 Essayage</span>
         <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
+      <div class="mobile-section-divider"></div>
       
       <div class="mobile-info-row">
         <span class="mobile-info-label">📑 N° PO</span>
         <span class="mobile-info-value">${card.numeroPO || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">📋 N° Soumission</span>
+        <span class="mobile-info-label">📋 Soumission</span>
         <span class="mobile-info-value">${card.numeroSoumission || '-'}</span>
       </div>
       <div class="mobile-info-row">
@@ -22495,24 +22764,99 @@ function renderMobilePageInfo(card) {
         <span class="mobile-info-value">${card.item || '-'}</span>
       </div>
       
-      <div style="height: 2px; background: #e2e8f0; margin: 10px 0;"></div>
+      <div class="mobile-section-divider"></div>
       
-      <!-- Boutons Photos -->
-      <div style="margin-top: 5px;">
-        <div class="mobile-photos-grid-small" id="mobilePhotosGrid">
-          <div class="mobile-photo-btn-small ${card.photoClient ? 'has-photo' : ''}" data-photo="client" onclick="openMobilePhoto('client')">
-            👤 Client
+      <!-- Boutons Photos avec icône appareil -->
+      <div class="mobile-photos-section">
+        <div class="mobile-photos-row">
+          <span class="mobile-photo-icon" onclick="openMobilePhotoMenu()">📷</span>
+          <div class="mobile-photo-btn-small ${card.photoClient ? 'has-photo' : ''}" onclick="openMobilePhotoLink('client')">
+            Client
           </div>
-          <div class="mobile-photo-btn-small ${card.photoAtelier ? 'has-photo' : ''}" data-photo="atelier" onclick="openMobilePhoto('atelier')">
-            🔧 Atelier
+          <div class="mobile-photo-btn-small ${card.photoAtelier ? 'has-photo' : ''}" onclick="openMobilePhotoLink('atelier')">
+            Atelier
           </div>
-          <div class="mobile-photo-btn-small ${card.photoDevis ? 'has-photo' : ''}" data-photo="devis" onclick="openMobilePhoto('devis')">
-            📄 Devis
+          <div class="mobile-photo-btn-small ${card.photoDevis ? 'has-photo' : ''}" onclick="openMobilePhotoLink('devis')">
+            Devis/Modifs
           </div>
         </div>
       </div>
     </div>
   `;
+}
+
+// Ouvrir le lien photo (si existe)
+function openMobilePhotoLink(photoType) {
+  if (!currentMobileFicheId) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  const photoKey = `photo${photoType.charAt(0).toUpperCase() + photoType.slice(1)}`;
+  const photoUrl = card[photoKey];
+  
+  if (photoUrl) {
+    window.open(photoUrl, '_blank');
+  } else {
+    alert('Aucun lien photo défini. Cliquez sur 📷 pour ajouter un lien.');
+  }
+}
+
+// Menu pour ajouter les liens photos
+function openMobilePhotoMenu() {
+  if (!currentMobileFicheId) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  
+  const menuHTML = `
+    <div class="mobile-photo-menu-overlay" id="mobilePhotoMenu" onclick="closeMobilePhotoMenu(event)">
+      <div class="mobile-photo-menu" onclick="event.stopPropagation()">
+        <div class="mobile-photo-menu-header">
+          <span>📷 Liens Photos</span>
+          <button onclick="closeMobilePhotoMenu()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#fff;">✕</button>
+        </div>
+        <div class="mobile-photo-menu-content">
+          <div class="mobile-photo-menu-field">
+            <label>👤 Client</label>
+            <input type="url" id="photoClientInput" value="${card.photoClient || ''}" placeholder="URL de la photo client">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>🔧 Atelier</label>
+            <input type="url" id="photoAtelierInput" value="${card.photoAtelier || ''}" placeholder="URL de la photo atelier">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>📄 Devis/Modifs</label>
+            <input type="url" id="photoDevisInput" value="${card.photoDevis || ''}" placeholder="URL du devis/modifs">
+          </div>
+        </div>
+        <div class="mobile-photo-menu-actions">
+          <button class="mobile-photo-save-btn" onclick="saveMobilePhotos()">💾 Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', menuHTML);
+}
+
+function closeMobilePhotoMenu(event) {
+  if (event && event.target.id !== 'mobilePhotoMenu') return;
+  const menu = document.getElementById('mobilePhotoMenu');
+  if (menu) menu.remove();
+}
+
+function saveMobilePhotos() {
+  if (!currentMobileFicheId) return;
+  
+  const clientInput = document.getElementById('photoClientInput');
+  const atelierInput = document.getElementById('photoAtelierInput');
+  const devisInput = document.getElementById('photoDevisInput');
+  
+  if (clientInput) cardsData[currentMobileFicheId].photoClient = clientInput.value.trim();
+  if (atelierInput) cardsData[currentMobileFicheId].photoAtelier = atelierInput.value.trim();
+  if (devisInput) cardsData[currentMobileFicheId].photoDevis = devisInput.value.trim();
+  
+  saveCardToFirebase(currentMobileFicheId);
+  closeMobilePhotoMenu({ target: { id: 'mobilePhotoMenu' } });
+  renderMobilePageInfo(cardsData[currentMobileFicheId]);
 }
 
 // Obtenir l'emoji de la colonne
@@ -22690,11 +23034,111 @@ function clearMobileSuivi(stepKey) {
 
 // Générer la page Notes
 function renderMobilePageNotes(card) {
-  // Notes seulement - les photos sont maintenant dans la page Info
+  // Générer les 6 boutons photos
+  const photosSection = document.getElementById('mobileNotesPhotos');
+  if (photosSection) {
+    photosSection.innerHTML = `
+      <div class="mobile-notes-photos-row">
+        <span class="mobile-photo-icon-notes" onclick="openMobilePhotos1to6Menu()">📷</span>
+        <div class="mobile-photo-btn-notes ${card.photo1 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo1')">1</div>
+        <div class="mobile-photo-btn-notes ${card.photo2 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo2')">2</div>
+        <div class="mobile-photo-btn-notes ${card.photo3 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo3')">3</div>
+        <div class="mobile-photo-btn-notes ${card.photo4 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo4')">4</div>
+        <div class="mobile-photo-btn-notes ${card.photo5 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo5')">5</div>
+        <div class="mobile-photo-btn-notes ${card.photo6 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo6')">6</div>
+      </div>
+    `;
+  }
+  
+  // Notes
   const textarea = document.getElementById('mobileNotesTextarea');
   if (textarea) {
     textarea.value = card.notes || '';
   }
+}
+
+// Ouvrir le lien photo 1-6
+function openMobilePhotoLink1to6(photoKey) {
+  if (!currentMobileFicheId) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  const photoUrl = card[photoKey];
+  
+  if (photoUrl) {
+    window.open(photoUrl, '_blank');
+  } else {
+    alert('Aucun lien défini. Cliquez sur 📷 pour ajouter des liens.');
+  }
+}
+
+// Menu pour ajouter les liens photos 1-6
+function openMobilePhotos1to6Menu() {
+  if (!currentMobileFicheId) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  
+  const menuHTML = `
+    <div class="mobile-photo-menu-overlay" id="mobilePhotos1to6Menu" onclick="closeMobilePhotos1to6Menu(event)">
+      <div class="mobile-photo-menu" onclick="event.stopPropagation()">
+        <div class="mobile-photo-menu-header">
+          <span>📷 Liens Photos 1-6</span>
+          <button onclick="closeMobilePhotos1to6Menu()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#fff;">✕</button>
+        </div>
+        <div class="mobile-photo-menu-content" style="max-height: 400px; overflow-y: auto;">
+          <div class="mobile-photo-menu-field">
+            <label>📷 Photo 1</label>
+            <input type="url" id="photo1Input" value="${card.photo1 || ''}" placeholder="URL photo 1">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>📷 Photo 2</label>
+            <input type="url" id="photo2Input" value="${card.photo2 || ''}" placeholder="URL photo 2">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>📷 Photo 3</label>
+            <input type="url" id="photo3Input" value="${card.photo3 || ''}" placeholder="URL photo 3">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>📷 Photo 4</label>
+            <input type="url" id="photo4Input" value="${card.photo4 || ''}" placeholder="URL photo 4">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>📷 Photo 5</label>
+            <input type="url" id="photo5Input" value="${card.photo5 || ''}" placeholder="URL photo 5">
+          </div>
+          <div class="mobile-photo-menu-field">
+            <label>📷 Photo 6</label>
+            <input type="url" id="photo6Input" value="${card.photo6 || ''}" placeholder="URL photo 6">
+          </div>
+        </div>
+        <div class="mobile-photo-menu-actions">
+          <button class="mobile-photo-save-btn" onclick="saveMobilePhotos1to6()">💾 Sauvegarder</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', menuHTML);
+}
+
+function closeMobilePhotos1to6Menu(event) {
+  if (event && event.target.id !== 'mobilePhotos1to6Menu') return;
+  const menu = document.getElementById('mobilePhotos1to6Menu');
+  if (menu) menu.remove();
+}
+
+function saveMobilePhotos1to6() {
+  if (!currentMobileFicheId) return;
+  
+  for (let i = 1; i <= 6; i++) {
+    const input = document.getElementById(`photo${i}Input`);
+    if (input) {
+      cardsData[currentMobileFicheId][`photo${i}`] = input.value.trim();
+    }
+  }
+  
+  saveCardToFirebase(currentMobileFicheId);
+  closeMobilePhotos1to6Menu({ target: { id: 'mobilePhotos1to6Menu' } });
+  renderMobilePageNotes(cardsData[currentMobileFicheId]);
 }
 
 // Sauvegarder les notes mobile
