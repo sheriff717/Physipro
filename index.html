@@ -1549,6 +1549,8 @@ html, body { margin: 0; padding: 0; }
   position: relative;
   width: 100%;
   height: 22px;
+  padding: 0 45px;
+  box-sizing: border-box;
 }
 
 /* Pastille région (Québec, Ontario, Maritime) - cliquable pour priorité */
@@ -1562,14 +1564,14 @@ html, body { margin: 0; padding: 0; }
   font-size: 7px;
   font-weight: 700;
   padding: 2px 4px;
-  border-radius: 3px;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  border-radius: 8px;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
   text-align: center;
-  line-height: 1.1;
+  line-height: 1;
   cursor: pointer;
   transition: all 0.2s;
   z-index: 10;
-  min-width: 24px;
+  white-space: nowrap;
 }
 
 .mcard-region-pill:hover {
@@ -1585,9 +1587,9 @@ html, body { margin: 0; padding: 0; }
   transform: translateY(-50%);
   background: linear-gradient(to bottom, #6b7fa8, #4a5a7a);
   border: 1px solid rgba(0,0,0,0.5);
-  border-radius: 3px;
+  border-radius: 8px;
   padding: 2px 5px;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
@@ -1596,7 +1598,7 @@ html, body { margin: 0; padding: 0; }
   z-index: 10;
   pointer-events: auto;
   color: #fff;
-  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-shadow: 1px 1px 0 #000;
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.18), 0 1px 2px rgba(0,0,0,0.6);
 }
 
@@ -8434,9 +8436,10 @@ input.cmd-pill-input {
   margin-bottom: 10px;
 }
 .login-title {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   margin-bottom: 3px;
+  line-height: 1.3;
 }
 .login-author {
   font-family: 'Brush Script MT', 'Segoe Script', 'Bradley Hand', cursive;
@@ -10023,13 +10026,13 @@ input.cmd-pill-input {
 }
 
 .mobile-home-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   margin: 0;
+  line-height: 1.3;
 }
 
 .mobile-home-subtitle {
@@ -10189,6 +10192,95 @@ input.cmd-pill-input {
 .mobile-search-hint-text {
   font-size: 15px;
   line-height: 1.5;
+}
+
+/* Compteur de cartes */
+.mobile-cards-count {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 5px;
+}
+
+/* Cartes mobiles */
+.mobile-card {
+  background: linear-gradient(135deg, #1e3a5f, #0d2240);
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  border-left: 4px solid #3b82f6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-card:active {
+  transform: scale(0.98);
+}
+
+.mobile-card.region-qc {
+  border-left-color: #3b82f6;
+}
+
+.mobile-card.region-on {
+  border-left-color: #E8B97A;
+  background: linear-gradient(135deg, #3d2815, #1a1108);
+}
+
+.mobile-card.region-ma {
+  border-left-color: #C7458C;
+  background: linear-gradient(135deg, #4a1535, #2a0a1a);
+}
+
+.mobile-card-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  min-width: 100px;
+}
+
+.mobile-card-order {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+}
+
+.mobile-card-client {
+  width: 100%;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobile-card-delay {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.mobile-card-delay.urgent {
+  background: #f59e0b;
+  color: #000;
+}
+
+.mobile-card-delay.retard {
+  background: #ef4444;
+  color: #fff;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.5; }
 }
 
 /* Bouton accès desktop */
@@ -10533,13 +10625,13 @@ input.cmd-pill-input {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
-  padding: 8px 12px;
+  gap: 3px;
+  padding: 5px 8px;
   background: #f1f5f9;
   border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  border-radius: 6px;
   color: #64748b;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
@@ -10608,9 +10700,9 @@ input.cmd-pill-input {
 
 .mobile-info-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 12px 15px;
-  margin-bottom: 12px;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 0;
   border: 1px solid #e2e8f0;
 }
 
@@ -10619,29 +10711,29 @@ input.cmd-pill-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 6px 0;
 }
 
 .mobile-status-label {
-  font-size: 15.5px;
+  font-size: 12px;
   font-weight: 700;
   color: #64748b;
 }
 
 .mobile-status-value {
-  font-size: 15.5px;
+  font-size: 12px;
   font-weight: 700;
   color: #1e40af;
 }
 
 .mobile-info-card-title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
   color: #3b82f6;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 10px;
-  padding-bottom: 8px;
+  margin-bottom: 6px;
+  padding-bottom: 5px;
   border-bottom: 2px solid #e2e8f0;
 }
 
@@ -10649,7 +10741,7 @@ input.cmd-pill-input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 5px 0;
   border-bottom: 1px solid #e8ecf0;
 }
 
@@ -10658,14 +10750,14 @@ input.cmd-pill-input {
 }
 
 .mobile-info-label {
-  font-size: 14.5px;
+  font-size: 12px;
   color: #64748b;
   font-weight: 500;
   flex-shrink: 0;
 }
 
 .mobile-info-value {
-  font-size: 15.5px;
+  font-size: 12px;
   color: #1e293b;
   font-weight: 600;
   text-align: right;
@@ -10682,33 +10774,33 @@ input.cmd-pill-input {
 .mobile-section-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, #cbd5e1, transparent);
-  margin: 8px 0;
+  margin: 4px 0;
 }
 
 /* Section photos */
 .mobile-photos-section {
-  margin-top: 8px;
+  margin-top: 5px;
 }
 
 .mobile-photos-title {
-  font-size: 13.5px;
+  font-size: 11px;
   font-weight: 600;
   color: #64748b;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 /* Ligne des boutons photos */
 .mobile-photos-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .mobile-photo-icon {
-  font-size: 28px;
+  font-size: 22px;
   cursor: pointer;
-  padding: 5px;
-  border-radius: 8px;
+  padding: 3px;
+  border-radius: 6px;
   transition: all 0.2s;
 }
 
@@ -11498,7 +11590,7 @@ input.cmd-pill-input {
       </div>
     </div>
     <div class="login-title-container">
-      <div class="login-title">Moulage</div>
+      <div class="login-title">Outil d'aide de gestion pour les moulages</div>
       <div class="login-author">par Daniel Charest</div>
     </div>
     <div class="login-subtitle">Connectez-vous avec votre email d'entreprise</div>
@@ -13974,6 +14066,17 @@ let EXPEDITION_OPTIONS = [
   { value: 'partiel', label: 'Envoi partiel', blink: false, color: 'yellow' },
   { value: 'expedie', label: 'Expédié', blink: false, color: '' }
 ];
+
+// Obtenir l'abréviation de la région
+function getRegionAbbrev(region) {
+  if (!region) return 'QC';
+  const r = region.toLowerCase();
+  if (r.includes('ontario') || r === 'on') return 'ON';
+  if (r.includes('maritime') || r === 'ma' || r.includes('nova') || r.includes('halifax') || r.includes('new')) return 'MA';
+  if (r.includes('québec') || r.includes('quebec') || r === 'qc') return 'QC';
+  // Pour les autres, prendre les 2 premières lettres
+  return region.substring(0, 2).toUpperCase();
+}
 
 function createCard(name, order, region, columnIndex) {
   const cardId = generateCardId();
@@ -22219,28 +22322,23 @@ let mobileDataLoaded = false;
 function updateMobileDataCount() {
   const count = Object.keys(cardsData).length;
   const countEl = document.getElementById('mobileDataCount');
-  const hintEl = document.getElementById('mobileSearchHint');
   
   if (countEl) {
     if (count > 0) {
       countEl.textContent = `${count} moulage${count > 1 ? 's' : ''} chargé${count > 1 ? 's' : ''}`;
       countEl.style.color = '#4ade80';
       mobileDataLoaded = true;
+      
+      // Afficher les cartes si pas de recherche en cours
+      const input = document.getElementById('mobileSearchInput');
+      if (!input || input.value.trim() === '') {
+        displayAllMobileCards();
+      }
     } else {
       countEl.textContent = '⏳ Chargement des données...';
       countEl.style.color = '#fbbf24';
       mobileDataLoaded = false;
     }
-  }
-  
-  if (hintEl && count > 0) {
-    hintEl.innerHTML = `
-      <div class="mobile-search-hint-icon">📋</div>
-      <div class="mobile-search-hint-text">
-        ${count} moulage${count > 1 ? 's' : ''} disponible${count > 1 ? 's' : ''}<br>
-        Entrez un mot-clé pour rechercher
-      </div>
-    `;
   }
 }
 
@@ -22265,14 +22363,14 @@ function createMobileHomeHTML() {
     <div class="mobile-home-overlay" id="mobileHomeOverlay">
       <div class="mobile-home-header">
         <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro1.png" class="mobile-home-logo" alt="PhysiPro">
-        <h1 class="mobile-home-title">Outil de gestion des moulages</h1>
+        <h1 class="mobile-home-title">Outil d'aide de gestion pour les moulages</h1>
         <p class="mobile-home-subtitle" id="mobileDataCount">⏳ Chargement des données...</p>
       </div>
       
       <div class="mobile-search-container">
         <div class="mobile-search-box">
           <span class="mobile-search-icon">🔍</span>
-          <input type="text" id="mobileSearchInput" placeholder="Rechercher (nom, commande, client...)" autocomplete="off">
+          <input type="text" id="mobileSearchInput" placeholder="Rechercher..." autocomplete="off">
           <span class="mobile-search-clear" id="mobileSearchClear" onclick="clearMobileSearch()">✕</span>
         </div>
       </div>
@@ -22376,28 +22474,101 @@ function initMobileSearchEvents() {
       performMobileSearch(query);
     });
   }
+  
+  // Afficher tous les moulages au démarrage
+  setTimeout(() => {
+    displayAllMobileCards();
+  }, 500);
+}
+
+// Afficher toutes les cartes de moulages
+function displayAllMobileCards() {
+  const results = document.getElementById('mobileSearchResults');
+  if (!results) return;
+  
+  const dataCount = Object.keys(cardsData).length;
+  if (dataCount === 0) {
+    results.innerHTML = `
+      <div class="mobile-search-hint">
+        <div class="mobile-search-hint-icon">⏳</div>
+        <div class="mobile-search-hint-text">
+          Chargement des données...<br>
+          Veuillez patienter
+        </div>
+      </div>
+    `;
+    return;
+  }
+  
+  // Trier par date de livraison
+  const sortedCards = Object.entries(cardsData)
+    .sort((a, b) => {
+      const dateA = a[1].dateLivraison || '9999';
+      const dateB = b[1].dateLivraison || '9999';
+      return dateA.localeCompare(dateB);
+    });
+  
+  results.innerHTML = `
+    <div class="mobile-cards-count">${dataCount} moulage${dataCount > 1 ? 's' : ''}</div>
+    ${sortedCards.map(([cardId, card]) => createMobileCardHTML(cardId, card)).join('')}
+  `;
+}
+
+// Créer le HTML d'une carte mobile
+function createMobileCardHTML(cardId, card) {
+  const regionClass = getRegionClass(card.region);
+  const daysInfo = calculateDaysRemaining(card.dateLivraison);
+  
+  return `
+    <div class="mobile-card ${regionClass}" onclick="openMobileFiche('${cardId}')">
+      <div class="mobile-card-name">${card.name || 'Sans nom'}</div>
+      <div class="mobile-card-order">#${card.order || '000000'}</div>
+      <div class="mobile-card-client">${card.client || '-'}</div>
+      <div class="mobile-card-delay ${daysInfo.class}">${daysInfo.text}</div>
+    </div>
+  `;
+}
+
+// Calculer les jours restants
+function calculateDaysRemaining(dateLivraison) {
+  if (!dateLivraison) return { text: '-', class: '' };
+  
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const delivery = new Date(dateLivraison);
+  delivery.setHours(0, 0, 0, 0);
+  
+  const diffTime = delivery - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  
+  if (diffDays < 0) {
+    return { text: `${Math.abs(diffDays)}j retard`, class: 'retard' };
+  } else if (diffDays <= 14) {
+    return { text: `${diffDays}j`, class: 'urgent' };
+  } else {
+    return { text: `${diffDays}j`, class: '' };
+  }
+}
+
+// Obtenir la classe de région
+function getRegionClass(region) {
+  if (!region) return 'region-qc';
+  const r = region.toLowerCase();
+  if (r.includes('ontario') || r.includes('on')) return 'region-on';
+  if (r.includes('maritime') || r.includes('ma') || r.includes('nova') || r.includes('halifax')) return 'region-ma';
+  return 'region-qc';
 }
 
 // Effacer la recherche
 function clearMobileSearch() {
   const input = document.getElementById('mobileSearchInput');
   const clearBtn = document.getElementById('mobileSearchClear');
-  const results = document.getElementById('mobileSearchResults');
   
   if (input) input.value = '';
   if (clearBtn) clearBtn.classList.remove('visible');
   
-  if (results) {
-    results.innerHTML = `
-      <div class="mobile-search-hint">
-        <div class="mobile-search-hint-icon">📋</div>
-        <div class="mobile-search-hint-text">
-          Entrez un mot-clé pour rechercher<br>
-          dans tous les moulages
-        </div>
-      </div>
-    `;
-  }
+  // Afficher tous les moulages
+  displayAllMobileCards();
 }
 
 // Effectuer la recherche mobile
@@ -22420,32 +22591,26 @@ function performMobileSearch(query) {
     return;
   }
   
-  if (query.length < 2) {
-    results.innerHTML = `
-      <div class="mobile-search-hint">
-        <div class="mobile-search-hint-icon">📋</div>
-        <div class="mobile-search-hint-text">
-          ${dataCount} moulage${dataCount > 1 ? 's' : ''} disponible${dataCount > 1 ? 's' : ''}<br>
-          Entrez au moins 2 caractères
-        </div>
-      </div>
-    `;
+  // Si pas de recherche, afficher tous les moulages
+  if (query.length < 1) {
+    displayAllMobileCards();
     return;
   }
   
   const queryLower = query.toLowerCase();
+  const queryNoSpaces = queryLower.replace(/\s/g, '');
   const matches = [];
-  const seenOrders = new Set(); // Pour éviter les doublons par numéro de commande
+  const seenOrders = new Set();
   
-  // Rechercher dans toutes les cartes
+  // Rechercher dans toutes les cartes - TOUS LES CHAMPS
   Object.entries(cardsData).forEach(([cardId, card]) => {
-    // Éviter les doublons par numéro de commande
-    const orderKey = (card.order || '').replace(/\s/g, ''); // Enlever les espaces
+    const orderKey = (card.order || '').replace(/\s/g, '');
     if (seenOrders.has(orderKey) && orderKey !== '') {
-      return; // Skip ce doublon
+      return;
     }
     
-    const searchFields = [
+    // Chercher dans TOUS les champs
+    const allFields = [
       card.name,
       card.order,
       card.client,
@@ -22453,25 +22618,19 @@ function performMobileSearch(query) {
       card.representant,
       card.numeroPO,
       card.numeroSoumission,
-      card.region
-    ].filter(Boolean).map(f => String(f).toLowerCase().replace(/\s/g, '')); // Enlever les espaces pour la recherche
-    
-    // Aussi chercher avec espaces
-    const searchFieldsWithSpaces = [
-      card.name,
-      card.order,
-      card.client,
-      card.intervenant,
-      card.representant,
-      card.numeroPO,
-      card.numeroSoumission,
-      card.region
+      card.region,
+      card.item,
+      card.notes,
+      card.dateRecue,
+      card.dateLivraison,
+      card.dateRobot,
+      card.dateEssayage
     ].filter(Boolean).map(f => String(f).toLowerCase());
     
-    const queryNoSpaces = queryLower.replace(/\s/g, '');
+    const allFieldsNoSpaces = allFields.map(f => f.replace(/\s/g, ''));
     
-    if (searchFields.some(field => field.includes(queryNoSpaces)) ||
-        searchFieldsWithSpaces.some(field => field.includes(queryLower))) {
+    if (allFieldsNoSpaces.some(field => field.includes(queryNoSpaces)) ||
+        allFields.some(field => field.includes(queryLower))) {
       matches.push({ cardId, card });
       if (orderKey) seenOrders.add(orderKey);
     }
@@ -22483,23 +22642,15 @@ function performMobileSearch(query) {
       <div class="mobile-no-results">
         <div class="mobile-no-results-icon">🔍</div>
         <div class="mobile-no-results-text">Aucun moulage trouvé pour "${query}"</div>
-        <div style="font-size: 12px; margin-top: 10px; opacity: 0.7;">Recherche dans ${dataCount} moulages</div>
       </div>
     `;
     return;
   }
   
-  results.innerHTML = matches.map(({ cardId, card }) => `
-    <div class="mobile-result-item" onclick="openMobileFiche('${cardId}')">
-      <div class="mobile-result-icon">📋</div>
-      <div class="mobile-result-info">
-        <div class="mobile-result-name">${card.name || 'Sans nom'}</div>
-        <div class="mobile-result-order">#${card.order || '000000'}</div>
-        <div class="mobile-result-client">${card.client || ''}</div>
-      </div>
-      <div class="mobile-result-arrow">›</div>
-    </div>
-  `).join('');
+  results.innerHTML = `
+    <div class="mobile-cards-count">${matches.length} résultat${matches.length > 1 ? 's' : ''}</div>
+    ${matches.map(({ cardId, card }) => createMobileCardHTML(cardId, card)).join('')}
+  `;
 }
 
 // Ouvrir une fiche mobile
