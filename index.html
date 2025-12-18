@@ -10288,11 +10288,13 @@ input.cmd-pill-input {
   height: 100%;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 15px;
+  padding: 12px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Page Notes (gauche) */
+/* Page Notes (gauche) - PLEINE PAGE */
 .mobile-page-notes {
   background: linear-gradient(to bottom, #1a3a5c, #0d2340);
 }
@@ -10300,15 +10302,22 @@ input.cmd-pill-input {
 .mobile-notes-section {
   background: rgba(255,255,255,0.05);
   border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-notes-section:last-child {
+  flex: 0;
+  margin-top: 10px;
 }
 
 .mobile-notes-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #fff;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -10316,13 +10325,14 @@ input.cmd-pill-input {
 
 .mobile-notes-textarea {
   width: 100%;
-  min-height: 150px;
+  flex: 1;
+  min-height: 200px;
   padding: 12px;
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 8px;
   background: rgba(0,0,0,0.3);
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
   resize: none;
   box-sizing: border-box;
   font-family: inherit;
@@ -10336,8 +10346,7 @@ input.cmd-pill-input {
 .mobile-photos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 15px;
+  gap: 8px;
 }
 
 .mobile-photo-btn {
@@ -10377,14 +10386,14 @@ input.cmd-pill-input {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .mobile-save-notes-btn:active {
   transform: scale(0.98);
 }
 
-/* Page Info (centre) */
+/* Page Info (centre) - PLEINE PAGE */
 .mobile-page-info {
   background: linear-gradient(to bottom, #1a3a5c, #0d2340);
 }
@@ -10392,24 +10401,24 @@ input.cmd-pill-input {
 .mobile-info-card {
   background: rgba(255,255,255,0.05);
   border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
 }
 
 .mobile-info-card-title {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: #4a8ef5;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .mobile-info-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
@@ -10418,16 +10427,16 @@ input.cmd-pill-input {
 }
 
 .mobile-info-label {
-  font-size: 12px;
+  font-size: 14px;
   color: rgba(255,255,255,0.6);
 }
 
 .mobile-info-value {
-  font-size: 13px;
+  font-size: 14px;
   color: #fff;
   font-weight: 500;
   text-align: right;
-  max-width: 60%;
+  max-width: 55%;
   word-break: break-word;
 }
 
@@ -10436,7 +10445,7 @@ input.cmd-pill-input {
   font-weight: 600;
 }
 
-/* Page Suivi (droite) */
+/* Page Suivi (droite) - PLEINE PAGE */
 .mobile-page-suivi {
   background: linear-gradient(to bottom, #1a3a5c, #0d2340);
 }
@@ -21742,28 +21751,29 @@ function createMobileHomeHTML() {
           
           <!-- PAGE NOTES (gauche - index 0) -->
           <div class="mobile-fiche-page mobile-page-notes" id="mobilePageNotes">
-            <div class="mobile-notes-section">
-              <div class="mobile-notes-title">📝 Notes</div>
-              <textarea class="mobile-notes-textarea" id="mobileNotesTextarea" placeholder="Écrivez vos notes ici..."></textarea>
-              <button class="mobile-save-notes-btn" onclick="saveMobileNotes()">💾 Sauvegarder les notes</button>
-            </div>
-            
-            <div class="mobile-notes-section">
-              <div class="mobile-notes-title">📷 Photos</div>
-              <div class="mobile-photos-grid" id="mobilePhotosGrid">
-                <div class="mobile-photo-btn" data-photo="client" onclick="openMobilePhoto('client')">
-                  <span>👤</span>
-                  Client
-                </div>
-                <div class="mobile-photo-btn" data-photo="atelier" onclick="openMobilePhoto('atelier')">
-                  <span>🔧</span>
-                  Atelier
-                </div>
-                <div class="mobile-photo-btn" data-photo="devis" onclick="openMobilePhoto('devis')">
-                  <span>📄</span>
-                  Devis
+            <div class="mobile-notes-section" style="flex: 1; display: flex; flex-direction: column;">
+              <div class="mobile-notes-title">📝 Notes du moulage</div>
+              <textarea class="mobile-notes-textarea" id="mobileNotesTextarea" placeholder="Écrivez vos notes ici..." style="flex: 1; min-height: 250px;"></textarea>
+              
+              <div style="margin-top: 15px;">
+                <div class="mobile-notes-title" style="margin-bottom: 8px;">📷 Photos</div>
+                <div class="mobile-photos-grid" id="mobilePhotosGrid">
+                  <div class="mobile-photo-btn" data-photo="client" onclick="openMobilePhoto('client')">
+                    <span>👤</span>
+                    Client
+                  </div>
+                  <div class="mobile-photo-btn" data-photo="atelier" onclick="openMobilePhoto('atelier')">
+                    <span>🔧</span>
+                    Atelier
+                  </div>
+                  <div class="mobile-photo-btn" data-photo="devis" onclick="openMobilePhoto('devis')">
+                    <span>📄</span>
+                    Devis
+                  </div>
                 </div>
               </div>
+              
+              <button class="mobile-save-notes-btn" onclick="saveMobileNotes()">💾 Sauvegarder les notes</button>
             </div>
           </div>
           
@@ -21893,10 +21903,29 @@ function performMobileSearch(query) {
   
   const queryLower = query.toLowerCase();
   const matches = [];
+  const seenOrders = new Set(); // Pour éviter les doublons par numéro de commande
   
   // Rechercher dans toutes les cartes
   Object.entries(cardsData).forEach(([cardId, card]) => {
+    // Éviter les doublons par numéro de commande
+    const orderKey = (card.order || '').replace(/\s/g, ''); // Enlever les espaces
+    if (seenOrders.has(orderKey) && orderKey !== '') {
+      return; // Skip ce doublon
+    }
+    
     const searchFields = [
+      card.name,
+      card.order,
+      card.client,
+      card.intervenant,
+      card.representant,
+      card.numeroPO,
+      card.numeroSoumission,
+      card.region
+    ].filter(Boolean).map(f => String(f).toLowerCase().replace(/\s/g, '')); // Enlever les espaces pour la recherche
+    
+    // Aussi chercher avec espaces
+    const searchFieldsWithSpaces = [
       card.name,
       card.order,
       card.client,
@@ -21907,8 +21936,12 @@ function performMobileSearch(query) {
       card.region
     ].filter(Boolean).map(f => String(f).toLowerCase());
     
-    if (searchFields.some(field => field.includes(queryLower))) {
+    const queryNoSpaces = queryLower.replace(/\s/g, '');
+    
+    if (searchFields.some(field => field.includes(queryNoSpaces)) ||
+        searchFieldsWithSpaces.some(field => field.includes(queryLower))) {
       matches.push({ cardId, card });
+      if (orderKey) seenOrders.add(orderKey);
     }
   });
   
@@ -21980,70 +22013,68 @@ function renderMobilePageInfo(card) {
   const container = document.getElementById('mobilePageInfo');
   
   container.innerHTML = `
-    <div class="mobile-info-card">
-      <div class="mobile-info-card-title">📋 Informations générales</div>
+    <div class="mobile-info-card" style="flex: 1;">
+      <div class="mobile-info-card-title">📋 FICHE MOULAGE</div>
+      
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Nom</span>
-        <span class="mobile-info-value">${card.name || '-'}</span>
+        <span class="mobile-info-label">👤 Nom</span>
+        <span class="mobile-info-value" style="font-size: 16px; font-weight: 700;">${card.name || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">N° Commande</span>
-        <span class="mobile-info-value highlight">${card.order || '-'}</span>
+        <span class="mobile-info-label">🔢 N° Commande</span>
+        <span class="mobile-info-value highlight" style="font-size: 16px;">${card.order || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Client</span>
+        <span class="mobile-info-label">🏢 Client</span>
         <span class="mobile-info-value">${card.client || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Région</span>
+        <span class="mobile-info-label">🗺️ Région</span>
         <span class="mobile-info-value">${card.region || '-'}</span>
       </div>
-    </div>
-    
-    <div class="mobile-info-card">
-      <div class="mobile-info-card-title">👥 Contacts</div>
+      
+      <div style="height: 1px; background: rgba(255,255,255,0.2); margin: 12px 0;"></div>
+      
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Intervenant</span>
+        <span class="mobile-info-label">👩‍⚕️ Intervenant</span>
         <span class="mobile-info-value">${card.intervenant || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Représentante</span>
+        <span class="mobile-info-label">👩‍💼 Représentante</span>
         <span class="mobile-info-value">${card.representant || '-'}</span>
       </div>
-    </div>
-    
-    <div class="mobile-info-card">
-      <div class="mobile-info-card-title">📅 Dates</div>
+      
+      <div style="height: 1px; background: rgba(255,255,255,0.2); margin: 12px 0;"></div>
+      
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Date reçue</span>
+        <span class="mobile-info-label">📥 Date reçue</span>
         <span class="mobile-info-value">${card.dateRecue || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Date livraison</span>
+        <span class="mobile-info-label">📦 Date livraison</span>
         <span class="mobile-info-value highlight">${card.dateLivraison || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Date robot</span>
+        <span class="mobile-info-label">🤖 Date robot</span>
         <span class="mobile-info-value">${card.dateRobot || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">RDV Essayage</span>
+        <span class="mobile-info-label">📅 RDV Essayage</span>
         <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
       </div>
-    </div>
-    
-    <div class="mobile-info-card">
-      <div class="mobile-info-card-title">📄 Références</div>
+      
+      <div style="height: 1px; background: rgba(255,255,255,0.2); margin: 12px 0;"></div>
+      
       <div class="mobile-info-row">
-        <span class="mobile-info-label">N° PO</span>
+        <span class="mobile-info-label">📑 N° PO</span>
         <span class="mobile-info-value">${card.numeroPO || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">N° Soumission</span>
+        <span class="mobile-info-label">📋 N° Soumission</span>
         <span class="mobile-info-value">${card.numeroSoumission || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">Item</span>
+        <span class="mobile-info-label">📦 Item</span>
         <span class="mobile-info-value">${card.item || '-'}</span>
       </div>
     </div>
