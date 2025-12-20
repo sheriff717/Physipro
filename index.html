@@ -39,8 +39,8 @@ html, body {
 .topbar {
   flex: 0 0 auto;
   width: 100%;
-  padding: 6px 20px 12px 20px;
-  min-height: 90px;
+  padding: 4px 20px 6px 20px;
+  min-height: 75px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,43 +52,70 @@ html, body {
 .tb-left { display: flex; align-items: center; gap: 10px; }
 
 .logo-flip-container {
-  width: 240px; height: 78px;
-  perspective: 1000px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
   cursor: pointer;
   position: relative; z-index: 100;
-  transition: transform 0.6s ease;
-  transform-style: preserve-3d;
 }
 
-.logo-flip-inner {
-  position: relative; width: 100%; height: 100%;
-  transition: transform 0.7s cubic-bezier(0.4, 0.0, 0.2, 1);
-  transform-style: preserve-3d;
-  pointer-events: none;
+.logo-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logo-flip-container:hover .logo-flip-inner { transform: rotateY(15deg); }
-
-@keyframes flipToBack { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(180deg); } }
-@keyframes flipToFront { 0% { transform: rotateY(180deg); } 100% { transform: rotateY(360deg); } }
-
-.logo-flip-container.flipping-to-back .logo-flip-inner { animation: flipToBack 0.7s forwards; }
-.logo-flip-container.flipping-to-front .logo-flip-inner { animation: flipToFront 0.7s forwards; }
-
-.logo-flip-front, .logo-flip-back {
-  position: absolute; width: 100%; height: 100%;
-  backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 6px; background: transparent; overflow: hidden;
-}
-
-.logo-flip-front { z-index: 2; }
-.logo-flip-back { transform: rotateY(180deg); }
-
-.logo-flip-front img, .logo-flip-back img {
-  max-width: 100%; max-height: 100%;
+.logo-top-fixed img {
+  height: 40px;
+  width: auto;
   object-fit: contain;
   filter: brightness(1.1) drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.logo-bottom-text {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  margin-top: -4px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+/* Menu à droite du logo */
+.logo-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.logo-flip-container:hover .logo-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.logo-menu-item {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  border-radius: 5px;
+  background: rgba(255,255,255,0.15);
+}
+
+.logo-menu-item:hover {
+  background: rgba(74, 142, 245, 0.6);
+  transform: translateX(3px);
 }
 
 .tb-center {
@@ -110,35 +137,46 @@ html, body {
 
 .settings-btn:hover { background: rgba(255,255,255,0.2); transform: rotate(45deg); }
 
-.tb-right { display: flex; align-items: center; gap: 15px; }
-
-.user-status {
-  display: flex; align-items: center; gap: 8px;
-  padding: 6px 12px; background: rgba(255,255,255,0.1);
-  border-radius: 20px; font-size: 12px;
+.tb-right { 
+  position: relative;
+  display: flex; 
+  flex-direction: column; 
+  align-items: flex-end; 
+  justify-content: center;
+  height: 100%;
 }
 
-.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #6b7280; }
+.user-status {
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+  display: flex; align-items: center; gap: 4px;
+  padding: 1px 6px; background: rgba(255,255,255,0.1);
+  border-radius: 8px; font-size: 8px;
+}
+
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #6b7280; }
 .status-dot.online { background: #22c55e; }
 .user-name { color: #fff; font-weight: 500; }
 
 .user-role-badge {
-  display: inline-block; margin-left: 6px; padding: 2px 6px;
-  border-radius: 8px; font-size: 9px; font-weight: 600;
+  display: inline-block; margin-left: 4px; padding: 1px 4px;
+  border-radius: 6px; font-size: 7px; font-weight: 600;
 }
 .user-role-badge.admin { background: #dc2626; color: #fff; }
 .user-role-badge.editor { background: #2563eb; color: #fff; }
 .user-role-badge.viewer { background: #6b7280; color: #fff; }
 
 .header-btn {
-  padding: 8px 16px;
-  background: linear-gradient(to bottom, #22c55e, #16a34a);
-  color: #fff; border: none; border-radius: 8px;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  padding: 4px 12px;
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
+  color: #fff; border: 1px solid #000; border-radius: 6px;
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  transition: all 0.2s; box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 3px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
-.header-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+.header-btn:hover { transform: translateY(-1px); box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 3px 8px rgba(0,0,0,0.4); }
 
 .search-row {
   position: absolute; bottom: 8px; left: 50%;
@@ -150,7 +188,7 @@ html, body {
   display: flex; align-items: center;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 20px; padding: 4px 12px; min-width: 380px;
+  border-radius: 20px; padding: 4px 12px; min-width: 480px;
 }
 
 .search-box:focus-within { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.4); }
@@ -217,6 +255,195 @@ html, body {
 .settings-item.logout:hover { background: rgba(239,68,68,0.2); }
 .settings-icon { font-size: 18px; }
 
+/* ===== IMPORT/EXPORT MENU ===== */
+.import-export-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+.import-export-overlay.hidden { display: none; }
+
+.import-export-popup {
+  background: linear-gradient(to bottom, #1e3a5f, #0a1628);
+  border: 2px solid #4a8ef5;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.import-export-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to bottom, #04152c, #4a8ef5);
+  border-bottom: 1px solid #4a8ef5;
+  border-radius: 10px 10px 0 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.import-export-close-btn {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.import-export-close-btn:hover { filter: brightness(1.2); }
+
+.import-export-content { padding: 20px; }
+
+.import-export-section { margin-bottom: 15px; }
+.import-export-section h3 { margin: 0 0 10px 0; font-size: 15px; color: #4ade80; }
+.import-export-section p { margin: 0 0 15px 0; font-size: 12px; color: #94a3b8; line-height: 1.4; }
+
+.import-export-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: filter 0.2s;
+}
+.import-export-btn:hover { filter: brightness(1.1); }
+
+.export-btn { background: linear-gradient(to bottom, #22c55e, #16a34a); color: white; }
+.import-btn { background: linear-gradient(to bottom, #3b82f6, #2563eb); color: white; }
+
+.export-options { display: flex; gap: 10px; margin-top: 10px; }
+
+.import-export-btn-small {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #4a8ef5;
+  background: rgba(74, 142, 245, 0.2);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.import-export-btn-small:hover { background: rgba(74, 142, 245, 0.4); }
+
+.import-export-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #4a8ef5, transparent);
+  margin: 20px 0;
+}
+
+.import-warning {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: #fca5a5;
+}
+
+/* ===== LOG MODAL ===== */
+.log-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20000;
+}
+.log-overlay.hidden { display: none; }
+
+.log-popup {
+  background: linear-gradient(to bottom, #1e3a5f, #0a1628);
+  border: 2px solid #4a8ef5;
+  border-radius: 12px;
+  width: 600px;
+  max-width: 95vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to bottom, #04152c, #4a8ef5);
+  border-bottom: 1px solid #4a8ef5;
+  border-radius: 10px 10px 0 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.log-close-btn {
+  background: linear-gradient(to bottom, #ef4444, #dc2626);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+}
+.log-close-btn:hover { filter: brightness(1.2); }
+
+.log-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.log-entry {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.log-time {
+  color: #94a3b8;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.log-action {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.log-empty {
+  text-align: center;
+  color: #64748b;
+  padding: 40px;
+  font-style: italic;
+}
+
 /* ===== BOARD ===== */
 .board-wrapper { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
 
@@ -234,40 +461,48 @@ html, body {
 
 .col-header {
   padding: 8px 10px;
-  background: linear-gradient(to bottom, rgba(74,142,245,0.3), rgba(74,142,245,0.1));
+  background: linear-gradient(to bottom, #04152c 0%, #4a8ef5 100%);
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 11px; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: #fff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
   flex-shrink: 0; cursor: default;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.16), 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .col-header.clickable { cursor: pointer; }
-.col-header.clickable:hover { background: linear-gradient(to bottom, rgba(74,142,245,0.5), rgba(74,142,245,0.2)); }
-.col-header.en-attente { background: linear-gradient(to bottom, rgba(239,68,68,0.3), rgba(239,68,68,0.1)); }
+.col-header.clickable:hover { background: linear-gradient(to bottom, #0a2540 0%, #5a9ef5 100%); }
+.col-header.en-attente { background: linear-gradient(to bottom, #4a1010 0%, #dc2626 100%); }
 
-.col-icon { font-size: 12px; margin-right: 4px; }
+.col-icon { position: absolute; left: 8px; font-size: 12px; }
+.col-title { text-align: center; }
 
 .col-count {
-  background: rgba(255,255,255,0.2); padding: 2px 6px;
+  position: absolute;
+  right: 8px;
+  background: linear-gradient(to bottom, #04152c 0%, #4a8ef5 100%);
+  padding: 2px 6px;
   border-radius: 10px; font-size: 10px; font-weight: 600;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  border: 1px solid rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
 }
 
 .col-content {
-  flex: 1; overflow-y: auto; padding: 4px;
-  display: flex; flex-direction: column; gap: 4px;
+  flex: 1; overflow-y: auto; padding: 1px;
+  display: flex; flex-direction: column; gap: 2px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
 }
 
-.col-content::-webkit-scrollbar { width: 6px; }
-.col-content::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
-.col-content::-webkit-scrollbar-thumb { background: rgba(74,142,245,0.4); border-radius: 3px; }
+.col-content::-webkit-scrollbar { display: none; } /* Chrome/Safari/Opera */
 
 /* ===== CARTES COMPACTES ===== */
 .mcard {
   position: relative;
-  margin: 2px 0;
-  padding: 4px 6px 2px 6px;
+  margin: 1px 0;
+  padding: 0px 6px 2px 6px;
   border-radius: 8px;
   background: linear-gradient(to bottom, #1a3a5a 0%, #3a6a9a 35%, #5a9acf 100%);
   border: 2px solid #000;
@@ -279,15 +514,15 @@ html, body {
 
 /* Couleurs par region - dégradé métallique lumineux */
 .mcard.region-qc {
-  background: linear-gradient(to bottom, #1a4a7a 0%, #3a7ac9 50%, #5a9aef 100%);
+  background: linear-gradient(to bottom, #04152c 0%, #4a8ef5 100%);
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 6px rgba(0,0,0,0.35);
 }
 .mcard.region-on {
-  background: linear-gradient(to bottom, #8a6020 0%, #c9a050 50%, #E8C080 100%);
+  background: linear-gradient(to bottom, #704414 0%, #E8B97A 100%);
   box-shadow: inset 0 2px 3px rgba(255,255,255,0.4), 0 2px 6px rgba(0,0,0,0.35);
 }
 .mcard.region-ma {
-  background: linear-gradient(to bottom, #6D2050 0%, #A04070 50%, #D060A0 100%);
+  background: linear-gradient(to bottom, #451238 0%, #8D2E6A 40%, #C7458C 100%);
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.2), 0 2px 6px rgba(0,0,0,0.35);
 }
 
@@ -309,6 +544,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   margin-bottom: 0;
+  padding: 0;
 }
 
 .mcard-info { width: 100%; text-align: center; }
@@ -318,18 +554,21 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1px;
+  margin-bottom: 0px;
 }
 
 .mcard-title {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 0;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-top: 0px;
   cursor: text;
   border: none;
   background: transparent;
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
   outline: none;
   font-family: inherit;
@@ -355,35 +594,49 @@ html, body {
   color: #fff;
   position: relative;
   width: 100%;
-  height: 18px;
+  height: 12px;
   padding: 0 35px;
   box-sizing: border-box;
+  margin-top: 0px;
 }
 
-/* Pastille region (Quebec, Ontario, Maritime) */
+/* Pastille region (Quebec, Ontario, Maritime) - même style que bouton Fiche */
 .mcard-region-pill {
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.3);
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
   color: #fff;
   font-size: 7px;
   font-weight: 700;
   padding: 2px 4px;
   border-radius: 6px;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  border: 1px solid #000;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
   text-align: center;
   line-height: 1;
   cursor: pointer;
   transition: all 0.2s;
   z-index: 10;
   white-space: nowrap;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.4);
 }
 
 .mcard-region-pill:hover {
-  background: rgba(255,255,255,0.5);
   transform: translateY(-50%) scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* Pastille région par couleur de carte */
+.mcard.region-qc .mcard-region-pill {
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
+}
+.mcard.region-on .mcard-region-pill {
+  background: linear-gradient(to bottom, #E8B97A, #704414);
+}
+.mcard.region-ma .mcard-region-pill {
+  background: linear-gradient(to bottom, #C7458C, #451238);
 }
 
 /* Bouton Fiche a droite */
@@ -414,22 +667,25 @@ html, body {
   filter: brightness(1.2);
 }
 
-/* Bouton Fiche par region - couleurs métalliques lumineuses */
+/* Bouton Fiche par region - même couleur que la carte */
 .mcard.region-qc .mcard-fiche-btn {
-  background: linear-gradient(to bottom, #5a9aef, #3a7ac9, #1a4a7a);
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
+  border: 1px solid #000;
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.6);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 .mcard.region-on .mcard-fiche-btn {
-  background: linear-gradient(to bottom, #E8C080, #c9a050, #8a6020);
-  box-shadow: inset 0 1px 2px rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.6);
+  background: linear-gradient(to bottom, #E8B97A, #704414);
+  border: 1px solid #000;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.6);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 .mcard.region-ma .mcard-fiche-btn {
-  background: linear-gradient(to bottom, #D060A0, #A04070, #6D2050);
-  box-shadow: inset 0 1px 1px rgba(255,255,255,0.25), 0 1px 2px rgba(0,0,0,0.6);
+  background: linear-gradient(to bottom, #C7458C, #451238);
+  border: 1px solid #000;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.6);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
@@ -467,13 +723,13 @@ html, body {
 .mcard-separator {
   height: 1px;
   background: rgba(255,255,255,0.25);
-  margin: 1px -6px 1px -6px;
+  margin: 0px -6px 0px -6px;
 }
 
 /* Pastille delai */
 .mcard-delay-pill {
   width: 100%;
-  padding: 1px 3px;
+  padding: 0px 3px;
   font-size: 7px;
   font-weight: 700;
   border-radius: 999px;
@@ -483,10 +739,10 @@ html, body {
   align-items: center;
   justify-content: center;
   border: 1px solid #000;
-  margin-top: 0px;
+  margin-top: 1px;
   margin-bottom: 1px;
   box-sizing: border-box;
-  line-height: 1;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -494,32 +750,32 @@ html, body {
   cursor: pointer;
 }
 
-/* Pastille delai par region - couleurs métalliques lumineuses */
+/* Pastille delai par region - même couleur que la carte */
 .mcard.region-qc .mcard-delay-pill {
-  background: linear-gradient(to bottom, #5a9aef, #3a7ac9, #1a4a7a);
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.3);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 .mcard.region-on .mcard-delay-pill {
-  background: linear-gradient(to bottom, #E8C080, #c9a050, #8a6020);
+  background: linear-gradient(to bottom, #E8B97A, #704414);
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.5);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 .mcard.region-ma .mcard-delay-pill {
-  background: linear-gradient(to bottom, #D060A0, #A04070, #6D2050);
+  background: linear-gradient(to bottom, #C7458C, #451238);
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.25);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
-/* Couleurs delai */
-.mcard-delay-pill.delai-vert { background: linear-gradient(to bottom, #22c55e, #15803d) !important; }
-.mcard-delay-pill.delai-jaune { background: linear-gradient(to bottom, #facc15, #d97706) !important; color: #000 !important; text-shadow: none !important; }
-.mcard-delay-pill.delai-rouge { background: linear-gradient(to bottom, #ef4444, #dc2626) !important; }
+/* Couleurs delai - PLUS DE VERT, seulement jaune et rouge */
+.mcard-delay-pill.delai-vert { } /* Pas de style spécial, garde la couleur de la carte */
+.mcard-delay-pill.delai-jaune { background: linear-gradient(to bottom, #f59e0b, #d97706) !important; color: #000 !important; text-shadow: none !important; }
+.mcard-delay-pill.delai-rouge { background: linear-gradient(to bottom, #ef4444, #b91c1c) !important; }
 .mcard-delay-pill.delai-retard {
-  background: linear-gradient(to bottom, #dc2626, #7f1d1d) !important;
+  background: linear-gradient(to bottom, #ef4444, #b91c1c) !important;
   animation: pulse-retard-delai 0.8s infinite !important;
 }
 
@@ -542,17 +798,17 @@ html, body {
   50%, 100% { background: #ff0000; box-shadow: 0 0 4px #ff0000, 0 0 8px #ff0000; }
 }
 
-/* Expédié */
+/* Expédié - même couleur que la carte */
 .mcard .mcard-delay-pill.expedie { cursor: default !important; animation: none !important; }
-.mcard.region-qc .mcard-delay-pill.expedie { background: linear-gradient(to bottom, #5a9aef, #3a7ac9, #1a4a7a) !important; }
-.mcard.region-on .mcard-delay-pill.expedie { background: linear-gradient(to bottom, #E8C080, #c9a050, #8a6020) !important; }
-.mcard.region-ma .mcard-delay-pill.expedie { background: linear-gradient(to bottom, #D060A0, #A04070, #6D2050) !important; }
+.mcard.region-qc .mcard-delay-pill.expedie { background: linear-gradient(to bottom, #4a8ef5, #04152c) !important; }
+.mcard.region-on .mcard-delay-pill.expedie { background: linear-gradient(to bottom, #E8B97A, #704414) !important; }
+.mcard.region-ma .mcard-delay-pill.expedie { background: linear-gradient(to bottom, #C7458C, #451238) !important; }
 
 /* Boutons footer */
 .mcard-footer-buttons {
   display: flex;
-  gap: 3px;
-  margin-top: 0;
+  gap: 2px;
+  margin-top: 1px;
 }
 
 .mcard-btn {
@@ -581,21 +837,21 @@ html, body {
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
-/* Bouton deplacer par region - couleurs métalliques lumineuses */
+/* Bouton deplacer par region - même couleur que la carte */
 .mcard.region-qc .mcard-btn-move {
-  background: linear-gradient(to bottom, #5a9aef, #3a7ac9, #1a4a7a);
+  background: linear-gradient(to bottom, #4a8ef5, #04152c);
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.6);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 .mcard.region-on .mcard-btn-move {
-  background: linear-gradient(to bottom, #E8C080, #c9a050, #8a6020);
+  background: linear-gradient(to bottom, #E8B97A, #704414);
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.5), 0 1px 2px rgba(0,0,0,0.6);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 .mcard.region-ma .mcard-btn-move {
-  background: linear-gradient(to bottom, #D060A0, #A04070, #6D2050);
+  background: linear-gradient(to bottom, #C7458C, #451238);
   box-shadow: inset 0 1px 1px rgba(255,255,255,0.25), 0 1px 2px rgba(0,0,0,0.6);
   color: #ffffff;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
@@ -1569,108 +1825,137 @@ html, body {
   100% { background: rgba(239, 68, 68, 0.2); opacity: 0; transform: translateX(20px); }
 }
 
-/* ===== MENU RAISON ATTENTE ===== */
-.raison-attente-menu {
+/* ===== MENUS CONTEXTUELS UNIFIÉS ===== */
+.ctx-menu {
   position: fixed;
   background: linear-gradient(145deg, #0d2137 0%, #1a3a5c 50%, #0d2137 100%);
-  border-radius: 14px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(74, 142, 245, 0.2);
   z-index: 25000;
-  min-width: 260px;
-  max-width: 320px;
+  min-width: 240px;
+  max-width: 300px;
   overflow: hidden;
 }
 
-.raison-menu-header {
-  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+.ctx-menu.raison {
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(239, 68, 68, 0.3);
+}
+
+.ctx-header {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
   color: white;
-  padding: 14px 18px;
-  font-size: 14px;
+  padding: 12px 16px;
+  font-size: 13px;
   font-weight: 700;
   text-align: center;
 }
 
-.raison-options {
-  max-height: 220px;
+.ctx-menu.raison .ctx-header {
+  background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+}
+
+.ctx-body { padding: 10px; }
+
+.ctx-region {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  margin: 4px 0;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.ctx-region:hover { background: rgba(74, 142, 245, 0.15); }
+.ctx-region.active { background: rgba(74, 142, 245, 0.2); border-color: #3b82f6; }
+
+.ctx-region-name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ctx-input {
+  width: 50px;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid #4a8ef5;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.ctx-unit {
+  font-size: 10px;
+  color: #9ca3af;
+  margin-left: 6px;
+}
+
+.ctx-options {
+  max-height: 200px;
   overflow-y: auto;
   padding: 8px;
 }
 
-.raison-option {
-  padding: 11px 14px;
-  font-size: 12px;
+.ctx-option {
+  padding: 10px 12px;
+  font-size: 11px;
   color: #fff;
   cursor: pointer;
-  border-radius: 8px;
-  margin-bottom: 4px;
+  border-radius: 6px;
+  margin-bottom: 3px;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.1);
-  transition: all 0.2s ease;
+  transition: all 0.2s;
 }
 
-.raison-option:hover {
+.ctx-option:hover {
   background: rgba(239, 68, 68, 0.2);
   border-color: rgba(239, 68, 68, 0.4);
-  transform: translateX(3px);
+  transform: translateX(2px);
 }
 
-.raison-option.selected {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.2) 100%);
+.ctx-option.selected {
+  background: rgba(239, 68, 68, 0.25);
   border-color: #ef4444;
   font-weight: 700;
 }
 
-.raison-menu-actions {
+.ctx-actions {
   border-top: 1px solid rgba(255,255,255,0.1);
-  padding: 10px;
+  padding: 8px;
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
-.raison-action {
-  flex: 1;
-  padding: 10px 12px;
+.ctx-footer {
+  padding: 10px;
+  background: rgba(0,0,0,0.2);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.ctx-btn {
+  padding: 8px 16px;
   font-size: 11px;
-  cursor: pointer;
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  border: none;
-}
-
-.raison-action.add {
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  color: white;
-}
-
-.raison-action.remove {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-}
-
-.raison-action.clear {
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-.raison-menu-footer {
-  padding: 10px 12px;
-  background: linear-gradient(to bottom, #0d2137 0%, #04152c 100%);
-  border-top: 1px solid rgba(74, 142, 245, 0.2);
-  text-align: center;
-}
-
-.raison-menu-footer button {
-  padding: 10px 28px;
-  font-size: 12px;
   font-weight: 600;
   background: linear-gradient(135deg, #4a8ef5 0%, #2563eb 100%);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: transform 0.1s;
 }
+
+.ctx-btn:hover { transform: scale(1.02); }
+.ctx-btn.primary { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); }
+.ctx-btn.danger { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+.ctx-btn.small { flex: 1; padding: 8px 10px; font-size: 10px; }
 
 /* Animation clignotante attente active */
 .mcard-delay-pill.attente-active {
@@ -1682,121 +1967,6 @@ html, body {
   50% { opacity: 0.5; background: #ef4444; }
 }
 
-/* ===== MENU DELAI ===== */
-.delai-menu-popup {
-  position: fixed;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
-  z-index: 25000;
-  min-width: 260px;
-  overflow: hidden;
-}
-
-.delai-menu-popup .delai-menu-header {
-  background: linear-gradient(to bottom, #1e40af, #1e3a8a);
-  color: white;
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.delai-regions-simple {
-  padding: 8px;
-}
-
-.delai-region-row {
-  display: flex;
-  align-items: center;
-  padding: 10px 12px;
-  margin: 4px 0;
-  border-radius: 8px;
-  background: #f8fafc;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 2px solid transparent;
-}
-
-.delai-region-row:hover {
-  background: #e0f2fe;
-}
-
-.delai-region-row.active {
-  background: #dbeafe;
-  border-color: #3b82f6;
-}
-
-.delai-region-row .region-name {
-  flex: 1;
-  font-size: 13px;
-  font-weight: 600;
-  color: #1e3a5f;
-}
-
-.delai-region-row .region-delai-input {
-  width: 50px;
-  padding: 4px 6px;
-  font-size: 13px;
-  font-weight: 700;
-  text-align: center;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  background: white;
-  color: #1e40af;
-}
-
-.delai-region-row .region-unit {
-  font-size: 11px;
-  color: #6b7280;
-  margin-left: 6px;
-}
-
-.delai-menu-expedie {
-  padding: 12px;
-  border-top: 1px solid #e2e8f0;
-}
-
-.delai-expedie-btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 13px;
-  font-weight: 700;
-  background: linear-gradient(to bottom, #8b5cf6, #7c3aed);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.delai-expedie-btn:hover {
-  background: linear-gradient(to bottom, #7c3aed, #6d28d9);
-}
-
-.delai-menu-footer {
-  padding: 10px;
-  background: #f1f5f9;
-  border-top: 1px solid #e2e8f0;
-}
-
-.delai-save-btn {
-  width: 100%;
-  padding: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  background: linear-gradient(to bottom, #22c55e, #16a34a);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-
-/* ===== VUE ROBOT HORIZONTALE ===== */
 /* ===== VUE ROBOT HORIZONTALE ===== */
 .robot-horizontal-container {
   display: none;
@@ -1942,99 +2112,6 @@ html, body {
 @keyframes blink-notes { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
 .rang-robot-text { font-weight: 600; color: #1e40af; }
-
-/* Calendrier popup */
-.table-calendar-popup {
-  position: fixed;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-  z-index: 30000;
-  width: 240px;
-}
-
-.table-cal-header {
-  background: linear-gradient(to bottom, #1e40af, #1e3a8a);
-  color: #fff;
-  padding: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.table-cal-header button {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 14px;
-  cursor: pointer;
-  padding: 2px 6px;
-}
-
-.table-cal-header button:hover { background: rgba(255,255,255,0.2); border-radius: 3px; }
-
-.table-cal-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  background: #f1f5f9;
-  padding: 4px;
-  gap: 1px;
-}
-
-.table-cal-day-name {
-  text-align: center;
-  font-size: 9px;
-  font-weight: 600;
-  color: #475569;
-  padding: 3px;
-}
-
-.table-cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 4px;
-  gap: 1px;
-  background: #fff;
-}
-
-.table-cal-cell {
-  text-align: center;
-  padding: 6px 2px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: 3px;
-  color: #111827;
-  background: #fff;
-}
-
-.table-cal-cell:hover { background: #dbeafe; color: #1e40af; }
-.table-cal-cell.empty { cursor: default; }
-.table-cal-cell.today { background: #fef3c7; font-weight: 700; color: #92400e; }
-.table-cal-cell.selected { background: #3b82f6; color: #fff; font-weight: 700; }
-
-.table-cal-footer {
-  display: flex;
-  gap: 4px;
-  padding: 8px;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-}
-
-.table-cal-footer button {
-  flex: 1;
-  padding: 6px;
-  font-size: 10px;
-  font-weight: 600;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.table-cal-clear { background: #fee2e2; color: #dc2626; }
-.table-cal-today { background: #dbeafe; color: #1e40af; }
-.table-cal-close { background: #e5e7eb; color: #374151; }
 
 /* Popup Notes - style fiche */
 .notes-popup-overlay {
@@ -2349,7 +2426,8 @@ html, body {
 }
 
 /* ===== CALENDRIER POPUP ===== */
-.calendar-overlay {
+/* ===== CALENDRIER UNIFIÉ ===== */
+.cal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.6);
@@ -2358,116 +2436,92 @@ html, body {
   justify-content: center;
   z-index: 25000;
 }
-.calendar-overlay.hidden { display: none; }
 
-.calendar-popup {
-  background: linear-gradient(to bottom, #1e3a5f, #0d2137);
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-  min-width: 280px;
+.cal-popup {
+  position: fixed;
+  z-index: 25000;
 }
 
-.calendar-header {
+.cal-container {
+  background: linear-gradient(to bottom, #1e3a5f, #0d2137);
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  min-width: 260px;
+}
+
+.cal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   color: #fff;
   font-weight: 600;
+  font-size: 13px;
 }
 
-.cal-nav-btn {
+.cal-header button {
   background: rgba(255,255,255,0.1);
   border: none;
   color: #fff;
-  padding: 5px 10px;
+  padding: 4px 10px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-}
-
-.cal-nav-btn:hover {
-  background: rgba(255,255,255,0.2);
-}
-
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  margin-bottom: 5px;
-}
-
-.calendar-weekdays span {
-  text-align: center;
-  font-size: 10px;
-  color: #888;
-  padding: 5px 0;
-}
-
-.calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-}
-
-.calendar-days .cal-day {
-  text-align: center;
-  padding: 8px 4px;
   font-size: 12px;
+}
+.cal-header button:hover { background: rgba(255,255,255,0.2); }
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: 4px;
+}
+.cal-weekdays span {
+  text-align: center;
+  font-size: 9px;
+  color: #888;
+  padding: 4px 0;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.cal-cell {
+  text-align: center;
+  padding: 7px 3px;
+  font-size: 11px;
   color: #fff;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 3px;
   background: rgba(255,255,255,0.05);
 }
+.cal-cell:hover { background: rgba(74,142,245,0.4); }
+.cal-cell.today { border: 2px solid #4a8ef5; }
+.cal-cell.selected { background: #4a8ef5; font-weight: bold; }
+.cal-cell.empty { cursor: default; background: transparent; }
 
-.calendar-days .cal-day:hover {
-  background: rgba(74,142,245,0.4);
-}
-
-.calendar-days .cal-day.today {
-  border: 2px solid #4a8ef5;
-}
-
-.calendar-days .cal-day.selected {
-  background: #4a8ef5;
-  font-weight: bold;
-}
-
-.calendar-days .cal-day.other-month {
-  color: #555;
-}
-
-.calendar-footer {
+.cal-footer {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   margin-top: 10px;
   justify-content: center;
 }
 
-.btn-cal-today, .btn-cal-clear, .btn-cal-close {
-  padding: 6px 12px;
+.cal-btn {
+  padding: 5px 10px;
   border-radius: 4px;
   border: none;
-  font-size: 11px;
+  font-size: 10px;
   cursor: pointer;
   font-weight: 600;
 }
-
-.btn-cal-today {
-  background: linear-gradient(to bottom, #4a8ef5, #2563eb);
-  color: #fff;
-}
-
-.btn-cal-clear {
-  background: linear-gradient(to bottom, #ef4444, #dc2626);
-  color: #fff;
-}
-
-.btn-cal-close {
-  background: linear-gradient(to bottom, #6b7280, #4b5563);
-  color: #fff;
-}
+.cal-btn.today { background: linear-gradient(to bottom, #4a8ef5, #2563eb); color: #fff; }
+.cal-btn.clear { background: linear-gradient(to bottom, #ef4444, #dc2626); color: #fff; }
+.cal-btn.close { background: linear-gradient(to bottom, #6b7280, #4b5563); color: #fff; }
 
 /* Date picker field style */
 .date-picker-field {
@@ -2483,106 +2537,9 @@ html, body {
   color: #6b7280;
   transition: border-color 0.2s;
 }
-
-.date-picker-field:hover {
-  border-color: #3b82f6;
-}
-
-.date-picker-field.has-value {
-  color: #111827;
-}
-
-.date-picker-icon {
-  font-size: 12px;
-}
-
-/* ===== LOGO NAVIGATION OVALE ===== */
-.logo-nav-container {
-  position: relative;
-  display: inline-block;
-}
-
-/* Ovale autour du logo - proche du logo */
-.logo-nav-oval {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 260px;
-  height: 90px;
-  border: 2px solid rgba(255,255,255,0.5);
-  border-radius: 50%;
-  background: rgba(30, 58, 95, 0.7);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4), inset 0 0 20px rgba(0,0,0,0.3);
-}
-
-.logo-nav-container:hover .logo-nav-oval {
-  opacity: 1;
-}
-
-/* Liens de navigation sur l'ovale */
-.logo-nav-link {
-  position: absolute;
-  font-family: 'Segoe Script', 'Brush Script MT', cursive;
-  font-size: 18px;
-  font-style: italic;
-  color: rgba(255,255,255,0.9);
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.3s ease;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.logo-nav-container:hover .logo-nav-link {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.logo-nav-link:hover {
-  color: #fff;
-  text-shadow: 0 0 10px rgba(255,255,255,0.8), 2px 2px 4px rgba(0,0,0,0.8);
-}
-
-/* Position gauche - inv (très proche du logo) */
-.logo-nav-link.left {
-  left: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.logo-nav-link.left:hover {
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Position droite - Série (très proche du logo) */
-.logo-nav-link.right {
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.logo-nav-link.right:hover {
-  transform: translateY(-50%) scale(1.1);
-}
-
-/* Position bas - En attente (sous l'ovale) */
-.logo-nav-link.bottom {
-  left: 50%;
-  top: calc(100% + 3px);
-  transform: translateX(-50%);
-  font-size: 14px;
-}
-.logo-nav-link.bottom:hover {
-  transform: translateX(-50%) scale(1.1);
-}
-
-/* Animation flip du logo pour navigation */
-.logo-flip-container.flip-left { transform: rotateY(-180deg); }
-.logo-flip-container.flip-right { transform: rotateY(180deg); }
-.logo-flip-container.flip-down { transform: rotateX(180deg); }
+.date-picker-field:hover { border-color: #3b82f6; }
+.date-picker-field.has-value { color: #111827; }
+.date-picker-icon { font-size: 12px; }
 
 /* ===== STRUCTURE MULTI-PAGES ===== */
 .page {
@@ -3274,49 +3231,82 @@ html, body {
   margin-bottom: 0;
   border: 1px solid #e2e8f0;
   flex: 1;
+  overflow-y: auto;
 }
 
-/* Ligne de statut */
-.mobile-status-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
+/* BLOC STATUT - Très visible en haut */
+.mobile-status-block {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(30, 64, 175, 0.3);
 }
 
-.mobile-status-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: #64748b;
+.mobile-status-block.attente {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+  animation: pulseAttente 2s infinite;
 }
 
-.mobile-status-value {
-  font-size: 12px;
-  font-weight: 700;
-  color: #1e40af;
+@keyframes pulseAttente {
+  0%, 100% { box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3); }
+  50% { box-shadow: 0 3px 15px rgba(220, 38, 38, 0.6); }
 }
 
+.mobile-status-dept {
+  font-size: 16px;
+  font-weight: 800;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mobile-status-raison {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  margin-top: 4px;
+  padding: 4px 8px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Lignes d'info compactes */
 .mobile-info-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
-  border-bottom: 1px solid #e8ecf0;
+  padding: 3px 0;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .mobile-info-row:last-child {
   border-bottom: none;
 }
 
+.mobile-info-row.double {
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.mobile-info-half {
+  display: flex;
+  justify-content: space-between;
+  width: 48%;
+}
+
 .mobile-info-label {
-  font-size: 12px;
+  font-size: 9px;
   color: #64748b;
   font-weight: 500;
   flex-shrink: 0;
 }
 
 .mobile-info-value {
-  font-size: 12px;
+  font-size: 9px;
   color: #1e293b;
   font-weight: 600;
   text-align: right;
@@ -3333,57 +3323,95 @@ html, body {
 .mobile-section-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, #cbd5e1, transparent);
-  margin: 4px 0;
+  margin: 3px 0;
 }
 
-/* Section photos sur page Info */
+/* BOUTONS PHOTOS - Pleine largeur, vert si vide */
 .mobile-photos-section {
-  margin-top: 5px;
+  margin-top: 6px;
 }
 
-.mobile-photos-row {
+.mobile-photos-grid {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.mobile-photo-icon {
-  font-size: 22px;
-  cursor: pointer;
-  padding: 3px;
-  border-radius: 6px;
-  transition: all 0.2s;
-}
-
-.mobile-photo-icon:active {
-  transform: scale(0.95);
-  background: #f1f5f9;
-}
-
-.mobile-photo-btn-small {
+.mobile-photo-btn-full {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  padding: 5px 8px;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  color: #64748b;
-  font-size: 10px;
-  font-weight: 600;
+  gap: 6px;
+  padding: 10px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
+  width: 100%;
 }
 
-.mobile-photo-btn-small.has-photo {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  border-color: #15803d;
-  color: #fff;
+.mobile-photo-btn-full.has-photo {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
 }
 
-.mobile-photo-btn-small:active {
-  transform: scale(0.95);
+.mobile-photo-btn-full:active {
+  transform: scale(0.98);
+}
+
+/* Slider compte expiré */
+.mobile-expire-section {
+  margin-top: 8px;
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.mobile-expire-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-expire-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.mobile-expire-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #cbd5e1;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.mobile-expire-toggle.active {
+  background: #ef4444;
+}
+
+.mobile-expire-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.mobile-expire-toggle.active::after {
+  transform: translateX(20px);
 }
 
 /* Page Notes (droite) - PLEINE PAGE BLANCHE */
@@ -3391,48 +3419,38 @@ html, body {
   background: #ffffff;
 }
 
-/* Section photos dans Notes (6 boutons) */
-.mobile-notes-photos-section {
-  padding: 10px 15px;
-  border-bottom: 1px solid #e2e8f0;
-  background: #f8fafc;
-}
-
+/* Photos 1-6 sur page Notes */
 .mobile-notes-photos-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: 30px repeat(6, 1fr);
+  gap: 4px;
+  padding: 8px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .mobile-photo-icon-notes {
-  font-size: 26px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 6px;
-  transition: all 0.2s;
-}
-
-.mobile-photo-icon-notes:active {
-  transform: scale(0.95);
-  background: #e2e8f0;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mobile-photo-btn-notes {
-  flex: 1;
-  padding: 10px 0;
-  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 4px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   border-radius: 6px;
-  text-align: center;
-  font-size: 14px;
+  color: #fff;
+  font-size: 11px;
   font-weight: 700;
-  color: #64748b;
   cursor: pointer;
-  transition: all 0.2s;
 }
 
 .mobile-photo-btn-notes.has-photo {
-  background: linear-gradient(to bottom, #22c55e, #16a34a);
-  color: #fff;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
 }
 
 .mobile-photo-btn-notes:active {
@@ -3576,14 +3594,17 @@ html, body {
 <div class="app-root">
   <header class="topbar">
     <div class="tb-left">
-      <div class="logo-flip-container" id="logoFlipContainer" onclick="flipLogoAndSwitch()">
-        <div class="logo-flip-inner">
-          <div class="logo-flip-front">
-            <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro1.png" alt="PhysiPro Moulage"/>
+      <div class="logo-flip-container" id="logoFlipContainer">
+        <div class="logo-main">
+          <div class="logo-top-fixed">
+            <img src="https://raw.githubusercontent.com/Physipro-list/Physipro-serie/main/logo-physiprodemi1.png" alt="PhysiPro"/>
           </div>
-          <div class="logo-flip-back">
-            <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro2.png" alt="PhysiPro Serie Plus"/>
-          </div>
+          <div class="logo-bottom-text" id="logoBottomText">Moulage</div>
+        </div>
+        <div class="logo-menu" id="logoMenu">
+          <div class="logo-menu-item" onclick="switchToPage('serie')">Série +</div>
+          <div class="logo-menu-item" onclick="switchToPage('inventaire')">Inventaire</div>
+          <div class="logo-menu-item" onclick="switchToPage('jobs')">Jobs en attente</div>
         </div>
       </div>
     </div>
@@ -3594,11 +3615,11 @@ html, body {
     </div>
     
     <div class="tb-right">
+      <button class="header-btn" id="btnAddMoulage">+ Ajouter moulage</button>
       <div class="user-status" id="userStatus">
         <span class="status-dot"></span>
         <span class="user-name">Non connecte</span>
       </div>
-      <button class="header-btn" id="btnAddMoulage">+ Ajouter moulage</button>
     </div>
     
     <div class="search-row">
@@ -3613,14 +3634,14 @@ html, body {
   <div class="page active" id="pageMoulages">
     <div class="board-wrapper">
       <div class="board" id="boardMoulages">
-        <div class="col"><div class="col-header clickable" onclick="toggleRobotView()" title="Cliquer pour vue tableau">⚙️ Robot <span class="col-count" id="countRobot">0</span></div><div class="col-content" id="colRobot"></div></div>
-        <div class="col"><div class="col-header">🪚 Dégauchage <span class="col-count" id="countDégauchage">0</span></div><div class="col-content" id="colDégauchage"></div></div>
-        <div class="col"><div class="col-header">♿ Essayage <span class="col-count" id="countEssayage">0</span></div><div class="col-content" id="colEssayage"></div></div>
-        <div class="col"><div class="col-header">🔨 Atelier <span class="col-count" id="countAtelier">0</span></div><div class="col-content" id="colAtelier"></div></div>
-        <div class="col"><div class="col-header">🧵 Couture <span class="col-count" id="countCouture">0</span></div><div class="col-content" id="colCouture"></div></div>
-        <div class="col"><div class="col-header">🎨 Peinture <span class="col-count" id="countPeinture">0</span></div><div class="col-content" id="colPeinture"></div></div>
-        <div class="col"><div class="col-header">🚚 Expédition <span class="col-count" id="countExpedition">0</span></div><div class="col-content" id="colExpedition"></div></div>
-        <div class="col"><div class="col-header en-attente">⏳ En attente <span class="col-count" id="countAttente">0</span></div><div class="col-content" id="colAttente"></div></div>
+        <div class="col"><div class="col-header clickable" onclick="toggleRobotView()" title="Cliquer pour vue tableau"><span class="col-icon">⚙️</span><span class="col-title">Robot</span><span class="col-count" id="countRobot">0</span></div><div class="col-content" id="colRobot"></div></div>
+        <div class="col"><div class="col-header"><span class="col-icon">🪚</span><span class="col-title">Dégauchage</span><span class="col-count" id="countDégauchage">0</span></div><div class="col-content" id="colDégauchage"></div></div>
+        <div class="col"><div class="col-header"><span class="col-icon">♿</span><span class="col-title">Essayage</span><span class="col-count" id="countEssayage">0</span></div><div class="col-content" id="colEssayage"></div></div>
+        <div class="col"><div class="col-header"><span class="col-icon">🔨</span><span class="col-title">Atelier</span><span class="col-count" id="countAtelier">0</span></div><div class="col-content" id="colAtelier"></div></div>
+        <div class="col"><div class="col-header"><span class="col-icon">🧵</span><span class="col-title">Couture</span><span class="col-count" id="countCouture">0</span></div><div class="col-content" id="colCouture"></div></div>
+        <div class="col"><div class="col-header"><span class="col-icon">🎨</span><span class="col-title">Peinture</span><span class="col-count" id="countPeinture">0</span></div><div class="col-content" id="colPeinture"></div></div>
+        <div class="col"><div class="col-header"><span class="col-icon">🚚</span><span class="col-title">Expédition</span><span class="col-count" id="countExpedition">0</span></div><div class="col-content" id="colExpedition"></div></div>
+        <div class="col"><div class="col-header en-attente"><span class="col-icon">⏳</span><span class="col-title">En attente</span><span class="col-count" id="countAttente">0</span></div><div class="col-content" id="colAttente"></div></div>
       </div>
     </div>
     
@@ -3699,6 +3720,53 @@ html, body {
         <button class="settings-item" id="btnImportExport"><span class="settings-icon">&#128230;</span><span>Importer / Exporter</span></button>
         <button class="settings-item" id="btnArchives"><span class="settings-icon">&#128203;</span><span>Log / Archives</span></button>
         <button class="settings-item logout" id="btnLogout"><span class="settings-icon">&#128682;</span><span>Deconnexion</span></button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Menu Import/Export -->
+  <div class="import-export-overlay hidden" id="importExportOverlay">
+    <div class="import-export-popup">
+      <div class="import-export-header">
+        <span>📦 Importer / Exporter les données</span>
+        <button class="import-export-close-btn" onclick="closeImportExportMenu()">✕</button>
+      </div>
+      <div class="import-export-content">
+        <div class="import-export-section">
+          <h3>📤 Exporter les données</h3>
+          <p>Télécharger toutes vos données (moulages, paramètres) dans un fichier JSON.</p>
+          <button class="import-export-btn export-btn" onclick="exportAllData()">
+            <span>📥</span> Exporter toutes les données
+          </button>
+          <div class="export-options">
+            <button class="import-export-btn-small" onclick="exportMoulagesOnly()">Moulages seulement</button>
+          </div>
+        </div>
+        <div class="import-export-divider"></div>
+        <div class="import-export-section">
+          <h3>📥 Importer les données</h3>
+          <p>Charger des données depuis un fichier JSON exporté précédemment.</p>
+          <input type="file" id="importFileInput" accept=".json" style="display:none" onchange="handleImportFile(event)">
+          <button class="import-export-btn import-btn" onclick="document.getElementById('importFileInput').click()">
+            <span>📤</span> Importer un fichier
+          </button>
+          <div class="import-warning">
+            ⚠️ L'importation ajoutera les données au système. Exportez d'abord vos données actuelles!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Menu Log/Archives -->
+  <div class="log-overlay hidden" id="logOverlay">
+    <div class="log-popup">
+      <div class="log-header">
+        <span>📋 Journal des activités</span>
+        <button class="log-close-btn" onclick="closeLogMenu()">✕</button>
+      </div>
+      <div class="log-content" id="logContent">
+        <div class="log-empty">Aucune activité enregistrée</div>
       </div>
     </div>
   </div>
@@ -5777,12 +5845,6 @@ function showToast(msg, err = false) {
   setTimeout(() => { toast.classList.remove('visible'); setTimeout(() => toast.remove(), 300); }, 2500);
 }
 
-function flipLogoAndSwitch() {
-  const c = document.getElementById('logoFlipContainer');
-  c.classList.toggle('flipping-to-back');
-  c.classList.toggle('flipping-to-front');
-}
-
 // Init
 document.addEventListener('DOMContentLoaded', () => {
   if (!initFirebase()) { showToast('Erreur Firebase', true); return; }
@@ -5838,7 +5900,6 @@ window.moveCardToPosition = moveCardToPosition;
 window.showDeleteConfirm = showDeleteConfirm;
 window.closeDeleteConfirm = closeDeleteConfirm;
 window.confirmDelete = confirmDelete;
-window.flipLogoAndSwitch = flipLogoAndSwitch;
 window.openPriorityMenu = openPriorityMenu;
 window.openCalendar = openCalendar;
 window.closeCalendar = closeCalendar;
@@ -5851,218 +5912,204 @@ window.saveMoulageNotes = saveMoulageNotes;
 window.showFichePriorityMenu = showFichePriorityMenu;
 window.togglePhotosMenu = togglePhotosMenu;
 window.closePhotosMenu = closePhotosMenu;
-// ===== MENU DELAI ET RAISON ATTENTE =====
 
+// ===== MENUS CONTEXTUELS UNIFIÉS (Délai / Raison Attente / Expédition) =====
 let isRobotViewActive = false;
 
+// Ferme tous les menus contextuels
+function closeContextMenus() {
+  document.getElementById('contextMenu')?.remove();
+}
+
+// Positionne un menu près d'un élément
+function positionMenu(menu, anchor, preferLeft = false) {
+  const rect = anchor.getBoundingClientRect();
+  const menuW = menu.offsetWidth || 250;
+  const menuH = menu.offsetHeight || 300;
+  
+  if (preferLeft) {
+    menu.style.left = Math.max(10, rect.left - menuW - 10) + 'px';
+    menu.style.top = Math.max(10, Math.min(rect.top, window.innerHeight - menuH - 10)) + 'px';
+  } else {
+    menu.style.left = Math.min(rect.left, window.innerWidth - menuW - 10) + 'px';
+    menu.style.top = Math.min(rect.bottom + 5, window.innerHeight - menuH - 10) + 'px';
+  }
+}
+
+// Met à jour une carte après modification
+function refreshCard(cardId) {
+  const card = document.querySelector(`.mcard[data-card-id="${cardId}"]`);
+  if (card && cardsData[cardId]) {
+    updateExistingCard(card, cardId, cardsData[cardId]);
+  }
+}
+
+// Menu principal - dispatch selon la colonne
 function openDelaiMenu(cardId, event) {
   event.stopPropagation();
   event.preventDefault();
-  
-  // Fermer tous les menus existants
-  document.getElementById('delaiMenu')?.remove();
-  document.getElementById('raisonAttenteMenu')?.remove();
+  closeContextMenus();
   
   const cardData = cardsData[cardId];
   if (!cardData) return;
   
-  // Si la carte est dans la colonne "En attente" (colonne 7), ouvrir le menu raison
+  // Colonne 7 (En attente) → Menu raison
   if (cardData.columnIndex === 7) {
-    openRaisonAttenteMenu(cardId, event);
+    showRaisonMenu(cardId, event);
     return;
   }
   
-  // Si la carte est dans la colonne "Expédition" (colonne 6), afficher SEULEMENT le bouton Expédier
+  // Colonne 6 (Expédition) → Menu expédier
   if (cardData.columnIndex === 6) {
-    const menu = document.createElement('div');
-    menu.id = 'delaiMenu';
-    menu.className = 'delai-menu-popup';
-    menu.onclick = function(e) { e.stopPropagation(); };
-    
-    menu.innerHTML = `
-      <div class="delai-menu-header">📦 Expédition</div>
-      <div class="delai-menu-expedie">
-        <button class="delai-expedie-btn" onclick="marquerExpedie('${cardId}')">&#128230; Marquer comme Expédié</button>
-      </div>
-      <div class="delai-menu-footer">
-        <button class="delai-save-btn" onclick="document.getElementById('delaiMenu')?.remove()">Fermer</button>
-      </div>
-    `;
-    
-    document.body.appendChild(menu);
-    const rect = event.target.getBoundingClientRect();
-    menu.style.left = Math.min(rect.left, window.innerWidth - 280) + 'px';
-    menu.style.top = Math.min(rect.bottom + 5, window.innerHeight - 300) + 'px';
+    showExpeditionMenu(cardId, event);
     return;
   }
   
-  // Pour les autres colonnes (0-5): menu délai régional sans bouton Expédier
-  const currentRegion = cardData.region || 'Quebec';
-  const delaiQC = MENU_DATA.delays['Quebec'] || 90;
-  const delaiMA = MENU_DATA.delays['Maritime'] || 45;
-  const delaiON = MENU_DATA.delays['Ontario'] || 30;
-  
+  // Colonnes 0-5 → Menu délai régional
+  showDelaiMenu(cardId, event);
+}
+
+// Menu Expédition (colonne 6)
+function showExpeditionMenu(cardId, event) {
   const menu = document.createElement('div');
-  menu.id = 'delaiMenu';
-  menu.className = 'delai-menu-popup';
-  menu.onclick = function(e) { e.stopPropagation(); };
+  menu.id = 'contextMenu';
+  menu.className = 'ctx-menu';
+  menu.onclick = e => e.stopPropagation();
   
   menu.innerHTML = `
-    <div class="delai-menu-header">&#9201; Délais par région</div>
-    <div class="delai-regions-simple">
-      <div class="delai-region-row ${currentRegion === 'Quebec' ? 'active' : ''}" onclick="selectRegionDelai('${cardId}', 'Quebec')">
-        <span class="region-name">Québec</span>
-        <input type="number" class="region-delai-input" id="delaiQC" value="${delaiQC}" min="1" max="365" onclick="event.stopPropagation()">
-        <span class="region-unit">jours</span>
-      </div>
-      <div class="delai-region-row ${currentRegion === 'Maritime' ? 'active' : ''}" onclick="selectRegionDelai('${cardId}', 'Maritime')">
-        <span class="region-name">Maritime</span>
-        <input type="number" class="region-delai-input" id="delaiMA" value="${delaiMA}" min="1" max="365" onclick="event.stopPropagation()">
-        <span class="region-unit">jours</span>
-      </div>
-      <div class="delai-region-row ${currentRegion === 'Ontario' ? 'active' : ''}" onclick="selectRegionDelai('${cardId}', 'Ontario')">
-        <span class="region-name">Ontario</span>
-        <input type="number" class="region-delai-input" id="delaiON" value="${delaiON}" min="1" max="365" onclick="event.stopPropagation()">
-        <span class="region-unit">jours</span>
-      </div>
+    <div class="ctx-header">📦 Expédition</div>
+    <div class="ctx-body">
+      <button class="ctx-btn primary" onclick="marquerExpedie('${cardId}')">📦 Marquer comme Expédié</button>
     </div>
-    <div class="delai-menu-footer">
-      <button class="delai-save-btn" onclick="saveDelaiAndClose('${cardId}')">Sauvegarder et fermer</button>
+    <div class="ctx-footer">
+      <button class="ctx-btn" onclick="closeContextMenus()">Fermer</button>
+    </div>
+  `;
+  
+  document.body.appendChild(menu);
+  positionMenu(menu, event.target);
+}
+
+// Menu Délai régional (colonnes 0-5)
+function showDelaiMenu(cardId, event) {
+  const cardData = cardsData[cardId];
+  const currentRegion = cardData.region || 'Quebec';
+  const delays = MENU_DATA.delays;
+  
+  const menu = document.createElement('div');
+  menu.id = 'contextMenu';
+  menu.className = 'ctx-menu';
+  menu.onclick = e => e.stopPropagation();
+  
+  const regions = [
+    { key: 'Quebec', label: 'Québec', delay: delays['Quebec'] || 90 },
+    { key: 'Maritime', label: 'Maritime', delay: delays['Maritime'] || 45 },
+    { key: 'Ontario', label: 'Ontario', delay: delays['Ontario'] || 30 }
+  ];
+  
+  const rowsHtml = regions.map(r => `
+    <div class="ctx-region ${currentRegion === r.key ? 'active' : ''}" data-region="${r.key}">
+      <span class="ctx-region-name">${r.label}</span>
+      <input type="number" class="ctx-input" data-region="${r.key}" value="${r.delay}" min="1" max="365" onclick="event.stopPropagation()">
+      <span class="ctx-unit">jours</span>
+    </div>
+  `).join('');
+  
+  menu.innerHTML = `
+    <div class="ctx-header">⏱ Délais par région</div>
+    <div class="ctx-body">${rowsHtml}</div>
+    <div class="ctx-footer">
+      <button class="ctx-btn primary" onclick="saveDelai('${cardId}')">Sauvegarder</button>
     </div>
   `;
   
   document.body.appendChild(menu);
   
-  // Positionner près de l'élément cliqué
-  const rect = event.target.getBoundingClientRect();
-  menu.style.left = Math.min(rect.left, window.innerWidth - 280) + 'px';
-  menu.style.top = Math.min(rect.bottom + 5, window.innerHeight - 300) + 'px';
+  // Click sur une région pour la sélectionner
+  menu.querySelectorAll('.ctx-region').forEach(row => {
+    row.onclick = (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      menu.querySelectorAll('.ctx-region').forEach(r => r.classList.remove('active'));
+      row.classList.add('active');
+      if (cardsData[cardId]) cardsData[cardId].region = row.dataset.region;
+    };
+  });
+  
+  positionMenu(menu, event.target);
 }
 
-function selectRegionDelai(cardId, region) {
-  // Marquer la ligne active visuellement
-  document.querySelectorAll('.delai-region-row').forEach(row => row.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+function saveDelai(cardId) {
+  const menu = document.getElementById('contextMenu');
+  if (!menu) return;
   
-  // Mettre à jour la région de la carte
-  if (cardsData[cardId]) {
+  // Sauvegarder les délais
+  menu.querySelectorAll('.ctx-input').forEach(input => {
+    MENU_DATA.delays[input.dataset.region] = parseInt(input.value) || 30;
+  });
+  
+  // Sauvegarder la région sélectionnée
+  const activeRow = menu.querySelector('.ctx-region.active');
+  if (activeRow && cardsData[cardId]) {
+    const region = activeRow.dataset.region;
     cardsData[cardId].region = region;
-  }
-}
-
-function saveDelaiAndClose(cardId) {
-  // Récupérer les valeurs des inputs
-  const delaiQC = parseInt(document.getElementById('delaiQC')?.value) || 90;
-  const delaiMA = parseInt(document.getElementById('delaiMA')?.value) || 45;
-  const delaiON = parseInt(document.getElementById('delaiON')?.value) || 30;
-  
-  // Mettre à jour les délais globaux
-  MENU_DATA.delays['Quebec'] = delaiQC;
-  MENU_DATA.delays['Maritime'] = delaiMA;
-  MENU_DATA.delays['Ontario'] = delaiON;
-  
-  // Sauvegarder la région sélectionnée pour cette carte
-  if (cardsData[cardId]) {
-    const selectedRegion = document.querySelector('.delai-region-row.active .region-name')?.textContent || cardsData[cardId].region;
-    // Normaliser le nom de région
-    let regionKey = selectedRegion;
-    if (selectedRegion === 'Québec') regionKey = 'Quebec';
-    
-    cardsData[cardId].region = regionKey;
-    cardsData[cardId].delaiPersonnalise = MENU_DATA.delays[regionKey];
+    cardsData[cardId].delaiPersonnalise = MENU_DATA.delays[region];
     saveCardToFirebase(cardId);
-    
-    // Mettre à jour l'affichage de la carte
-    const card = document.querySelector('.mcard[data-card-id="' + cardId + '"]');
-    if (card) {
-      updateExistingCard(card, cardId, cardsData[cardId]);
-    }
+    refreshCard(cardId);
   }
   
-  document.getElementById('delaiMenu')?.remove();
+  closeContextMenus();
   showToast('Délai sauvegardé!');
 }
 
 function marquerExpedie(cardId) {
-  const dateExp = prompt('Date d\'expédition (AAAA-MM-JJ):', new Date().toISOString().split('T')[0]);
-  if (dateExp) {
-    if (cardsData[cardId]) {
-      cardsData[cardId].expedie = true;
-      cardsData[cardId].dateExpedition = dateExp;
-      saveCardToFirebase(cardId);
-      
-      // Mettre à jour l'affichage
-      const card = document.querySelector('.mcard[data-card-id="' + cardId + '"]');
-      if (card) {
-        updateExistingCard(card, cardId, cardsData[cardId]);
-      }
-    }
+  const dateExp = prompt("Date d'expédition (AAAA-MM-JJ):", new Date().toISOString().split('T')[0]);
+  if (dateExp && cardsData[cardId]) {
+    cardsData[cardId].expedie = true;
+    cardsData[cardId].dateExpedition = dateExp;
+    saveCardToFirebase(cardId);
+    refreshCard(cardId);
   }
-  document.getElementById('delaiMenu')?.remove();
+  closeContextMenus();
 }
 
-// ===== MENU RAISON ATTENTE =====
-
-function openRaisonAttenteMenu(cardId, event) {
-  event.stopPropagation();
-  event.preventDefault();
-  
-  document.getElementById('raisonAttenteMenu')?.remove();
-  document.getElementById('delaiMenu')?.remove();
-  
+// Menu Raison d'attente (colonne 7)
+function showRaisonMenu(cardId, event) {
   const currentRaison = cardsData[cardId]?.raisonAttente || '';
-  const raisonsAttente = customLists.raisonsAttente || [
-    'RDV non reçu',
-    'Client rappeler - voir note',
-    'Essayage autre région',
-    'Mesure à reprendre',
-    'Pièce à recommander',
-    'Vérification prix',
-    'Intervention',
-    'Livraison reportée',
-    'Hors délai RAMQ',
-    'Sous traitement',
-    'Voir Fiche'
+  const raisons = customLists.raisonsAttente || [
+    'RDV non reçu', 'Client rappeler - voir note', 'Essayage autre région',
+    'Mesure à reprendre', 'Pièce à recommander', 'Vérification prix',
+    'Intervention', 'Livraison reportée', 'Hors délai RAMQ', 'Sous traitement', 'Voir Fiche'
   ];
   
   const menu = document.createElement('div');
-  menu.id = 'raisonAttenteMenu';
-  menu.className = 'raison-attente-menu';
-  menu.onclick = function(e) { e.stopPropagation(); };
+  menu.id = 'contextMenu';
+  menu.className = 'ctx-menu raison';
+  menu.onclick = e => e.stopPropagation();
   
-  const optionsHtml = raisonsAttente.map(raison => {
-    const isSelected = raison === currentRaison;
-    return '<div class="raison-option ' + (isSelected ? 'selected' : '') + '" onclick="selectRaisonAttente(\'' + cardId + '\', \'' + raison.replace(/'/g, "\\'") + '\')">' + raison + '</div>';
-  }).join('');
+  const optionsHtml = raisons.map(r => 
+    `<div class="ctx-option ${r === currentRaison ? 'selected' : ''}" onclick="selectRaison('${cardId}','${r.replace(/'/g, "\\'")}')">${r}</div>`
+  ).join('');
   
   menu.innerHTML = `
-    <div class="raison-menu-header">&#9203; Raison d'attente</div>
-    <div class="raison-options">
-      ${optionsHtml}
+    <div class="ctx-header">⏳ Raison d'attente</div>
+    <div class="ctx-options">${optionsHtml}</div>
+    <div class="ctx-actions">
+      <button class="ctx-btn small" onclick="addRaison('${cardId}')">➕ Ajouter</button>
+      <button class="ctx-btn small danger" onclick="clearRaison('${cardId}')">🗑 Effacer</button>
     </div>
-    <div class="raison-menu-actions">
-      <div class="raison-action add" onclick="addRaisonAttente('${cardId}')">&#10133; Ajouter</div>
-      <div class="raison-action clear" onclick="clearRaisonAttente('${cardId}')">&#128465; Effacer</div>
-    </div>
-    <div class="raison-menu-footer">
-      <button onclick="document.getElementById('raisonAttenteMenu')?.remove()">Fermer</button>
+    <div class="ctx-footer">
+      <button class="ctx-btn" onclick="closeContextMenus()">Fermer</button>
     </div>
   `;
   
   document.body.appendChild(menu);
   
   // Positionner à gauche de la carte
-  const card = document.querySelector('.mcard[data-card-id="' + cardId + '"]');
-  const cardRect = card ? card.getBoundingClientRect() : event.target.getBoundingClientRect();
-  const menuHeight = menu.offsetHeight || 350;
-  const cardCenterY = cardRect.top + (cardRect.height / 2);
-  const menuTop = cardCenterY - (menuHeight / 2);
-  
-  menu.style.left = Math.max(10, cardRect.left - menu.offsetWidth - 10) + 'px';
-  menu.style.top = Math.max(10, Math.min(menuTop, window.innerHeight - menuHeight - 10)) + 'px';
+  const card = document.querySelector(`.mcard[data-card-id="${cardId}"]`);
+  positionMenu(menu, card || event.target, true);
 }
 
-function selectRaisonAttente(cardId, raison) {
+function selectRaison(cardId, raison) {
   if (cardsData[cardId]) {
     cardsData[cardId].raisonAttente = raison;
     cardsData[cardId].attenteActive = true;
@@ -6070,50 +6117,46 @@ function selectRaisonAttente(cardId, raison) {
       cardsData[cardId].dateAttente = new Date().toLocaleDateString('fr-CA');
     }
     saveCardToFirebase(cardId);
-    
-    // Mettre à jour l'affichage
-    const card = document.querySelector('.mcard[data-card-id="' + cardId + '"]');
-    if (card) {
-      updateExistingCard(card, cardId, cardsData[cardId]);
-    }
+    refreshCard(cardId);
   }
-  document.getElementById('raisonAttenteMenu')?.remove();
+  closeContextMenus();
   showToast('Raison: ' + raison);
 }
 
-function addRaisonAttente(cardId) {
-  const newRaison = prompt('Nouvelle raison d\'attente:');
-  if (newRaison && newRaison.trim()) {
+function addRaison(cardId) {
+  const newRaison = prompt("Nouvelle raison d'attente:");
+  if (newRaison?.trim()) {
     const raison = newRaison.trim();
-    if (!customLists.raisonsAttente) {
-      customLists.raisonsAttente = [];
-    }
+    if (!customLists.raisonsAttente) customLists.raisonsAttente = [];
     if (!customLists.raisonsAttente.includes(raison)) {
       customLists.raisonsAttente.push(raison);
       customLists.raisonsAttente.sort((a, b) => a.localeCompare(b, 'fr'));
       saveCustomLists();
-      showListToast('&#10004; "' + raison + '" AJOUTÉ!', true);
+      showListToast('✓ "' + raison + '" AJOUTÉ!', true);
     }
-    selectRaisonAttente(cardId, raison);
+    selectRaison(cardId, raison);
   }
 }
 
-function clearRaisonAttente(cardId) {
+function clearRaison(cardId) {
   if (cardsData[cardId]) {
     cardsData[cardId].raisonAttente = '';
     cardsData[cardId].attenteActive = false;
     cardsData[cardId].dateAttente = '';
     saveCardToFirebase(cardId);
-    
-    // Mettre à jour l'affichage
-    const card = document.querySelector('.mcard[data-card-id="' + cardId + '"]');
-    if (card) {
-      updateExistingCard(card, cardId, cardsData[cardId]);
-    }
+    refreshCard(cardId);
   }
-  document.getElementById('raisonAttenteMenu')?.remove();
+  closeContextMenus();
   showToast('Raison effacée');
 }
+
+// Alias pour compatibilité
+function openRaisonAttenteMenu(cardId, event) { showRaisonMenu(cardId, event); }
+function selectRaisonAttente(cardId, raison) { selectRaison(cardId, raison); }
+function addRaisonAttente(cardId) { addRaison(cardId); }
+function clearRaisonAttente(cardId) { clearRaison(cardId); }
+function selectRegionDelai(cardId, region) { if(cardsData[cardId]) cardsData[cardId].region = region; }
+function saveDelaiAndClose(cardId) { saveDelai(cardId); }
 
 // ===== VUE ROBOT HORIZONTALE =====
 
@@ -6292,91 +6335,6 @@ function setupTableEditableListeners() {
   });
 }
 
-// Calendrier tableau
-function showTableCalendar(cardId, field, cell) {
-  document.getElementById('tableCalendarPopup')?.remove();
-  
-  const currentDate = cardsData[cardId]?.[field] || '';
-  const d = currentDate ? new Date(currentDate+'T00:00:00') : new Date();
-  
-  const popup = document.createElement('div');
-  popup.id = 'tableCalendarPopup';
-  popup.className = 'table-calendar-popup';
-  popup.onclick = e => e.stopPropagation();
-  popup.innerHTML = generateCalendarHTML(d.getFullYear(), d.getMonth(), currentDate, cardId, field);
-  
-  document.body.appendChild(popup);
-  
-  const rect = cell.getBoundingClientRect();
-  popup.style.left = Math.min(rect.left, window.innerWidth - 260) + 'px';
-  popup.style.top = Math.min(rect.bottom + 5, window.innerHeight - 320) + 'px';
-}
-
-function generateCalendarHTML(year, month, selected, cardId, field) {
-  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  const days = ['Di','Lu','Ma','Me','Je','Ve','Sa'];
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date().toISOString().split('T')[0];
-  
-  let html = `<div class="table-cal-header">
-    <button onclick="navTableCal(-1,'${cardId}','${field}')">◀</button>
-    <span>${months[month]} ${year}</span>
-    <button onclick="navTableCal(1,'${cardId}','${field}')">▶</button>
-  </div>
-  <div class="table-cal-days">${days.map(d=>'<div class="table-cal-day-name">'+d+'</div>').join('')}</div>
-  <div class="table-cal-grid">`;
-  
-  for (let i = 0; i < firstDay; i++) html += '<div class="table-cal-cell empty"></div>';
-  
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateStr = year+'-'+String(month+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
-    let cls = 'table-cal-cell';
-    if (dateStr === selected) cls += ' selected';
-    if (dateStr === today) cls += ' today';
-    html += `<div class="${cls}" onclick="selectTableDate('${cardId}','${field}','${dateStr}')">${day}</div>`;
-  }
-  
-  html += `</div>
-  <div class="table-cal-footer">
-    <button class="table-cal-clear" onclick="selectTableDate('${cardId}','${field}','')">Effacer</button>
-    <button class="table-cal-today" onclick="selectTableDate('${cardId}','${field}','${today}')">Aujourd'hui</button>
-    <button class="table-cal-close" onclick="closeTableCalendar()">Fermer</button>
-  </div>`;
-  
-  return html;
-}
-
-function navTableCal(dir, cardId, field) {
-  const popup = document.getElementById('tableCalendarPopup');
-  if (!popup) return;
-  
-  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  const text = popup.querySelector('.table-cal-header span').textContent.split(' ');
-  let month = months.indexOf(text[0]);
-  let year = parseInt(text[1]);
-  
-  month += dir;
-  if (month < 0) { month = 11; year--; }
-  if (month > 11) { month = 0; year++; }
-  
-  const selected = cardsData[cardId]?.[field] || '';
-  popup.innerHTML = generateCalendarHTML(year, month, selected, cardId, field);
-}
-
-function selectTableDate(cardId, field, dateStr) {
-  if (cardsData[cardId]) {
-    cardsData[cardId][field] = dateStr;
-    saveCardToFirebase(cardId);
-    renderRobotTable();
-  }
-  closeTableCalendar();
-}
-
-function closeTableCalendar() {
-  document.getElementById('tableCalendarPopup')?.remove();
-}
-
 // Ouvre un popup Notes identique à la fiche moulage
 function openCardNotes(cardId) {
   document.getElementById('notesPopupOverlay')?.remove();
@@ -6499,9 +6457,8 @@ function setupColumnResize() {
 
 // Fermer menus au clic ailleurs
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.table-calendar-popup') && !e.target.closest('.date-cell')) closeTableCalendar();
-  if (!e.target.closest('.delai-menu-popup') && !e.target.closest('.mcard-delay-pill')) document.getElementById('delaiMenu')?.remove();
-  if (!e.target.closest('.raison-attente-menu') && !e.target.closest('.mcard-delay-pill')) document.getElementById('raisonAttenteMenu')?.remove();
+  if (!e.target.closest('#unifiedCalendar') && !e.target.closest('.date-cell')) closeCalendar();
+  if (!e.target.closest('.ctx-menu') && !e.target.closest('.mcard-delay-pill')) closeContextMenus();
 });
 
 // Exports window
@@ -6517,6 +6474,12 @@ window.closeNotesPopup = closeNotesPopup;
 window.savePopupNotes = savePopupNotes;
 window.savePopupPhotoLinks = savePopupPhotoLinks;
 window.togglePopupPhotosPanel = togglePopupPhotosPanel;
+window.closeContextMenus = closeContextMenus;
+window.selectRaison = selectRaison;
+window.addRaison = addRaison;
+window.clearRaison = clearRaison;
+window.saveDelai = saveDelai;
+window.marquerExpedie = marquerExpedie;
 
 // ===== MODAL AJOUTER MOULAGE =====
 function showAddMoulageModal() {
@@ -6788,210 +6751,204 @@ function handleImportMoulageJson(event) {
   event.target.value = '';
 }
 
-// ===== NAVIGATION LOGO AVEC ARCS =====
-// ===== CALENDRIER POPUP =====
-let calendarYear = new Date().getFullYear();
-let calendarMonth = new Date().getMonth();
-let calendarTarget = null;
+// ===== CALENDRIER UNIFIÉ =====
+const CAL_MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const CAL_DAYS = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 
+let calState = { year: 0, month: 0, selected: '', callback: null, clearCallback: null, mode: 'modal', anchorEl: null };
+
+function showCalendar(options = {}) {
+  const { value = '', onSelect = null, onClear = null, mode = 'modal', anchor = null } = options;
+  
+  // Fermer tout calendrier existant
+  closeCalendar();
+  
+  // Initialiser l'état
+  const d = value ? new Date(value + 'T12:00:00') : new Date();
+  calState = { 
+    year: d.getFullYear(), 
+    month: d.getMonth(), 
+    selected: value, 
+    callback: onSelect, 
+    clearCallback: onClear,
+    mode: mode,
+    anchorEl: anchor
+  };
+  
+  // Créer le calendrier
+  const cal = document.createElement('div');
+  cal.id = 'unifiedCalendar';
+  cal.className = mode === 'modal' ? 'cal-overlay' : 'cal-popup';
+  cal.onclick = mode === 'modal' ? (e) => { if (e.target === cal) closeCalendar(); } : (e) => e.stopPropagation();
+  
+  const popup = document.createElement('div');
+  popup.className = 'cal-container';
+  popup.innerHTML = renderCalendarContent();
+  
+  if (mode === 'modal') {
+    cal.appendChild(popup);
+  } else {
+    cal.appendChild(popup);
+  }
+  
+  document.body.appendChild(cal);
+  
+  // Positionner si mode inline
+  if (mode === 'inline' && anchor) {
+    const rect = anchor.getBoundingClientRect();
+    cal.style.left = Math.min(rect.left, window.innerWidth - 260) + 'px';
+    cal.style.top = Math.min(rect.bottom + 5, window.innerHeight - 320) + 'px';
+  }
+}
+
+function renderCalendarContent() {
+  const { year, month, selected } = calState;
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date().toISOString().split('T')[0];
+  
+  let daysHtml = '';
+  
+  // Jours vides du début
+  for (let i = 0; i < firstDay; i++) daysHtml += '<div class="cal-cell empty"></div>';
+  
+  // Jours du mois
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    let cls = 'cal-cell';
+    if (dateStr === today) cls += ' today';
+    if (dateStr === selected) cls += ' selected';
+    daysHtml += `<div class="${cls}" onclick="selectCalDate('${dateStr}')">${day}</div>`;
+  }
+  
+  return `
+    <div class="cal-header">
+      <button onclick="navCal(-1)">◀</button>
+      <span>${CAL_MONTHS[month]} ${year}</span>
+      <button onclick="navCal(1)">▶</button>
+    </div>
+    <div class="cal-weekdays">${CAL_DAYS.map(d => `<span>${d}</span>`).join('')}</div>
+    <div class="cal-grid">${daysHtml}</div>
+    <div class="cal-footer">
+      <button class="cal-btn today" onclick="selectCalDate('${today}')">Aujourd'hui</button>
+      <button class="cal-btn clear" onclick="clearCalDate()">Effacer</button>
+      <button class="cal-btn close" onclick="closeCalendar()">Fermer</button>
+    </div>
+  `;
+}
+
+function navCal(dir) {
+  calState.month += dir;
+  if (calState.month < 0) { calState.month = 11; calState.year--; }
+  if (calState.month > 11) { calState.month = 0; calState.year++; }
+  document.querySelector('#unifiedCalendar .cal-container').innerHTML = renderCalendarContent();
+}
+
+function selectCalDate(dateStr) {
+  if (calState.callback) calState.callback(dateStr);
+  closeCalendar();
+}
+
+function clearCalDate() {
+  if (calState.clearCallback) calState.clearCallback();
+  else if (calState.callback) calState.callback('');
+  closeCalendar();
+}
+
+function closeCalendar() {
+  document.getElementById('unifiedCalendar')?.remove();
+}
+
+// Format date FR
 function formatDateFR(dateStr) {
   if (!dateStr) return '-- Sélectionner --';
   const d = new Date(dateStr + 'T12:00:00');
   return d.toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+// ===== COMPATIBILITÉ ANCIEN CODE =====
+// Calendrier popup (fiche moulage)
 function openCalendarPopup(targetId) {
-  calendarTarget = targetId;
-  
-  // Lire la date actuelle si existante
   const hiddenInput = document.getElementById(targetId);
-  if (hiddenInput && hiddenInput.value) {
-    const parts = hiddenInput.value.split('-');
-    calendarYear = parseInt(parts[0]);
-    calendarMonth = parseInt(parts[1]) - 1;
-  } else {
-    calendarYear = new Date().getFullYear();
-    calendarMonth = new Date().getMonth();
-  }
+  const currentValue = hiddenInput?.value || '';
   
-  // Créer le popup si nécessaire
-  let overlay = document.getElementById('calendarOverlay');
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = 'calendarOverlay';
-    overlay.className = 'calendar-overlay hidden';
-    overlay.innerHTML = `
-      <div class="calendar-popup">
-        <div class="calendar-header">
-          <button class="cal-nav-btn" onclick="calendarPrev()">◀</button>
-          <span id="calendarTitle">Décembre 2025</span>
-          <button class="cal-nav-btn" onclick="calendarNext()">▶</button>
-        </div>
-        <div class="calendar-weekdays">
-          <span>Dim</span><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span>
-        </div>
-        <div class="calendar-days" id="calendarDays"></div>
-        <div class="calendar-footer">
-          <button class="btn-cal-today" onclick="calendarToday()">Aujourd'hui</button>
-          <button class="btn-cal-clear" onclick="calendarClear()">Effacer</button>
-          <button class="btn-cal-close" onclick="closeCalendarPopup()">Fermer</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(overlay);
-  }
-  
-  renderCalendar();
-  overlay.classList.remove('hidden');
-}
-
-function closeCalendarPopup() {
-  const overlay = document.getElementById('calendarOverlay');
-  if (overlay) overlay.classList.add('hidden');
-}
-
-function calendarPrev() {
-  calendarMonth--;
-  if (calendarMonth < 0) {
-    calendarMonth = 11;
-    calendarYear--;
-  }
-  renderCalendar();
-}
-
-function calendarNext() {
-  calendarMonth++;
-  if (calendarMonth > 11) {
-    calendarMonth = 0;
-    calendarYear++;
-  }
-  renderCalendar();
-}
-
-function calendarToday() {
-  selectCalendarDate(new Date().toISOString().split('T')[0]);
-}
-
-function calendarClear() {
-  if (calendarTarget) {
-    document.getElementById(calendarTarget).value = '';
-    const displayEl = document.getElementById(calendarTarget + 'Display');
-    if (displayEl) displayEl.textContent = '-- Sélectionner --';
-  }
-  closeCalendarPopup();
-}
-
-function selectCalendarDate(dateStr) {
-  if (calendarTarget) {
-    document.getElementById(calendarTarget).value = dateStr;
-    const displayEl = document.getElementById(calendarTarget + 'Display');
-    if (displayEl) displayEl.textContent = formatDateFR(dateStr);
-  }
-  closeCalendarPopup();
-}
-
-function renderCalendar() {
-  const titleEl = document.getElementById('calendarTitle');
-  const daysEl = document.getElementById('calendarDays');
-  
-  const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-  
-  titleEl.textContent = monthNames[calendarMonth] + ' ' + calendarYear;
-  
-  const firstDay = new Date(calendarYear, calendarMonth, 1);
-  const lastDay = new Date(calendarYear, calendarMonth + 1, 0);
-  const startDay = firstDay.getDay();
-  const daysInMonth = lastDay.getDate();
-  
-  const today = new Date().toISOString().split('T')[0];
-  const selectedDate = calendarTarget ? document.getElementById(calendarTarget)?.value : '';
-  
-  let html = '';
-  
-  // Jours du mois précédent
-  const prevMonthLastDay = new Date(calendarYear, calendarMonth, 0).getDate();
-  for (let i = startDay - 1; i >= 0; i--) {
-    html += '<div class="cal-day other-month">' + (prevMonthLastDay - i) + '</div>';
-  }
-  
-  // Jours du mois actuel
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateStr = calendarYear + '-' + String(calendarMonth + 1).padStart(2, '0') + '-' + String(day).padStart(2, '0');
-    let classes = 'cal-day';
-    if (dateStr === today) classes += ' today';
-    if (dateStr === selectedDate) classes += ' selected';
-    html += '<div class="' + classes + '" onclick="selectCalendarDate(\'' + dateStr + '\')">' + day + '</div>';
-  }
-  
-  // Jours du mois suivant
-  const totalCells = startDay + daysInMonth;
-  const remainingCells = (7 - (totalCells % 7)) % 7;
-  for (let i = 1; i <= remainingCells; i++) {
-    html += '<div class="cal-day other-month">' + i + '</div>';
-  }
-  
-  daysEl.innerHTML = html;
-}
-
-// ===== NAVIGATION LOGO AVEC DEMI-CERCLES =====
-let currentPage = 'moulages';
-
-function setupLogoNavigation() {
-  const logoContainer = document.getElementById('logoFlipContainer');
-  if (!logoContainer) return;
-  
-  logoContainer.classList.add('logo-nav-container');
-  
-  // Créer l'ovale de fond
-  const oval = document.createElement('div');
-  oval.className = 'logo-nav-oval';
-  logoContainer.appendChild(oval);
-  
-  // Créer les liens de navigation
-  const links = [
-    { direction: 'left', label: 'inv', page: 'inventaire' },
-    { direction: 'right', label: 'Série', page: 'serie' },
-    { direction: 'bottom', label: 'En attente', page: 'jobs' }
-  ];
-  
-  links.forEach(link => {
-    const linkEl = document.createElement('div');
-    linkEl.className = 'logo-nav-link ' + link.direction;
-    linkEl.textContent = link.label;
-    linkEl.dataset.page = link.page;
-    linkEl.dataset.direction = link.direction;
-    linkEl.onclick = (e) => {
-      e.stopPropagation();
-      navigateToPage(link.page, link.direction);
-    };
-    logoContainer.appendChild(linkEl);
+  showCalendar({
+    value: currentValue,
+    mode: 'modal',
+    onSelect: (dateStr) => {
+      if (hiddenInput) hiddenInput.value = dateStr;
+      const displayEl = document.getElementById(targetId + 'Display');
+      if (displayEl) displayEl.textContent = formatDateFR(dateStr);
+    }
   });
 }
+function closeCalendarPopup() { closeCalendar(); }
+function calendarPrev() { navCal(-1); }
+function calendarNext() { navCal(1); }
+function calendarToday() { selectCalDate(new Date().toISOString().split('T')[0]); }
+function calendarClear() { clearCalDate(); }
+function selectCalendarDate(dateStr) { selectCalDate(dateStr); }
 
-function handleLogoClick(e) {
-  // Ne rien faire si clic sur un lien
-  if (e.target.classList.contains('logo-nav-link')) return;
+// Calendrier table (vue Robot)
+function showTableCalendar(cardId, field, cell) {
+  const currentDate = cardsData[cardId]?.[field] || '';
+  
+  showCalendar({
+    value: currentDate,
+    mode: 'inline',
+    anchor: cell,
+    onSelect: (dateStr) => {
+      if (cardsData[cardId]) {
+        cardsData[cardId][field] = dateStr;
+        saveCardToFirebase(cardId);
+        renderRobotTable();
+      }
+    }
+  });
 }
+function closeTableCalendar() { closeCalendar(); }
+function navTableCal(dir, cardId, field) { navCal(dir); }
+function selectTableDate(cardId, field, dateStr) { selectCalDate(dateStr); }
 
-function navigateToPage(page, direction) {
-  const logoContainer = document.getElementById('logoFlipContainer');
+// ===== NAVIGATION PAGES =====
+let currentPage = 'moulages';
+
+// Mapping pages vers noms affichés
+const pageNames = {
+  'moulages': 'Moulage',
+  'serie': 'Série +',
+  'inventaire': 'Inventaire',
+  'jobs': 'Jobs en attente'
+};
+
+function updateLogoMenu() {
+  const menu = document.getElementById('logoMenu');
+  if (!menu) return;
   
-  // Animation flip
-  if (logoContainer) {
-    logoContainer.classList.add('flip-' + direction);
-    
-    setTimeout(() => {
-      logoContainer.classList.remove('flip-left', 'flip-right', 'flip-down', 'flip-up');
-    }, 600);
-  }
-  
-  // Changer de page
-  switchToPage(page);
+  // Reconstruire le menu avec les 3 autres pages (pas la page actuelle)
+  menu.innerHTML = '';
+  Object.keys(pageNames).forEach(page => {
+    if (page !== currentPage) {
+      const item = document.createElement('div');
+      item.className = 'logo-menu-item';
+      item.textContent = pageNames[page];
+      item.onclick = () => switchToPage(page);
+      menu.appendChild(item);
+    }
+  });
 }
 
 function switchToPage(page) {
   currentPage = page;
+  
+  // Changer le texte du bas du logo
+  const logoText = document.getElementById('logoBottomText');
+  if (logoText && pageNames[page]) {
+    logoText.textContent = pageNames[page];
+  }
+  
+  // Mettre à jour le menu
+  updateLogoMenu();
   
   // Cacher toutes les pages
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -7002,23 +6959,22 @@ function switchToPage(page) {
     pageEl.classList.add('active');
   } else {
     // Page pas encore créée - afficher toast
-    showToast('Page "' + page + '" - À développer');
+    showToast('Page "' + pageNames[page] + '" - À développer');
     // Revenir à moulages
+    currentPage = 'moulages';
     const moulagesPage = document.getElementById('pageMoulages');
     if (moulagesPage) moulagesPage.classList.add('active');
+    // Remettre le texte Moulage
+    if (logoText) logoText.textContent = pageNames['moulages'];
+    // Mettre à jour le menu
+    updateLogoMenu();
   }
 }
-
-// Initialiser
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(setupLogoNavigation, 500);
-});
 
 window.showAddMoulageModal = showAddMoulageModal;
 window.closeAddMoulageModal = closeAddMoulageModal;
 window.confirmAddMoulage = confirmAddMoulage;
 window.handleImportMoulageJson = handleImportMoulageJson;
-window.navigateToPage = navigateToPage;
 window.switchToPage = switchToPage;
 window.openCalendarPopup = openCalendarPopup;
 window.closeCalendarPopup = closeCalendarPopup;
@@ -7435,126 +7391,165 @@ function closeMobileFiche() {
 function renderMobilePageInfo(card) {
   const container = document.getElementById('mobilePageInfo');
   
-  // Calculer le statut basé sur columnIndex
+  // Calculer le statut
   const colIndex = card.columnIndex || 0;
   const colNames = ['Robot', 'Dégauchage', 'Essayage', 'Atelier', 'Couture', 'Peinture', 'Expédition', 'En attente'];
   const currentDept = colNames[colIndex] || 'Robot';
+  const isAttente = colIndex === 7;
+  const raisonAttente = card.raisonAttente || '';
   
-  // Déterminer le bon article
+  // Déterminer le texte du statut
   let article = 'À ';
   if (currentDept === 'Robot' || currentDept === 'Dégauchage') article = 'Au ';
   else if (currentDept === 'Atelier' || currentDept === 'Essayage') article = "À l'";
   else if (currentDept === 'Couture' || currentDept === 'Peinture' || currentDept === 'Expédition') article = 'À la ';
+  else if (isAttente) article = '';
   
-  let statutText = `${article}${currentDept}`;
+  const statutText = isAttente ? '⏳ EN ATTENTE' : `${article}${currentDept}`;
+  const compteExpire = card.compteExpire || false;
   
   container.innerHTML = `
     <div class="mobile-info-card" style="flex: 1;">
-      <!-- Statut en haut -->
-      <div class="mobile-status-row">
-        <span class="mobile-status-label">Statut:</span>
-        <span class="mobile-status-value">${statutText}</span>
+      <!-- BLOC STATUT - Très visible -->
+      <div class="mobile-status-block ${isAttente ? 'attente' : ''}">
+        <div class="mobile-status-dept">${statutText}</div>
+        ${isAttente && raisonAttente ? `<div class="mobile-status-raison">${raisonAttente}</div>` : ''}
       </div>
       
-      <div class="mobile-section-divider"></div>
-      
+      <!-- Infos principales sur 2 colonnes -->
       <div class="mobile-info-row">
         <span class="mobile-info-label">👤 Nom</span>
-        <span class="mobile-info-value" style="font-weight: 700;">${card.name || '-'}</span>
+        <span class="mobile-info-value" style="font-weight:700;">${card.name || '-'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">🔢 N° Commande</span>
-        <span class="mobile-info-value highlight">${card.order || '-'}</span>
+      <div class="mobile-info-row double">
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">🔢 Cmd</span>
+          <span class="mobile-info-value highlight">${card.order || '-'}</span>
+        </div>
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">📋 Soum.</span>
+          <span class="mobile-info-value">${card.numeroSoumission || '-'}</span>
+        </div>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">🏢 Client</span>
-        <span class="mobile-info-value">${card.client || '-'}</span>
-      </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">🗺️ Région</span>
-        <span class="mobile-info-value">${card.region || '-'}</span>
-      </div>
-      
-      <div class="mobile-section-divider"></div>
-      
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">👩‍⚕️ Intervenant</span>
-        <span class="mobile-info-value">${card.intervenant || '-'}</span>
-      </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">👩‍💼 Représentante</span>
-        <span class="mobile-info-value">${card.representant || '-'}</span>
+      <div class="mobile-info-row double">
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">🏢 Client</span>
+          <span class="mobile-info-value">${card.client || '-'}</span>
+        </div>
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">🗺️ Région</span>
+          <span class="mobile-info-value">${card.region || '-'}</span>
+        </div>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📥 Date reçue</span>
-        <span class="mobile-info-value">${card.dateRecue || '-'}</span>
-      </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📦 Livraison</span>
-        <span class="mobile-info-value highlight">${card.dateLivraison || '-'}</span>
-      </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">🤖 Date robot</span>
-        <span class="mobile-info-value">${card.dateRobot || '-'}</span>
-      </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📅 Essayage</span>
-        <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
+      <div class="mobile-info-row double">
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">👩‍⚕️ Interv.</span>
+          <span class="mobile-info-value">${card.intervenant || '-'}</span>
+        </div>
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">👩‍💼 Rep.</span>
+          <span class="mobile-info-value">${card.representant || '-'}</span>
+        </div>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📑 N° PO</span>
-        <span class="mobile-info-value">${card.numeroPO || '-'}</span>
+      <div class="mobile-info-row double">
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">📥 Reçue</span>
+          <span class="mobile-info-value">${card.dateRecue || '-'}</span>
+        </div>
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">📦 Livr.</span>
+          <span class="mobile-info-value highlight">${card.dateLivraison || '-'}</span>
+        </div>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📋 Soumission</span>
-        <span class="mobile-info-value">${card.numeroSoumission || '-'}</span>
-      </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📦 Item</span>
-        <span class="mobile-info-value">${card.item || '-'}</span>
+      <div class="mobile-info-row double">
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">🤖 Robot</span>
+          <span class="mobile-info-value">${card.dateRobot || '-'}</span>
+        </div>
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">📅 Essay.</span>
+          <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
+        </div>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <!-- Boutons Photos avec icône appareil -->
+      <div class="mobile-info-row double">
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">📑 PO</span>
+          <span class="mobile-info-value">${card.numeroPO || '-'}</span>
+        </div>
+        <div class="mobile-info-half">
+          <span class="mobile-info-label">📦 Item</span>
+          <span class="mobile-info-value">${card.item || '-'}</span>
+        </div>
+      </div>
+      
+      <div class="mobile-section-divider"></div>
+      
+      <!-- BOUTONS PHOTOS - Pleine largeur -->
       <div class="mobile-photos-section">
-        <div class="mobile-photos-row">
-          <span class="mobile-photo-icon" onclick="openMobilePhotoMenu()">📷</span>
-          <div class="mobile-photo-btn-small ${card.photoClient ? 'has-photo' : ''}" onclick="openMobilePhotoLink('client')">
-            Client
+        <div class="mobile-photos-grid">
+          <div class="mobile-photo-btn-full ${card.photoClient ? 'has-photo' : ''}" onclick="openMobilePhotoLink('client')">
+            📷 Photo Client ${card.photoClient ? '✓' : ''}
           </div>
-          <div class="mobile-photo-btn-small ${card.photoAtelier ? 'has-photo' : ''}" onclick="openMobilePhotoLink('atelier')">
-            Atelier
+          <div class="mobile-photo-btn-full ${card.photoAtelier ? 'has-photo' : ''}" onclick="openMobilePhotoLink('atelier')">
+            📷 Photo Atelier ${card.photoAtelier ? '✓' : ''}
           </div>
-          <div class="mobile-photo-btn-small ${card.photoDevis ? 'has-photo' : ''}" onclick="openMobilePhotoLink('devis')">
-            Devis/Modifs
+          <div class="mobile-photo-btn-full ${card.photoDevis ? 'has-photo' : ''}" onclick="openMobilePhotoLink('devis')">
+            📷 Devis/Modifications ${card.photoDevis ? '✓' : ''}
           </div>
+        </div>
+      </div>
+      
+      <!-- SLIDER COMPTE EXPIRÉ -->
+      <div class="mobile-expire-section">
+        <div class="mobile-expire-row">
+          <span class="mobile-expire-label">⚠️ Compte expiré</span>
+          <div class="mobile-expire-toggle ${compteExpire ? 'active' : ''}" onclick="toggleCompteExpire()"></div>
         </div>
       </div>
     </div>
   `;
 }
 
+// Toggle compte expiré
+function toggleCompteExpire() {
+  if (!currentMobileFicheId || !cardsData[currentMobileFicheId]) return;
+  
+  const card = cardsData[currentMobileFicheId];
+  card.compteExpire = !card.compteExpire;
+  saveCardToFirebase(currentMobileFicheId);
+  
+  // Mettre à jour le toggle visuellement
+  const toggle = document.querySelector('.mobile-expire-toggle');
+  if (toggle) {
+    toggle.classList.toggle('active', card.compteExpire);
+  }
+  
+  showToast(card.compteExpire ? 'Compte marqué expiré' : 'Compte non expiré');
+}
+
 // Générer la page Notes
 function renderMobilePageNotes(card) {
-  // Générer les 6 boutons photos
+  // Générer les 6 boutons photos (vert si vide, bleu si plein)
   const photosSection = document.getElementById('mobileNotesPhotos');
   if (photosSection) {
     photosSection.innerHTML = `
       <div class="mobile-notes-photos-row">
-        <span class="mobile-photo-icon-notes" onclick="openMobilePhotos1to6Menu()">📷</span>
-        <div class="mobile-photo-btn-notes ${card.photo1 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo1')">1</div>
-        <div class="mobile-photo-btn-notes ${card.photo2 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo2')">2</div>
-        <div class="mobile-photo-btn-notes ${card.photo3 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo3')">3</div>
-        <div class="mobile-photo-btn-notes ${card.photo4 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo4')">4</div>
-        <div class="mobile-photo-btn-notes ${card.photo5 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo5')">5</div>
-        <div class="mobile-photo-btn-notes ${card.photo6 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo6')">6</div>
+        <span class="mobile-photo-icon-notes">📷</span>
+        <div class="mobile-photo-btn-notes ${card.photo1 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo1')">${card.photo1 ? '1 ✓' : '1'}</div>
+        <div class="mobile-photo-btn-notes ${card.photo2 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo2')">${card.photo2 ? '2 ✓' : '2'}</div>
+        <div class="mobile-photo-btn-notes ${card.photo3 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo3')">${card.photo3 ? '3 ✓' : '3'}</div>
+        <div class="mobile-photo-btn-notes ${card.photo4 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo4')">${card.photo4 ? '4 ✓' : '4'}</div>
+        <div class="mobile-photo-btn-notes ${card.photo5 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo5')">${card.photo5 ? '5 ✓' : '5'}</div>
+        <div class="mobile-photo-btn-notes ${card.photo6 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo6')">${card.photo6 ? '6 ✓' : '6'}</div>
       </div>
     `;
   }
@@ -7870,6 +7865,7 @@ window.switchToDesktopMode = switchToDesktopMode;
 window.clearMobileSearch = clearMobileSearch;
 window.openMobileFiche = openMobileFiche;
 window.closeMobileFiche = closeMobileFiche;
+window.toggleCompteExpire = toggleCompteExpire;
 window.openMobilePhotoLink = openMobilePhotoLink;
 window.openMobilePhotoMenu = openMobilePhotoMenu;
 window.closeMobilePhotoMenu = closeMobilePhotoMenu;
@@ -7878,6 +7874,178 @@ window.openMobilePhotoLink1to6 = openMobilePhotoLink1to6;
 window.openMobilePhotos1to6Menu = openMobilePhotos1to6Menu;
 window.closeMobilePhotos1to6Menu = closeMobilePhotos1to6Menu;
 window.saveMobilePhotos1to6 = saveMobilePhotos1to6;
+
+// ===== IMPORT/EXPORT & LOG FUNCTIONS =====
+let logEntries = [];
+
+function openImportExportMenu() {
+  document.getElementById('importExportOverlay')?.classList.remove('hidden');
+  document.getElementById('settingsOverlay')?.classList.add('hidden');
+}
+
+function closeImportExportMenu() {
+  document.getElementById('importExportOverlay')?.classList.add('hidden');
+}
+
+function openLogMenu() {
+  renderLogEntries();
+  document.getElementById('logOverlay')?.classList.remove('hidden');
+  document.getElementById('settingsOverlay')?.classList.add('hidden');
+}
+
+function closeLogMenu() {
+  document.getElementById('logOverlay')?.classList.add('hidden');
+}
+
+// Fermer avec clic sur overlay
+document.getElementById('importExportOverlay')?.addEventListener('click', (e) => {
+  if (e.target.id === 'importExportOverlay') closeImportExportMenu();
+});
+document.getElementById('logOverlay')?.addEventListener('click', (e) => {
+  if (e.target.id === 'logOverlay') closeLogMenu();
+});
+
+// Exporter TOUTES les données
+function exportAllData() {
+  const exportData = {
+    version: 'PhysiPro_v2.18',
+    exportDate: new Date().toISOString(),
+    exportedBy: currentUser?.email || 'Anonyme',
+    moulages: cardsData,
+    logs: logEntries
+  };
+  
+  downloadJSON(exportData, `physipro_backup_${formatDateForFilename()}.json`);
+  addLogEntry('Export', 'Export complet effectué');
+  alert('✅ Export complet effectué!\n\nFichier téléchargé avec toutes les données.');
+}
+
+// Exporter seulement les moulages
+function exportMoulagesOnly() {
+  const exportData = {
+    version: 'PhysiPro_v2.18',
+    exportDate: new Date().toISOString(),
+    exportType: 'moulages_only',
+    moulages: cardsData
+  };
+  
+  downloadJSON(exportData, `physipro_moulages_${formatDateForFilename()}.json`);
+  addLogEntry('Export', 'Export moulages effectué');
+  alert('✅ Export des moulages effectué!');
+}
+
+// Télécharger JSON
+function downloadJSON(data, filename) {
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function formatDateForFilename() {
+  const now = new Date();
+  return now.toISOString().slice(0,10).replace(/-/g, '') + '_' + 
+         now.toTimeString().slice(0,5).replace(':', '');
+}
+
+// Importer fichier
+function handleImportFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const importedData = JSON.parse(e.target.result);
+      
+      if (!importedData.version || !importedData.version.startsWith('PhysiPro')) {
+        alert('❌ Fichier invalide!\n\nCe fichier ne semble pas être un export PhysiPro valide.');
+        return;
+      }
+      
+      const confirmMsg = `⚠️ ATTENTION!\n\nVous êtes sur le point d'importer des données du ${new Date(importedData.exportDate).toLocaleString('fr-CA')}.\n\nCette action ajoutera les données importées.\n\nÊtes-vous sûr de vouloir continuer?`;
+      
+      if (!confirm(confirmMsg)) return;
+      
+      let importCount = 0;
+      
+      if (importedData.moulages) {
+        Object.keys(importedData.moulages).forEach(cardId => {
+          cardsData[cardId] = importedData.moulages[cardId];
+          saveCardToFirebase(cardId);
+          importCount++;
+        });
+      }
+      
+      loadCardsFromFirebase();
+      addLogEntry('Import', `${importCount} moulages importés`);
+      alert(`✅ Importation réussie!\n\n• ${importCount} moulages importés\n\nL'affichage a été rafraîchi.`);
+      closeImportExportMenu();
+      
+    } catch (error) {
+      console.error('Erreur d\'importation:', error);
+      alert('❌ Erreur lors de l\'importation!\n\n' + error.message);
+    }
+  };
+  
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// Log entries
+function addLogEntry(action, details) {
+  let userName = 'Anonyme';
+  if (currentUser?.name) {
+    userName = currentUser.name;
+  } else if (currentUser?.email) {
+    userName = currentUser.email.split('@')[0];
+  }
+  
+  const entry = {
+    time: new Date().toLocaleString('fr-CA'),
+    user: userName,
+    action,
+    details
+  };
+  logEntries.unshift(entry);
+  if (logEntries.length > 100) logEntries.pop();
+}
+
+function renderLogEntries() {
+  const container = document.getElementById('logContent');
+  if (!container) return;
+  
+  if (logEntries.length === 0) {
+    container.innerHTML = '<div class="log-empty">Aucune activité enregistrée</div>';
+    return;
+  }
+  
+  container.innerHTML = logEntries.map(e => `
+    <div class="log-entry">
+      <div class="log-time">${e.time} - ${e.user}</div>
+      <div><span class="log-action">${e.action}</span>: ${e.details}</div>
+    </div>
+  `).join('');
+}
+
+// Connecter les boutons settings
+document.getElementById('btnImportExport')?.addEventListener('click', openImportExportMenu);
+document.getElementById('btnArchives')?.addEventListener('click', openLogMenu);
+
+// Exposer fonctions globalement
+window.openImportExportMenu = openImportExportMenu;
+window.closeImportExportMenu = closeImportExportMenu;
+window.openLogMenu = openLogMenu;
+window.closeLogMenu = closeLogMenu;
+window.exportAllData = exportAllData;
+window.exportMoulagesOnly = exportMoulagesOnly;
+window.handleImportFile = handleImportFile;
 </script>
 </body>
 </html>
