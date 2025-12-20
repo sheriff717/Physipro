@@ -3355,6 +3355,21 @@ html, body {
   font-size: 15px;
 }
 
+/* Client - texte qui s'adapte si trop long */
+.mobile-info-value.shrink-text {
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+
+@supports (container-type: inline-size) {
+  .mobile-info-value.shrink-text {
+    font-size: clamp(10px, 4vw, 15px);
+  }
+}
+
 .mobile-info-value.highlight {
   color: #16a34a;
   font-weight: 700;
@@ -4154,19 +4169,20 @@ function createCardElement(cardId, cardData) {
   const regionText = cardData.region || '--';
   
   // Nom et commande: verrouillés si déjà remplis
-  const nameLocked = cardData.name && cardData.name.trim() !== '' && cardData.name !== 'Nom du moulage';
-  const orderLocked = cardData.order && cardData.order.trim() !== '' && cardData.order !== '000000';
+  // Les champs nom et commande peuvent être modifiés avec confirmation
+  const hasName = cardData.name && cardData.name.trim() !== '' && cardData.name !== 'Nom du moulage';
+  const hasOrder = cardData.order && cardData.order.trim() !== '' && cardData.order !== '000000';
   
   card.innerHTML = `
     <div class="priority-badge hidden" data-priority="0"></div>
     <div class="mcard-header">
       <div class="mcard-info">
         <div class="mcard-title-line">
-          <input type="text" class="mcard-title ${nameLocked ? 'locked' : ''}" value="${cardData.name || 'Nom du moulage'}" data-field="name" ${nameLocked ? 'readonly' : ''}>
+          <input type="text" class="mcard-title ${hasName ? 'needs-confirm' : ''}" value="${cardData.name || 'Nom du moulage'}" data-field="name" data-original="${cardData.name || ''}">
         </div>
         <div class="mcard-order-line">
           <span class="mcard-region-pill" onclick="openPriorityMenu('${cardId}', event)" title="Cliquer pour priorite">${regionText}</span>
-          <input type="text" class="mcard-order ${orderLocked ? 'locked' : ''}" value="${cardData.order || '000000'}" data-field="order" maxlength="6" ${orderLocked ? 'readonly' : ''}>
+          <input type="text" class="mcard-order ${hasOrder ? 'needs-confirm' : ''}" value="${cardData.order || '000000'}" data-field="order" maxlength="6" data-original="${cardData.order || ''}">
           <button class="mcard-fiche-btn" data-action="open-fiche" data-card-id="${cardId}" title="Ouvrir la fiche">Fiche</button>
         </div>
       </div>
@@ -4331,7 +4347,19 @@ function attachCardEvents(card) {
   titleInput?.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); titleInput.blur(); } });
   titleInput?.addEventListener('blur', () => {
     if (cardsData[cardId]) {
-      cardsData[cardId].name = titleInput.value || 'Nom du moulage';
+      const newValue = titleInput.value || 'Nom du moulage';
+      const originalValue = titleInput.dataset.original || '';
+      
+      // Si le champ avait une valeur et qu'on la change, demander confirmation
+      if (originalValue && originalValue !== 'Nom du moulage' && newValue !== originalValue) {
+        if (!confirm(`Voulez-vous vraiment changer le nom du moulage?\n\nAncien: "${originalValue}"\nNouveau: "${newValue}"`)) {
+          titleInput.value = originalValue;
+          return;
+        }
+        titleInput.dataset.original = newValue;
+      }
+      
+      cardsData[cardId].name = newValue;
       saveCardToFirebase(cardId);
     }
   });
@@ -4343,7 +4371,19 @@ function attachCardEvents(card) {
   orderInput?.addEventListener('input', () => { orderInput.value = orderInput.value.replace(/[^0-9]/g, '').slice(0, 6); });
   orderInput?.addEventListener('blur', () => {
     if (cardsData[cardId]) {
-      cardsData[cardId].order = orderInput.value || '000000';
+      const newValue = orderInput.value || '000000';
+      const originalValue = orderInput.dataset.original || '';
+      
+      // Si le champ avait une valeur et qu'on la change, demander confirmation
+      if (originalValue && originalValue !== '000000' && newValue !== originalValue) {
+        if (!confirm(`Voulez-vous vraiment changer le numéro de commande?\n\nAncien: "${originalValue}"\nNouveau: "${newValue}"`)) {
+          orderInput.value = originalValue;
+          return;
+        }
+        orderInput.dataset.original = newValue;
+      }
+      
+      cardsData[cardId].order = newValue;
       saveCardToFirebase(cardId);
     }
   });
@@ -4788,9 +4828,9 @@ function generateFicheHTML(card) {
   const joursAttente = calcJoursAttente(data.dateAttente);
   const isEnAttente = data.columnIndex === 7;
   
-  // Nom et numéro de commande: verrouillés si déjà remplis
-  const nameLocked = data.name && data.name.trim() !== '';
-  const orderLocked = data.order && data.order.trim() !== '';
+  // Champs qui nécessitent confirmation si modifiés
+  const hasName = data.name && data.name.trim() !== '';
+  const hasOrder = data.order && data.order.trim() !== '';
   
   // Priorité
   const priorityLabels = {
@@ -4828,8 +4868,8 @@ function generateFicheHTML(card) {
             </select>
           </div>
           <div class="fiche-field">
-            <div class="fiche-label">Nom du moulage ${nameLocked ? '🔒' : ''}</div>
-            <input type="text" class="fiche-input ${nameLocked ? 'locked' : ''}" data-fiche-field="name" value="${data.name || ''}" placeholder="Nom..." ${nameLocked ? 'readonly' : ''}>
+            <div class="fiche-label">Nom du moulage</div>
+            <input type="text" class="fiche-input ${hasName ? 'needs-confirm' : ''}" data-fiche-field="name" value="${data.name || ''}" placeholder="Nom..." data-original="${data.name || ''}">
           </div>
         </div>
         
@@ -4843,8 +4883,8 @@ function generateFicheHTML(card) {
             <input type="text" class="fiche-input" data-fiche-field="numeroPO" value="${data.numeroPO || ''}" placeholder="Numéro...">
           </div>
           <div class="fiche-field">
-            <div class="fiche-label">N&#176; Commande ${orderLocked ? '🔒' : ''}</div>
-            <input type="text" class="fiche-input ${orderLocked ? 'locked' : ''}" data-fiche-field="order" value="${data.order || ''}" placeholder="000000" maxlength="6" ${orderLocked ? 'readonly' : ''}>
+            <div class="fiche-label">N&#176; Commande</div>
+            <input type="text" class="fiche-input ${hasOrder ? 'needs-confirm' : ''}" data-fiche-field="order" value="${data.order || ''}" placeholder="000000" maxlength="6" data-original="${data.order || ''}">
           </div>
         </div>
         
@@ -5067,7 +5107,20 @@ function attachFicheEvents(card) {
     el.addEventListener('change', () => {
       const field = el.dataset.ficheField;
       if (field && cardsData[cardId]) {
-        cardsData[cardId][field] = el.value;
+        const originalValue = el.getAttribute('data-original') || '';
+        const newValue = el.value;
+        
+        // Confirmation pour nom et commande si déjà remplis
+        if ((field === 'name' || field === 'order') && originalValue && newValue !== originalValue) {
+          const fieldLabel = field === 'name' ? 'le nom du moulage' : 'le numéro de commande';
+          if (!confirm(`Voulez-vous vraiment changer ${fieldLabel}?\n\nAncien: "${originalValue}"\nNouveau: "${newValue}"`)) {
+            el.value = originalValue;
+            return;
+          }
+          el.setAttribute('data-original', newValue);
+        }
+        
+        cardsData[cardId][field] = newValue;
         
         // Si region change, mettre a jour la carte
         if (field === 'region') {
@@ -5538,7 +5591,12 @@ function loadCustomLists() {
       console.log('Listes chargees depuis Firebase');
     }
   }).catch(err => {
-    console.error('Erreur chargement listes:', err);
+    // Si erreur de permission, utiliser les valeurs par défaut silencieusement
+    if (err.message && err.message.includes('permission_denied')) {
+      console.log('Listes: utilisation des valeurs par défaut (permissions Firebase)');
+    } else {
+      console.error('Erreur chargement listes:', err);
+    }
   });
 }
 
@@ -5550,8 +5608,14 @@ function saveCustomLists() {
         resolve();
       })
       .catch(err => {
-        console.error('Erreur sauvegarde listes:', err);
-        reject(err);
+        // Si erreur de permission, ignorer silencieusement
+        if (err.message && err.message.includes('permission_denied')) {
+          console.log('Listes: sauvegarde locale uniquement (permissions Firebase)');
+          resolve(); // Ne pas bloquer l'application
+        } else {
+          console.error('Erreur sauvegarde listes:', err);
+          reject(err);
+        }
       });
   });
 }
@@ -6267,13 +6331,13 @@ function renderRobotTable() {
     const prio = card.priority || 0;
     const hasNotes = card.notes && card.notes.trim().length > 0;
     
-    // Nom et numéro de commande: modifiables seulement si vides
-    const nameEditable = !card.name || card.name.trim() === '';
-    const orderEditable = !card.order || card.order.trim() === '';
+    // Tous les champs sont éditables mais nom/commande demandent confirmation si déjà remplis
+    const hasName = card.name && card.name.trim() !== '';
+    const hasOrder = card.order && card.order.trim() !== '';
     
     tr.innerHTML = `
-      <td class="${nameEditable ? 'editable' : 'locked'}" ${nameEditable ? 'contenteditable="true"' : ''} data-field="name">${card.name || ''}</td>
-      <td class="${orderEditable ? 'editable' : 'locked'}" ${orderEditable ? 'contenteditable="true"' : ''} data-field="order">${card.order || ''}</td>
+      <td class="editable ${hasName ? 'needs-confirm' : ''}" contenteditable="true" data-field="name" data-original="${card.name || ''}">${card.name || ''}</td>
+      <td class="editable ${hasOrder ? 'needs-confirm' : ''}" contenteditable="true" data-field="order" data-original="${card.order || ''}">${card.order || ''}</td>
       <td class="editable" contenteditable="true" data-field="numeroSoumission">${card.numeroSoumission || ''}</td>
       <td class="editable" contenteditable="true" data-field="numeroPO">${card.numeroPO || ''}</td>
       <td>${buildSelectCell(cardId, 'client', card.client, lists.clients, 'moulageClients')}</td>
@@ -6380,7 +6444,19 @@ function setupTableEditableListeners() {
       const cardId = row?.getAttribute('data-card-id');
       const field = this.getAttribute('data-field');
       const value = this.textContent.trim();
+      const originalValue = this.getAttribute('data-original') || '';
+      
       if (cardId && cardsData[cardId]) {
+        // Confirmation pour nom et commande si déjà remplis
+        if ((field === 'name' || field === 'order') && originalValue && value !== originalValue) {
+          const fieldLabel = field === 'name' ? 'le nom du moulage' : 'le numéro de commande';
+          if (!confirm(`Voulez-vous vraiment changer ${fieldLabel}?\n\nAncien: "${originalValue}"\nNouveau: "${value}"`)) {
+            this.textContent = originalValue;
+            return;
+          }
+          this.setAttribute('data-original', value);
+        }
+        
         cardsData[cardId][field] = value;
         saveCardToFirebase(cardId);
         
@@ -7506,7 +7582,7 @@ function renderMobilePageInfo(card) {
       </div>
       <div class="mobile-info-row size-plus1">
         <span class="mobile-info-label">🏢 Client</span>
-        <span class="mobile-info-value">${card.client || '-'}</span>
+        <span class="mobile-info-value shrink-text">${card.client || '-'}</span>
       </div>
       <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">🗺️ Région</span>
@@ -7566,18 +7642,18 @@ function renderMobilePageInfo(card) {
 
 // Générer la page Notes
 function renderMobilePageNotes(card) {
-  // Générer les 6 boutons photos (vert si vide, bleu si plein)
+  // Générer les 6 boutons photos (vert si vide, bleu si plein) - Utilise notePhoto1, etc. pour synchro avec PC
   const photosSection = document.getElementById('mobileNotesPhotos');
   if (photosSection) {
     photosSection.innerHTML = `
       <div class="mobile-notes-photos-row">
         <span class="mobile-photo-icon-notes">📷</span>
-        <div class="mobile-photo-btn-notes ${card.photo1 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo1')">${card.photo1 ? '1 ✓' : '1'}</div>
-        <div class="mobile-photo-btn-notes ${card.photo2 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo2')">${card.photo2 ? '2 ✓' : '2'}</div>
-        <div class="mobile-photo-btn-notes ${card.photo3 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo3')">${card.photo3 ? '3 ✓' : '3'}</div>
-        <div class="mobile-photo-btn-notes ${card.photo4 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo4')">${card.photo4 ? '4 ✓' : '4'}</div>
-        <div class="mobile-photo-btn-notes ${card.photo5 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo5')">${card.photo5 ? '5 ✓' : '5'}</div>
-        <div class="mobile-photo-btn-notes ${card.photo6 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('photo6')">${card.photo6 ? '6 ✓' : '6'}</div>
+        <div class="mobile-photo-btn-notes ${card.notePhoto1 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('notePhoto1')">${card.notePhoto1 ? '1 ✓' : '1'}</div>
+        <div class="mobile-photo-btn-notes ${card.notePhoto2 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('notePhoto2')">${card.notePhoto2 ? '2 ✓' : '2'}</div>
+        <div class="mobile-photo-btn-notes ${card.notePhoto3 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('notePhoto3')">${card.notePhoto3 ? '3 ✓' : '3'}</div>
+        <div class="mobile-photo-btn-notes ${card.notePhoto4 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('notePhoto4')">${card.notePhoto4 ? '4 ✓' : '4'}</div>
+        <div class="mobile-photo-btn-notes ${card.notePhoto5 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('notePhoto5')">${card.notePhoto5 ? '5 ✓' : '5'}</div>
+        <div class="mobile-photo-btn-notes ${card.notePhoto6 ? 'has-photo' : ''}" onclick="openMobilePhotoLink1to6('notePhoto6')">${card.notePhoto6 ? '6 ✓' : '6'}</div>
       </div>
     `;
   }
@@ -7722,7 +7798,7 @@ function openMobilePhotoLink1to6(photoKey) {
   }
 }
 
-// Menu pour ajouter les liens photos 1-6
+// Menu pour ajouter les liens photos 1-6 (utilise notePhoto pour synchro avec PC)
 function openMobilePhotos1to6Menu() {
   if (!currentMobileFicheId) return;
   
@@ -7738,27 +7814,27 @@ function openMobilePhotos1to6Menu() {
         <div class="mobile-photo-menu-content">
           <div class="mobile-photo-menu-field">
             <label>📷 Photo 1</label>
-            <input type="url" id="photo1Input" value="${card.photo1 || ''}" placeholder="URL photo 1">
+            <input type="url" id="notePhoto1Input" value="${card.notePhoto1 || ''}" placeholder="URL photo 1">
           </div>
           <div class="mobile-photo-menu-field">
             <label>📷 Photo 2</label>
-            <input type="url" id="photo2Input" value="${card.photo2 || ''}" placeholder="URL photo 2">
+            <input type="url" id="notePhoto2Input" value="${card.notePhoto2 || ''}" placeholder="URL photo 2">
           </div>
           <div class="mobile-photo-menu-field">
             <label>📷 Photo 3</label>
-            <input type="url" id="photo3Input" value="${card.photo3 || ''}" placeholder="URL photo 3">
+            <input type="url" id="notePhoto3Input" value="${card.notePhoto3 || ''}" placeholder="URL photo 3">
           </div>
           <div class="mobile-photo-menu-field">
             <label>📷 Photo 4</label>
-            <input type="url" id="photo4Input" value="${card.photo4 || ''}" placeholder="URL photo 4">
+            <input type="url" id="notePhoto4Input" value="${card.notePhoto4 || ''}" placeholder="URL photo 4">
           </div>
           <div class="mobile-photo-menu-field">
             <label>📷 Photo 5</label>
-            <input type="url" id="photo5Input" value="${card.photo5 || ''}" placeholder="URL photo 5">
+            <input type="url" id="notePhoto5Input" value="${card.notePhoto5 || ''}" placeholder="URL photo 5">
           </div>
           <div class="mobile-photo-menu-field">
             <label>📷 Photo 6</label>
-            <input type="url" id="photo6Input" value="${card.photo6 || ''}" placeholder="URL photo 6">
+            <input type="url" id="notePhoto6Input" value="${card.notePhoto6 || ''}" placeholder="URL photo 6">
           </div>
         </div>
         <div class="mobile-photo-menu-actions">
@@ -7780,10 +7856,11 @@ function closeMobilePhotos1to6Menu(event) {
 function saveMobilePhotos1to6() {
   if (!currentMobileFicheId) return;
   
+  // Utilise notePhoto pour synchro avec PC
   for (let i = 1; i <= 6; i++) {
-    const input = document.getElementById(`photo${i}Input`);
+    const input = document.getElementById(`notePhoto${i}Input`);
     if (input) {
-      cardsData[currentMobileFicheId][`photo${i}`] = input.value.trim();
+      cardsData[currentMobileFicheId][`notePhoto${i}`] = input.value.trim();
     }
   }
   
