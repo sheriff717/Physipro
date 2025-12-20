@@ -3314,7 +3314,7 @@ html, body {
   border-radius: 4px;
 }
 
-/* Lignes d'info compactes - texte 14px */
+/* Lignes d'info compactes */
 .mobile-info-row {
   display: flex;
   justify-content: space-between;
@@ -3327,6 +3327,7 @@ html, body {
   border-bottom: none;
 }
 
+/* Tailles par défaut */
 .mobile-info-label {
   font-size: 14px;
   color: #64748b;
@@ -3343,9 +3344,30 @@ html, body {
   word-break: break-word;
 }
 
+/* Tailles spécifiques par champ (+2px = 16px, +1px = 15px) */
+.mobile-info-row.size-plus2 .mobile-info-label,
+.mobile-info-row.size-plus2 .mobile-info-value {
+  font-size: 16px;
+}
+
+.mobile-info-row.size-plus1 .mobile-info-label,
+.mobile-info-row.size-plus1 .mobile-info-value {
+  font-size: 15px;
+}
+
 .mobile-info-value.highlight {
   color: #16a34a;
   font-weight: 700;
+}
+
+/* Animation clignotement pour raison attente */
+@keyframes blinkRaison {
+  0%, 100% { opacity: 1; background: rgba(0,0,0,0.25); }
+  50% { opacity: 0.6; background: rgba(255,255,255,0.2); }
+}
+
+.mobile-status-raison.blink {
+  animation: blinkRaison 1.2s ease-in-out infinite;
 }
 
 /* Séparateur de section compact */
@@ -3355,7 +3377,7 @@ html, body {
   margin: 4px 0;
 }
 
-/* BOUTONS PHOTOS - Icône + 3 boutons sur même ligne */
+/* BOUTONS PHOTOS - 3 boutons avec icône caméra */
 .mobile-photos-section {
   margin-top: 6px;
 }
@@ -3366,16 +3388,12 @@ html, body {
   gap: 6px;
 }
 
-.mobile-photo-icon {
-  font-size: 24px;
-  flex-shrink: 0;
-}
-
 .mobile-photo-btn {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   padding: 10px 6px;
   background: linear-gradient(135deg, #22c55e, #16a34a);
   border: none;
@@ -7467,41 +7485,41 @@ function renderMobilePageInfo(card) {
       <!-- STATUT - Une seule ligne -->
       <div class="mobile-status-block ${isAttente ? 'attente' : ''}">
         <span class="mobile-status-text">${statutLine}</span>
-        ${isAttente && raisonAttente ? `<span class="mobile-status-raison">${raisonAttente}</span>` : ''}
+        ${isAttente && raisonAttente ? `<span class="mobile-status-raison blink">${raisonAttente}</span>` : ''}
       </div>
       
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">👤 Nom</span>
+      <div class="mobile-info-row size-plus2">
+        <span class="mobile-info-label">👤 Nom du Moulage</span>
         <span class="mobile-info-value" style="font-weight:700;">${card.name || '-'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">🔢 Commande</span>
+      <div class="mobile-info-row size-plus2">
+        <span class="mobile-info-label">🔢 # de commande</span>
         <span class="mobile-info-value highlight">${card.order || '-'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📋 Soumission</span>
+      <div class="mobile-info-row size-plus2">
+        <span class="mobile-info-label">📋 # de soumission</span>
         <span class="mobile-info-value">${card.numeroSoumission || '-'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📑 PO</span>
+      <div class="mobile-info-row size-plus2">
+        <span class="mobile-info-label">📑 # de PO</span>
         <span class="mobile-info-value">${card.numeroPO || '-'}</span>
       </div>
-      <div class="mobile-info-row">
+      <div class="mobile-info-row size-plus1">
         <span class="mobile-info-label">🏢 Client</span>
         <span class="mobile-info-value">${card.client || '-'}</span>
       </div>
-      <div class="mobile-info-row">
+      <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">🗺️ Région</span>
         <span class="mobile-info-value">${card.region || '-'}</span>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <div class="mobile-info-row">
+      <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">👩‍⚕️ Intervenant</span>
         <span class="mobile-info-value">${card.intervenant || '-'}</span>
       </div>
-      <div class="mobile-info-row">
+      <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">👩‍💼 Représentante</span>
         <span class="mobile-info-value">${card.representant || '-'}</span>
       </div>
@@ -7509,38 +7527,37 @@ function renderMobilePageInfo(card) {
       <div class="mobile-section-divider"></div>
       
       <div class="mobile-info-row">
-        <span class="mobile-info-label">📥 Reçue</span>
+        <span class="mobile-info-label">📥 Date réception de la commande</span>
         <span class="mobile-info-value">${card.dateRecue || '-'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📦 Livraison</span>
+      <div class="mobile-info-row size-plus2">
+        <span class="mobile-info-label">📦 Date de livraison</span>
         <span class="mobile-info-value highlight">${card.dateLivraison || '-'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">🤖 Robot</span>
+      <div class="mobile-info-row size-plus1">
+        <span class="mobile-info-label">🤖 Date de fabrication au robot</span>
         <span class="mobile-info-value">${card.dateRobot || '-'}</span>
       </div>
       <div class="mobile-info-row">
-        <span class="mobile-info-label">📅 Essayage</span>
+        <span class="mobile-info-label">📅 Date du RDV essayage avec Rep</span>
         <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <div class="mobile-info-row">
+      <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">📦 Item</span>
         <span class="mobile-info-value">${card.item || '-'}</span>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <!-- PHOTOS - Icône + 3 boutons sur même ligne -->
+      <!-- PHOTOS - 3 boutons avec icône caméra -->
       <div class="mobile-photos-section">
         <div class="mobile-photos-row">
-          <span class="mobile-photo-icon">📷</span>
-          <div class="mobile-photo-btn ${card.photoClient ? 'has-photo' : ''}" onclick="openMobilePhotoLink('client')">Client</div>
-          <div class="mobile-photo-btn ${card.photoAtelier ? 'has-photo' : ''}" onclick="openMobilePhotoLink('atelier')">Atelier</div>
-          <div class="mobile-photo-btn ${card.photoDevis ? 'has-photo' : ''}" onclick="openMobilePhotoLink('devis')">Devis</div>
+          <div class="mobile-photo-btn ${card.photoClient ? 'has-photo' : ''}" onclick="openMobilePhotoLink('client')">📷 Client</div>
+          <div class="mobile-photo-btn ${card.photoAtelier ? 'has-photo' : ''}" onclick="openMobilePhotoLink('atelier')">📷 Atelier</div>
+          <div class="mobile-photo-btn ${card.photoDevis ? 'has-photo' : ''}" onclick="openMobilePhotoLink('devis')">📷 Devis</div>
         </div>
       </div>
     </div>
