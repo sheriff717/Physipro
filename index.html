@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhysiPro Moulage v12.0</title>
+  <title>PhysiPro Moulage v12.2</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -12,7 +12,7 @@
   
   <style>
 /* =====================================================
-   PHYSIPRO MOULAGE v12.0 - CODE PROPRE
+   PHYSIPRO MOULAGE v12.2 - CODE PROPRE
    ===================================================== */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1180,6 +1180,50 @@ html, body {
   box-sizing: border-box;
   line-height: 1.4;
   background: white;
+}
+
+/* Notes contenteditable avec support images */
+.notes-page-content {
+  flex: 1;
+  width: 100%;
+  padding: 8px;
+  font-size: 11px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-family: inherit;
+  box-sizing: border-box;
+  line-height: 1.4;
+  background: white;
+  overflow-y: auto;
+  color: #000;
+  outline: none;
+}
+
+.notes-page-content:focus {
+  border-color: #3b82f6;
+}
+
+.notes-page-content:empty:before {
+  content: attr(placeholder);
+  color: #9ca3af;
+}
+
+.notes-page-content img {
+  max-width: 100%;
+  border-radius: 4px;
+  margin: 5px 0;
+  cursor: nwse-resize;
+  border: 2px solid transparent;
+  display: block;
+}
+
+.notes-page-content img:hover {
+  border-color: #3b82f6;
+}
+
+.notes-page-content img.resizing {
+  border-color: #22c55e;
+  opacity: 0.8;
 }
 
 .notes-photos-links {
@@ -4708,7 +4752,7 @@ html, body {
 }
 
 .job-mini-order {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   text-align: center;
 }
@@ -4716,7 +4760,7 @@ html, body {
 .job-mini-rep {
   position: absolute;
   right: 0;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
 }
 
@@ -4729,7 +4773,7 @@ html, body {
 }
 
 .job-mini-client {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -4741,7 +4785,7 @@ html, body {
 .job-mini-days {
   display: block;
   width: 100%;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   padding: 3px 6px;
   border-radius: 999px;
@@ -6507,6 +6551,11 @@ function openFiche(card) {
   card.classList.add('mcard-expanded');
   if (cardOverlay) cardOverlay.classList.add('active');
   currentExpandedCard = card;
+  
+  // Initialiser le redimensionnement des images existantes dans les notes
+  setTimeout(() => {
+    initMoulageNotesImageResizing(cardId);
+  }, 100);
 }
 
 function closeFiche() {
@@ -6719,10 +6768,12 @@ function generateFicheHTML(card) {
         <button class="notes-photo-btn ${data.notePhoto5 ? 'has-link' : ''}" onclick="openNotePhoto('${cardId}', 5)">Photo 5</button>
         <button class="notes-photo-btn ${data.notePhoto6 ? 'has-link' : ''}" onclick="openNotePhoto('${cardId}', 6)">Photo 6</button>
       </div>
-      <textarea class="notes-page-textarea" id="notesTextarea_${cardId}" 
+      <div class="notes-page-content" id="notesContent_${cardId}" 
+        contenteditable="true"
         placeholder="Cliquez ici pour écrire..."
-        onfocus="prepareNoteWithSignature('${cardId}')"
-        onblur="saveMoulageNotes('${cardId}')">${data.notes || ''}</textarea>
+        onclick="prepareMoulageNoteWithSignature('${cardId}', event)"
+        onpaste="handleMoulageNotesPaste(event, '${cardId}')"
+        onblur="saveMoulageNotes('${cardId}')">${data.notes || ''}</div>
     </div>
   `;
 }
@@ -7191,10 +7242,170 @@ function markNoteAsRead(cardId) {
 
 // Notes
 function saveMoulageNotes(cardId) {
-  const textarea = document.getElementById('notesTextarea_' + cardId);
-  if (textarea && cardsData[cardId]) {
-    cardsData[cardId].notes = textarea.value;
+  const content = document.getElementById('notesContent_' + cardId);
+  if (content && cardsData[cardId]) {
+    cardsData[cardId].notes = content.innerHTML;
     saveCardToFirebase(cardId);
+  }
+}
+
+// Préparer la signature pour les notes moulages (contenteditable)
+function prepareMoulageNoteWithSignature(cardId, event) {
+  const content = document.getElementById('notesContent_' + cardId);
+  if (!content) return;
+  
+  // Ne pas ajouter de signature si on clique sur une image
+  if (event && event.target.tagName === 'IMG') return;
+  
+  const userName = getCurrentUserName();
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-CA');
+  const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+  
+  let currentHTML = content.innerHTML;
+  
+  // Si representante et premiere visite, ajouter "Note vue par..."
+  if (isRepresentante()) {
+    const viewedMarker = 'Note vue par ' + userName;
+    if (!currentHTML.includes(viewedMarker)) {
+      const viewedLine = `<div class="note-timestamp"><strong>*** ${viewedMarker} (${dateStr} à ${timeStr}) ***</strong></div>`;
+      if (currentHTML.trim() && currentHTML !== '<br>') {
+        currentHTML = currentHTML + '<br>' + viewedLine;
+      } else {
+        currentHTML = viewedLine;
+      }
+      content.innerHTML = currentHTML;
+      markNoteAsRead(cardId);
+    }
+  }
+  
+  // Créer la signature
+  const signature = `<div class="note-timestamp"><strong>-- ${userName} (${dateStr} à ${timeStr}) --</strong></div>`;
+  
+  // Vérifier si la dernière signature est la même (même minute)
+  const signaturePattern = new RegExp(`-- ${userName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(${dateStr} à ${timeStr}\\) --`);
+  
+  if (!signaturePattern.test(currentHTML)) {
+    if (currentHTML.trim() && currentHTML !== '<br>') {
+      content.innerHTML = currentHTML + '<br>' + signature + '<br>';
+    } else {
+      content.innerHTML = signature + '<br>';
+    }
+  }
+  
+  // Placer le curseur à la fin
+  setTimeout(() => {
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(content);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    content.scrollTop = content.scrollHeight;
+  }, 10);
+}
+
+// Gérer le paste d'images dans les notes moulages PC
+function handleMoulageNotesPaste(event, cardId) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+  
+  for (let item of items) {
+    if (item.type.indexOf('image') !== -1) {
+      event.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.width = '200px';
+        img.style.cursor = 'nwse-resize';
+        img.style.display = 'block';
+        img.style.margin = '5px 0';
+        
+        // Activer le redimensionnement
+        makeMoulageNoteImageResizable(img);
+        
+        const selection = window.getSelection();
+        const content = document.getElementById('notesContent_' + cardId);
+        
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          range.setStartAfter(img);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else if (content) {
+          content.appendChild(img);
+        }
+        
+        saveMoulageNotes(cardId);
+      };
+      
+      reader.readAsDataURL(file);
+      break;
+    }
+  }
+}
+
+// Rendre une image redimensionnable dans les notes moulages PC
+function makeMoulageNoteImageResizable(img) {
+  let isResizing = false;
+  let startX, startWidth;
+  
+  img.addEventListener('mousedown', function(e) {
+    const rect = img.getBoundingClientRect();
+    const isNearEdge = (rect.right - e.clientX < 20) && (rect.bottom - e.clientY < 20);
+    
+    if (isNearEdge) {
+      e.preventDefault();
+      e.stopPropagation();
+      isResizing = true;
+      startX = e.clientX;
+      startWidth = img.offsetWidth;
+      img.classList.add('resizing');
+      
+      const onMouseMove = (e) => {
+        if (!isResizing) return;
+        const newWidth = startWidth + (e.clientX - startX);
+        if (newWidth > 50 && newWidth < 500) {
+          img.style.width = newWidth + 'px';
+          img.style.height = 'auto';
+        }
+      };
+      
+      const onMouseUp = () => {
+        isResizing = false;
+        img.classList.remove('resizing');
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        // Trouver le cardId pour sauvegarder
+        const notesDiv = img.closest('.notes-page-content');
+        if (notesDiv && notesDiv.id) {
+          const cardId = notesDiv.id.replace('notesContent_', '');
+          saveMoulageNotes(cardId);
+        }
+      };
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  });
+}
+
+// Initialiser le redimensionnement pour les images existantes dans les notes moulages
+function initMoulageNotesImageResizing(cardId) {
+  const content = document.getElementById('notesContent_' + cardId);
+  if (content) {
+    content.querySelectorAll('img').forEach(img => {
+      img.style.cursor = 'nwse-resize';
+      img.style.maxWidth = '100%';
+      makeMoulageNoteImageResizable(img);
+    });
   }
 }
 
@@ -7723,6 +7934,10 @@ window.openCalendar = openCalendar;
 window.openPhotoLink = openPhotoLink;
 window.openNotePhoto = openNotePhoto;
 window.saveMoulageNotes = saveMoulageNotes;
+window.prepareMoulageNoteWithSignature = prepareMoulageNoteWithSignature;
+window.handleMoulageNotesPaste = handleMoulageNotesPaste;
+window.makeMoulageNoteImageResizable = makeMoulageNoteImageResizable;
+window.initMoulageNotesImageResizing = initMoulageNotesImageResizing;
 window.showFichePriorityMenu = showFichePriorityMenu;
 window.togglePhotosMenu = togglePhotosMenu;
 window.closePhotosMenu = closePhotosMenu;
@@ -8240,17 +8455,153 @@ function openCardNotes(cardId) {
       <button class="notes-photo-btn ${card.notePhoto6?'has-link':''}" onclick="openNotePhoto('${cardId}', 6)">Photo 6</button>
     </div>
     
-    <textarea class="notes-page-textarea" id="notesTextarea_popup_${cardId}" 
+    <div class="notes-page-content" id="notesContent_popup_${cardId}" 
+      contenteditable="true"
       placeholder="Cliquez ici pour écrire..."
-      onfocus="prepareNoteWithSignature('popup_${cardId}')"
-      onblur="savePopupNotes('${cardId}')">${card.notes || ''}</textarea>
+      onclick="preparePopupNoteWithSignature('${cardId}', event)"
+      onpaste="handlePopupNotesPaste(event, '${cardId}')"
+      onblur="savePopupNotes('${cardId}')">${card.notes || ''}</div>
   `;
   
   document.body.appendChild(overlay);
   document.body.appendChild(popup);
   
-  // Focus sur le textarea
-  setTimeout(() => document.getElementById('notesTextarea_popup_' + cardId)?.focus(), 100);
+  // Initialiser le redimensionnement des images existantes
+  setTimeout(() => initPopupNotesImageResizing(cardId), 100);
+}
+
+// Préparer signature pour popup notes
+function preparePopupNoteWithSignature(cardId, event) {
+  const content = document.getElementById('notesContent_popup_' + cardId);
+  if (!content) return;
+  
+  if (event && event.target.tagName === 'IMG') return;
+  
+  const userName = getCurrentUserName();
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-CA');
+  const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+  
+  let currentHTML = content.innerHTML;
+  
+  const signature = `<div class="note-timestamp"><strong>-- ${userName} (${dateStr} à ${timeStr}) --</strong></div>`;
+  const signaturePattern = new RegExp(`-- ${userName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} \\(${dateStr} à ${timeStr}\\) --`);
+  
+  if (!signaturePattern.test(currentHTML)) {
+    if (currentHTML.trim() && currentHTML !== '<br>') {
+      content.innerHTML = currentHTML + '<br>' + signature + '<br>';
+    } else {
+      content.innerHTML = signature + '<br>';
+    }
+  }
+  
+  setTimeout(() => {
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(content);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    content.scrollTop = content.scrollHeight;
+  }, 10);
+}
+
+// Gérer le paste d'images dans popup notes
+function handlePopupNotesPaste(event, cardId) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+  
+  for (let item of items) {
+    if (item.type.indexOf('image') !== -1) {
+      event.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.width = '200px';
+        img.style.cursor = 'nwse-resize';
+        img.style.display = 'block';
+        img.style.margin = '5px 0';
+        
+        makePopupNoteImageResizable(img, cardId);
+        
+        const selection = window.getSelection();
+        const content = document.getElementById('notesContent_popup_' + cardId);
+        
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          range.setStartAfter(img);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else if (content) {
+          content.appendChild(img);
+        }
+        
+        savePopupNotes(cardId);
+      };
+      
+      reader.readAsDataURL(file);
+      break;
+    }
+  }
+}
+
+// Rendre image redimensionnable dans popup
+function makePopupNoteImageResizable(img, cardId) {
+  let isResizing = false;
+  let startX, startWidth;
+  
+  img.addEventListener('mousedown', function(e) {
+    const rect = img.getBoundingClientRect();
+    const isNearEdge = (rect.right - e.clientX < 20) && (rect.bottom - e.clientY < 20);
+    
+    if (isNearEdge) {
+      e.preventDefault();
+      e.stopPropagation();
+      isResizing = true;
+      startX = e.clientX;
+      startWidth = img.offsetWidth;
+      img.classList.add('resizing');
+      
+      const onMouseMove = (e) => {
+        if (!isResizing) return;
+        const newWidth = startWidth + (e.clientX - startX);
+        if (newWidth > 50 && newWidth < 500) {
+          img.style.width = newWidth + 'px';
+          img.style.height = 'auto';
+        }
+      };
+      
+      const onMouseUp = () => {
+        isResizing = false;
+        img.classList.remove('resizing');
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        savePopupNotes(cardId);
+      };
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  });
+}
+
+// Initialiser redimensionnement images popup
+function initPopupNotesImageResizing(cardId) {
+  const content = document.getElementById('notesContent_popup_' + cardId);
+  if (content) {
+    content.querySelectorAll('img').forEach(img => {
+      img.style.cursor = 'nwse-resize';
+      img.style.maxWidth = '100%';
+      makePopupNoteImageResizable(img, cardId);
+    });
+  }
 }
 
 function togglePopupPhotosPanel(cardId) {
@@ -8274,15 +8625,15 @@ function savePopupPhotoLinks(cardId) {
 }
 
 function savePopupNotes(cardId) {
-  const textarea = document.getElementById('notesTextarea_popup_' + cardId);
-  if (!textarea || !cardsData[cardId]) return;
+  const content = document.getElementById('notesContent_popup_' + cardId);
+  if (!content || !cardsData[cardId]) return;
   
-  cardsData[cardId].notes = textarea.value.trim();
+  cardsData[cardId].notes = content.innerHTML;
   saveCardToFirebase(cardId);
   
   // Sync avec fiche si ouverte
-  const ficheTextarea = document.getElementById('notesTextarea_' + cardId);
-  if (ficheTextarea) ficheTextarea.value = cardsData[cardId].notes;
+  const ficheContent = document.getElementById('notesContent_' + cardId);
+  if (ficheContent) ficheContent.innerHTML = cardsData[cardId].notes;
   
   renderRobotTable();
 }
@@ -8330,6 +8681,10 @@ window.showTableCalendar = showTableCalendar;
 window.openCardNotes = openCardNotes;
 window.closeNotesPopup = closeNotesPopup;
 window.savePopupNotes = savePopupNotes;
+window.preparePopupNoteWithSignature = preparePopupNoteWithSignature;
+window.handlePopupNotesPaste = handlePopupNotesPaste;
+window.makePopupNoteImageResizable = makePopupNoteImageResizable;
+window.initPopupNotesImageResizing = initPopupNotesImageResizing;
 window.savePopupPhotoLinks = savePopupPhotoLinks;
 window.togglePopupPhotosPanel = togglePopupPhotosPanel;
 window.closeContextMenus = closeContextMenus;
