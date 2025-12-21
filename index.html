@@ -157,11 +157,22 @@ html, body {
 
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #6b7280; }
 .status-dot.online { background: #22c55e; }
-.user-name { color: #fff; font-weight: 500; }
+.user-name { 
+  color: #fff; 
+  font-weight: 500; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  line-height: 1.1;
+}
 
 .user-role-badge {
-  display: inline-block; margin-left: 4px; padding: 1px 4px;
-  border-radius: 6px; font-size: 7px; font-weight: 600;
+  display: inline-block; 
+  padding: 1px 5px;
+  border-radius: 6px; 
+  font-size: 7px; 
+  font-weight: 600;
 }
 .user-role-badge.admin { background: #dc2626; color: #fff; }
 .user-role-badge.editor { background: #2563eb; color: #fff; }
@@ -729,7 +740,7 @@ html, body {
 /* Pastille delai */
 .mcard-delay-pill {
   width: 100%;
-  padding: 0px 3px;
+  padding: 1px 3px;
   font-size: 7px;
   font-weight: 700;
   border-radius: 999px;
@@ -738,7 +749,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #000;
+  border: 2px solid #000;
   margin-top: 1px;
   margin-bottom: 1px;
   box-sizing: border-box;
@@ -2336,7 +2347,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 20000;
+  z-index: 200000;
 }
 .add-modal-overlay.hidden { display: none; }
 
@@ -2479,6 +2490,89 @@ html, body {
 
 .add-btn-confirm:hover {
   filter: brightness(1.1);
+}
+
+/* ===== MODALS RESPONSIVE MOBILE ===== */
+@media (max-width: 600px) {
+  .add-modal {
+    max-width: 100%;
+    max-height: 90vh;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    max-height: 60vh;
+    padding: 10px;
+  }
+  
+  .add-modal-field {
+    width: 100%;
+  }
+  
+  .add-modal-field label {
+    font-size: 10px;
+  }
+  
+  .add-modal-field input,
+  .add-modal-field select {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+  
+  /* Job Add Modal Mobile */
+  .job-add-modal {
+    max-width: 100%;
+    max-height: 90vh;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .job-add-body {
+    overflow-y: auto;
+    max-height: 65vh;
+    padding: 10px;
+  }
+  
+  .job-add-row {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+  
+  .job-add-field {
+    flex: none !important;
+    width: 100% !important;
+  }
+  
+  .job-add-field label {
+    font-size: 10px;
+  }
+  
+  .job-add-field input,
+  .job-add-field select {
+    font-size: 14px;
+    padding: 10px 12px;
+    height: auto;
+  }
+  
+  .job-add-header h3 {
+    font-size: 13px;
+  }
+  
+  .job-add-footer {
+    padding: 10px;
+  }
+  
+  .job-add-footer button {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
 }
 
 /* ===== CALENDRIER POPUP ===== */
@@ -2974,35 +3068,48 @@ html, body {
 }
 
 .mobile-home-header {
-  padding: 12px 20px 8px 20px;
-  text-align: center;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background: linear-gradient(to bottom, #04152c 0%, #0d2d4d 100%);
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
-.mobile-home-logo {
-  height: 45px;
-  margin-bottom: 4px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.mobile-home-back {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 6px;
+  flex-shrink: 0;
 }
 
-/* Fallback si le logo ne charge pas */
-.mobile-home-logo-fallback {
-  font-size: 22px;
-  font-weight: 800;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  margin-bottom: 2px;
-  letter-spacing: 1px;
+.mobile-home-back:active {
+  background: rgba(255,255,255,0.1);
+}
+
+.mobile-home-add {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: 2px solid #000;
+  color: white;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  flex-shrink: 0;
 }
 
 .mobile-home-title {
-  font-size: 14px;
+  flex: 1;
+  font-size: 13px;
   font-weight: 600;
-  color: rgba(255,255,255,0.85);
-  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
   margin: 0;
   line-height: 1.2;
 }
@@ -3109,9 +3216,9 @@ html, body {
 /* Cartes mobiles - Style PC compact */
 .mobile-card {
   position: relative;
-  margin: 5px 10px;
-  padding: 8px 10px 6px 10px;
-  border-radius: 8px;
+  margin: 4px 10px;
+  padding: 6px 10px;
+  border-radius: 12px;
   background: linear-gradient(to bottom, #04152c 0%, #4a8ef5 100%);
   border: 2px solid #000;
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 6px rgba(0,0,0,0.35);
@@ -3144,7 +3251,7 @@ html, body {
 /* Nom du moulage - centré en haut - PLUS GRAND */
 .mobile-card-name {
   width: 100%;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: #fff;
   text-align: center;
@@ -3155,16 +3262,32 @@ html, body {
   margin-bottom: 2px;
 }
 
-/* Ligne du milieu : région + commande */
+/* Ligne du milieu : REP + Commande + Région */
 .mobile-card-middle {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 3px;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 2px;
 }
 
-/* Pastille région */
+/* Représentante à gauche */
+.mobile-card-rep {
+  font-size: 10px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 1px 1px 0 #000;
+  flex-shrink: 0;
+}
+
+/* Numéro de commande au centre - PLUS GRAND */
+.mobile-card-order {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Pastille région à droite */
 .mobile-card-region {
   font-size: 9px;
   font-weight: 700;
@@ -3174,27 +3297,12 @@ html, body {
   color: #fff;
   text-shadow: 1px 1px 0 #000;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 .mobile-card.region-qc .mobile-card-region { background: rgba(59, 130, 246, 0.5); }
 .mobile-card.region-on .mobile-card-region { background: rgba(232, 185, 122, 0.5); color: #000; text-shadow: none; }
 .mobile-card.region-ma .mobile-card-region { background: rgba(199, 69, 140, 0.5); }
-
-/* Numéro de commande - PLUS GRAND */
-.mobile-card-order {
-  font-size: 14px;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 1px 1px 0 #000;
-}
-
-/* Représentante */
-.mobile-card-rep {
-  font-size: 10px;
-  color: rgba(255,255,255,0.7);
-  text-align: center;
-  margin-bottom: 3px;
-}
 
 /* Pastille délai - LARGE (même largeur que carte) */
 .mobile-card-delay {
@@ -3283,75 +3391,112 @@ html, body {
   display: none;
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(180deg, #0a1628 0%, #1a365d 50%, #2d4a6f 100%);
   z-index: 100000;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 30px;
 }
 
 .mobile-menu-overlay.active {
   display: flex;
 }
 
-.mobile-menu-logo {
-  width: 180px;
-  margin-bottom: 20px;
-}
-
 .mobile-menu-title {
   color: white;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 300;
   text-align: center;
-  margin-bottom: 40px;
-  opacity: 0.8;
+  margin-bottom: 50px;
+  opacity: 0.9;
+  letter-spacing: 1px;
 }
 
 .mobile-menu-buttons {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
 }
 
 .mobile-menu-btn {
-  padding: 20px;
-  border-radius: 12px;
+  padding: 22px 25px;
+  border-radius: 16px;
   border: none;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 17px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: transform 0.2s;
+  gap: 15px;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-menu-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+  border-radius: 16px 16px 0 0;
 }
 
 .mobile-menu-btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .mobile-menu-btn.btn-moulages {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background: linear-gradient(145deg, #4a90e2, #2563eb);
   color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .mobile-menu-btn.btn-jobs {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
-  color: white;
+  background: linear-gradient(145deg, #f7b32b, #e09100);
+  color: #1a1a1a;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
 }
 
 .mobile-menu-btn-icon {
-  font-size: 24px;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.mobile-menu-btn-text {
+  flex: 1;
+  text-align: left;
 }
 
 .mobile-menu-btn-count {
-  font-size: 12px;
-  opacity: 0.8;
-  margin-left: 5px;
+  font-size: 13px;
+  opacity: 0.85;
+  background: rgba(0,0,0,0.2);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.mobile-desktop-btn {
+  margin-top: 40px;
+  padding: 12px 25px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 25px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mobile-desktop-btn:active {
+  background: rgba(255,255,255,0.2);
 }
 
 /* =============================================================================
@@ -3361,7 +3506,7 @@ html, body {
   display: none;
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(180deg, #0a1628 0%, #1a365d 50%, #2d4a6f 100%);
   z-index: 100000;
   flex-direction: column;
 }
@@ -3371,38 +3516,40 @@ html, body {
 }
 
 .mobile-jobs-header {
-  padding: 15px 20px;
+  padding: 12px 15px;
   background: rgba(0,0,0,0.3);
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 .mobile-jobs-back {
   background: none;
   border: none;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
-  padding: 5px;
+  padding: 5px 8px;
 }
 
 .mobile-jobs-title {
   flex: 1;
   color: white;
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
 }
 
 .mobile-jobs-add {
   background: linear-gradient(135deg, #22c55e, #16a34a);
-  border: none;
+  border: 2px solid #000;
   color: white;
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
 }
 
 .mobile-jobs-list {
@@ -3414,14 +3561,16 @@ html, body {
   gap: 8px;
 }
 
-/* Carte Job Mobile */
+/* Carte Job Mobile avec bordure noire */
 .mobile-job-card {
   background: linear-gradient(135deg, #04152c, #4a8ef5);
-  border-radius: 10px;
-  padding: 12px 15px;
+  border-radius: 12px;
+  border: 2px solid #000;
+  padding: 10px 12px;
   color: white;
   cursor: pointer;
   transition: transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
 }
 
 .mobile-job-card:active {
@@ -3436,39 +3585,62 @@ html, body {
   background: linear-gradient(135deg, #5c4d00, #f5c800);
 }
 
+/* Ligne 1: # commande centré + Rep à droite */
 .mobile-job-card-row1 {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.mobile-job-card-order {
+  font-size: 17px;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  text-align: center;
+}
+
+.mobile-job-card-rep {
+  position: absolute;
+  right: 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+/* Ligne 2: Client */
+.mobile-job-card-row2 {
+  display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 6px;
 }
 
-.mobile-job-card-order {
-  font-size: 14px;
-  font-weight: 700;
-}
-
 .mobile-job-card-client {
   font-size: 12px;
-  opacity: 0.9;
+  font-weight: 500;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
-.mobile-job-card-row2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mobile-job-card-rep {
-  font-size: 11px;
-  opacity: 0.8;
-}
-
+/* Ligne 3: Pastille délai pleine largeur */
 .mobile-job-card-days {
-  font-size: 10px;
+  display: block;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 700;
   padding: 3px 8px;
-  border-radius: 10px;
-  background: rgba(0,0,0,0.3);
+  border-radius: 20px;
+  border: 2px solid #000;
+  text-align: center;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+/* Couleurs selon délai - OK = même couleur que carte (transparent) */
+.mobile-job-card-days.ok {
+  background: rgba(0,0,0,0.2);
 }
 
 .mobile-job-card-days.warn {
@@ -3477,6 +3649,16 @@ html, body {
 
 .mobile-job-card-days.danger {
   background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.mobile-job-card-days.critical {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  animation: pulseRed 2s ease-in-out infinite;
+}
+
+@keyframes pulseRed {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 /* =============================================================================
@@ -3589,13 +3771,21 @@ html, body {
 }
 
 .mobile-job-date-pill {
-  padding: 10px 12px;
+  padding: 8px 6px;
   background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #1f2937;
   text-align: center;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mobile-job-date-pill:active {
+  transform: scale(0.97);
+  background: linear-gradient(to bottom, #e2e8f0, #cbd5e1);
 }
 
 .mobile-job-notes-area {
@@ -3616,13 +3806,37 @@ html, body {
 
 .mobile-job-notes-content {
   flex: 1;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  width: 100%;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
   padding: 12px;
   font-size: 14px;
+  font-family: inherit;
+  line-height: 1.5;
+  min-height: 250px;
+  max-height: 400px;
   overflow-y: auto;
-  min-height: 200px;
   background: white;
+  box-sizing: border-box;
+  color: #1e293b;
+}
+
+.mobile-job-notes-content:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.mobile-job-notes-content:empty:before {
+  content: 'Cliquez pour ajouter des notes...';
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.mobile-job-notes-content img {
+  max-width: 100%;
+  border-radius: 4px;
+  cursor: nwse-resize;
 }
 
 .mobile-job-fiche-footer {
@@ -3807,6 +4021,20 @@ html, body {
   justify-content: center;
   gap: 8px;
   flex-wrap: wrap;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.mobile-status-block:active {
+  transform: scale(0.98);
+}
+
+.mobile-status-edit {
+  font-size: 10px;
+  color: rgba(255,255,255,0.8);
+  padding: 2px 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
 
 .mobile-status-block.attente {
@@ -3849,16 +4077,16 @@ html, body {
   border-bottom: none;
 }
 
-/* Tailles par défaut */
+/* Tailles par défaut - réduites de 1px */
 .mobile-info-label {
-  font-size: 14px;
+  font-size: 13px;
   color: #64748b;
   font-weight: 500;
   flex-shrink: 0;
 }
 
 .mobile-info-value {
-  font-size: 14px;
+  font-size: 13px;
   color: #1e293b;
   font-weight: 600;
   text-align: right;
@@ -3866,20 +4094,52 @@ html, body {
   word-break: break-word;
 }
 
-/* Tailles spécifiques par champ (+2px = 16px, +1px = 15px) */
+/* Dates et items éditables */
+.mobile-date-editable,
+.mobile-item-editable {
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.mobile-date-editable:active,
+.mobile-item-editable:active {
+  transform: scale(0.97);
+  background: #e2e8f0;
+}
+
+/* Lignes de dates compactes */
+.mobile-info-row.mobile-date-row {
+  padding: 3px 0;
+}
+
+.mobile-info-row.mobile-date-row .mobile-info-label {
+  font-size: 12px;
+}
+
+.mobile-info-row.mobile-date-row .mobile-info-value {
+  font-size: 11px;
+}
+
+/* Tailles spécifiques par champ (+2px = 15px, +1px = 14px) - réduites */
 .mobile-info-row.size-plus2 .mobile-info-label,
 .mobile-info-row.size-plus2 .mobile-info-value {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .mobile-info-row.size-plus1 .mobile-info-label,
 .mobile-info-row.size-plus1 .mobile-info-value {
-  font-size: 15px;
+  font-size: 14px;
 }
 
-/* Client - texte qui s'adapte si trop long */
+/* Texte qui s'adapte si trop long (ex: 2 intervenants) */
 .mobile-info-value.shrink-text {
-  font-size: 15px;
+  font-size: 13px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3994,7 +4254,7 @@ html, body {
 }
 
 /* Textarea plein écran pour Notes */
-.mobile-notes-textarea-full {
+.mobile-notes-content-editable {
   width: 100%;
   height: 100%;
   flex: 1;
@@ -4003,18 +4263,26 @@ html, body {
   background: #ffffff;
   color: #1e293b;
   font-size: 16px;
-  resize: none;
   box-sizing: border-box;
   font-family: inherit;
   line-height: 1.6;
+  overflow-y: auto;
 }
 
-.mobile-notes-textarea-full:focus {
+.mobile-notes-content-editable:focus {
   outline: none;
 }
 
-.mobile-notes-textarea-full::placeholder {
+.mobile-notes-content-editable:empty:before {
+  content: 'Cliquez pour ajouter des notes (collez des images!)';
   color: #94a3b8;
+  font-style: italic;
+}
+
+.mobile-notes-content-editable img {
+  max-width: 100%;
+  border-radius: 4px;
+  cursor: nwse-resize;
 }
 
 /* Menu popup photos */
@@ -4027,6 +4295,186 @@ html, body {
   justify-content: center;
   z-index: 200000;
   padding: 20px;
+}
+
+/* ===== SÉLECTEUR D'ITEM MOBILE ===== */
+.mobile-item-selector-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200000;
+  padding: 20px;
+}
+
+.mobile-item-selector {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.mobile-item-selector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: linear-gradient(to bottom, #1e40af, #3b82f6);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mobile-item-selector-body {
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.mobile-item-option {
+  padding: 14px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 4px;
+  color: #1e293b;
+  background: #f8fafc;
+}
+
+.mobile-item-option:hover,
+.mobile-item-option:active {
+  background: #f1f5f9;
+}
+
+.mobile-item-option.selected {
+  background: #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+}
+
+/* ===== HISTORIQUE DÉPARTEMENTS MOBILE ===== */
+.mobile-dept-history-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200000;
+  padding: 10px;
+}
+
+.mobile-dept-history {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.mobile-dept-history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(to bottom, #1e40af, #3b82f6);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.mobile-dept-history-body {
+  padding: 10px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.mobile-dept-row {
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-left: 4px solid #cbd5e1;
+}
+
+.mobile-dept-row.active {
+  background: #dbeafe;
+  border-left-color: #3b82f6;
+}
+
+.mobile-dept-row.completed {
+  background: #dcfce7;
+  border-left-color: #22c55e;
+}
+
+.mobile-dept-row.current {
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.mobile-dept-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.mobile-dept-dates {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mobile-dept-date-field {
+  flex: 1;
+}
+
+.mobile-dept-date-field label {
+  display: block;
+  font-size: 10px;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.mobile-dept-date-field input {
+  width: 100%;
+  padding: 6px 4px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 11px;
+  box-sizing: border-box;
+}
+
+.mobile-dept-jours {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3b82f6;
+  min-width: 35px;
+  text-align: center;
+}
+
+.mobile-dept-history-footer {
+  padding: 10px 16px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.mobile-dept-close-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to bottom, #1e40af, #3b82f6);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .mobile-photo-menu {
@@ -4677,7 +5125,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100001;
+  z-index: 200000;
   padding: 20px;
 }
 
@@ -5315,7 +5763,7 @@ function loginSuccess(userInfo, email) {
   const statusDot = userStatusEl.querySelector('.status-dot');
   const userName = userStatusEl.querySelector('.user-name');
   if (statusDot) statusDot.classList.add('online');
-  if (userName) userName.innerHTML = userInfo.name + '<span class="user-role-badge ' + userInfo.role + '">' + 
+  if (userName) userName.innerHTML = '<span class="user-name-text">' + userInfo.name + '</span><span class="user-role-badge ' + userInfo.role + '">' + 
     ({ admin: 'Admin', editor: 'Editeur', viewer: 'Lecteur' }[userInfo.role] || userInfo.role) + '</span>';
   
   loadCardsFromFirebase();
@@ -7195,7 +7643,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('settingsCloseBtn').addEventListener('click', () => document.getElementById('settingsOverlay').classList.add('hidden'));
   document.getElementById('settingsOverlay').addEventListener('click', e => { if (e.target.id === 'settingsOverlay') document.getElementById('settingsOverlay').classList.add('hidden'); });
   document.getElementById('btnLogout').addEventListener('click', logout);
-  document.getElementById('btnAddMoulage').addEventListener('click', () => showAddMoulageModal());
+  
+  const btnAddMoulage = document.getElementById('btnAddMoulage');
+  if (btnAddMoulage) btnAddMoulage.addEventListener('click', () => showAddMoulageModal());
   
   document.getElementById('searchInput').addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
@@ -8039,6 +8489,10 @@ function confirmAddMoulage() {
   if (isRobotViewActive && typeof renderRobotTable === 'function') {
     setTimeout(() => renderRobotTable(), 200);
   }
+  
+  // Mettre à jour les compteurs mobile
+  if (typeof updateMobileMenuCounts === 'function') updateMobileMenuCounts();
+  if (typeof displayAllMobileCards === 'function') displayAllMobileCards();
 }
 
 // ===== IMPORT JSON POUR MOULAGE =====
@@ -8440,61 +8894,123 @@ window.clearCalDate = clearCalDate;
 // =============================================================================
 
 let jobsData = {
-  // 2 cartes exemple pour tests
-  'job_example_1': {
+  // 6 jobs exemple pour tests - dates 2025
+  'job_ex_1': {
     type: 'question',
     order: '287001',
     client: 'Centre ABC',
-    numeroPO: 'PO-2024-001',
+    numeroPO: 'PO-2025-001',
     numeroSoumission: 'S-001',
     representant: 'Marie-Soleil',
     intervenant: 'Dr Martin',
     region: 'Quebec',
-    dateRecue: '2024-12-01',
-    dateAmene: '2024-12-10',
-    dateLivraison: '2024-12-25',
+    dateRecue: '2025-12-01',
+    dateAmene: '2025-12-15',
+    dateLivraison: '2025-12-28',
     notes: '',
-    createdAt: new Date().toISOString()
+    createdAt: '2025-12-15T10:00:00Z'
   },
-  'job_example_2': {
+  'job_ex_2': {
     type: 'question',
     order: '287002',
     client: 'Clinique XYZ',
-    numeroPO: 'PO-2024-002',
+    numeroPO: 'PO-2025-002',
     numeroSoumission: 'S-002',
     representant: 'Valérie',
     intervenant: 'Dr Tremblay',
     region: 'Ontario',
-    dateRecue: '2024-12-05',
-    dateAmene: '2024-12-12',
-    dateLivraison: '2024-12-28',
+    dateRecue: '2025-12-05',
+    dateAmene: '2025-12-18',
+    dateLivraison: '2025-12-30',
     notes: '',
-    createdAt: new Date().toISOString()
+    createdAt: '2025-12-18T10:00:00Z'
+  },
+  'job_ex_3': {
+    type: 'question',
+    order: '287003',
+    client: 'SAT IRDPQ Hamel',
+    numeroPO: 'PO-2025-003',
+    numeroSoumission: 'S-003',
+    representant: 'Marie-Pier',
+    intervenant: 'Isabelle Neault',
+    region: 'Quebec',
+    dateRecue: '2025-12-10',
+    dateAmene: '2025-12-19',
+    dateLivraison: '2026-01-05',
+    notes: '',
+    createdAt: '2025-12-19T10:00:00Z'
+  },
+  'job_ex_4': {
+    type: 'question',
+    order: '287004',
+    client: 'IWK Nouvelle Ecosse',
+    numeroPO: 'PO-2025-004',
+    numeroSoumission: 'S-004',
+    representant: 'Fabrys',
+    intervenant: 'Jenny Jackson',
+    region: 'Quebec',
+    dateRecue: '2025-12-08',
+    dateAmene: '2025-12-20',
+    dateLivraison: '2026-01-10',
+    notes: '',
+    createdAt: '2025-12-20T10:00:00Z'
+  },
+  'job_ex_5': {
+    type: 'question',
+    order: '287005',
+    client: 'Stan Cassidy Nouveau Brunswick',
+    numeroPO: 'PO-2025-005',
+    numeroSoumission: 'S-005',
+    representant: 'Multipass',
+    intervenant: 'Pam McKaskill',
+    region: 'Ontario',
+    dateRecue: '2025-12-12',
+    dateAmene: '2025-12-21',
+    dateLivraison: '2026-01-15',
+    notes: '',
+    createdAt: '2025-12-21T10:00:00Z'
+  },
+  'job_ex_6': {
+    type: 'question',
+    order: '287006',
+    client: 'TLC Medical',
+    numeroPO: 'PO-2025-006',
+    numeroSoumission: 'S-006',
+    representant: 'Marie-Soleil',
+    intervenant: 'Eric Gagnon',
+    region: 'Quebec',
+    dateRecue: '2025-12-14',
+    dateAmene: '2025-12-21',
+    dateLivraison: '2026-01-20',
+    notes: '',
+    createdAt: '2025-12-21T11:00:00Z'
   }
 };
 let currentJobId = null;
 
 // Charger les jobs depuis Firebase
 function loadJobsFromFirebase() {
-  // Toujours afficher immédiatement les exemples
+  // Afficher les exemples immédiatement
   renderJobs();
+  if (typeof renderMobileJobsList === 'function') renderMobileJobsList();
   
-  if (!firebaseDb) return;
+  if (!firebaseDb) {
+    return;
+  }
   
   firebaseDb.ref('jobs').on('value', snapshot => {
     if (snapshot.exists()) {
       const data = snapshot.val();
-      jobsData = {};
+      // Fusionner avec les exemples (Firebase a priorité)
       Object.keys(data).forEach(key => {
         jobsData[key] = data[key];
       });
-    } else {
-      // Firebase vide - sauvegarder les exemples dans Firebase
-      Object.keys(jobsData).forEach(key => {
-        firebaseDb.ref('jobs/' + key).set(jobsData[key]);
-      });
     }
     renderJobs();
+    // Mettre à jour aussi la liste mobile
+    if (typeof renderMobileJobsList === 'function') renderMobileJobsList();
+    // Mettre à jour les compteurs du menu mobile
+    if (typeof updateMobileMenuCounts === 'function') updateMobileMenuCounts();
   });
 }
 
@@ -8525,9 +9041,20 @@ function calcJobDays(dateStr) {
 
 // Classe couleur jours
 function getDaysClass(days) {
-  if (days <= 7) return 'ok';
-  if (days <= 14) return 'warn';
-  return 'danger';
+  if (days < 10) return 'ok';       // Même couleur que la carte
+  if (days < 15) return 'warn';     // Jaune
+  if (days < 25) return 'danger';   // Rouge
+  return 'critical';                // Rouge clignotant
+}
+
+// Formater numéro de soumission (enlever les zéros au début si trop long)
+function formatSoumission(num) {
+  if (!num) return '-';
+  // Si plus de 8 caractères et commence par des zéros, enlever les 4 premiers zéros
+  if (num.length > 8 && num.startsWith('0000')) {
+    return num.substring(4);
+  }
+  return num;
 }
 
 // Formater date en français
@@ -9255,6 +9782,9 @@ function saveNewJob() {
   saveJobToFirebase(jobId);
   closeAddJobModal();
   renderJobs();
+  // Mettre à jour la liste mobile aussi
+  if (typeof renderMobileJobsList === 'function') renderMobileJobsList();
+  if (typeof updateMobileMenuCounts === 'function') updateMobileMenuCounts();
   showToast('Job ajouté!');
 }
 
@@ -9323,7 +9853,6 @@ function initJobsPage() {
 // Exports
 window.showAddJobModal = showAddJobModal;
 window.closeAddJobModal = closeAddJobModal;
-window.selectAddType = selectAddType;
 window.saveNewJob = saveNewJob;
 window.handleImportJobJson = handleImportJobJson;
 window.openJobFiche = openJobFiche;
@@ -9357,8 +9886,8 @@ function isMobileDevice() {
 }
 
 // Variables globales mobile
-let currentMobileFicheId = null;
-let mobileSwipeCurrentPage = 0; // 0=Info, 1=Notes
+var currentMobileFicheId = null;
+var mobileSwipeCurrentPage = 0; // 0=Info, 1=Notes
 
 // Fonction appelée APRÈS la connexion réussie
 function initMobileAfterLogin() {
@@ -9426,12 +9955,9 @@ function createMobileHomeHTML() {
     <!-- ÉCRAN D'ACCUEIL MOBILE -->
     <div class="mobile-home-overlay" id="mobileHomeOverlay">
       <div class="mobile-home-header">
-        <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro1.png" 
-             class="mobile-home-logo" 
-             alt="PhysiPro"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <div class="mobile-home-logo-fallback" style="display:none;">PHYSIPRO MOULAGE</div>
-        <h1 class="mobile-home-title">Outil d'aide de gestion pour les moulages</h1>
+        <button class="mobile-home-back" onclick="closeMobileMoulages()">←</button>
+        <h1 class="mobile-home-title">Outil de gestion des moulages</h1>
+        <button class="mobile-home-add" onclick="showAddMoulageModal()">+</button>
       </div>
       
       <div class="mobile-search-container">
@@ -9451,10 +9977,6 @@ function createMobileHomeHTML() {
             Veuillez patienter
           </div>
         </div>
-      </div>
-      
-      <div class="mobile-desktop-btn" onclick="switchToDesktopMode()">
-        💻 Accéder à la version complète
       </div>
     </div>
     
@@ -9482,7 +10004,12 @@ function createMobileHomeHTML() {
             <div class="mobile-notes-photos-section" id="mobileNotesPhotos">
               <!-- Contenu généré dynamiquement -->
             </div>
-            <textarea class="mobile-notes-textarea-full" id="mobileNotesTextarea" placeholder="Écrivez vos notes ici..."></textarea>
+            <div class="mobile-notes-content-editable" 
+                 id="mobileNotesContent" 
+                 contenteditable="true"
+                 onclick="insertMobileNoteTimestamp(event)"
+                 onpaste="handleMobileNotesPaste(event)"
+                 onblur="saveMobileNotesContent()"></div>
           </div>
           
         </div>
@@ -9599,11 +10126,10 @@ function createMobileCardHTML(cardId, card) {
   else if (regionClass === 'region-ma') regionText = 'MA';
   
   // Représentante (raccourcie)
-  let repText = '';
+  let repText = '-';
   if (card.representant) {
     repText = card.representant;
-    // Raccourcir si trop long
-    if (repText.length > 20) {
+    if (repText.length > 12) {
       repText = repText.split(' ')[0];
     }
   }
@@ -9611,15 +10137,15 @@ function createMobileCardHTML(cardId, card) {
   // Raison attente
   const raisonAttente = card.raisonAttente || '';
   
-  // HTML pour la carte
+  // HTML pour la carte - REP à gauche, #commande au centre, région à droite
   return `
     <div class="mobile-card ${regionClass} ${isEnAttente ? 'en-attente' : ''}" onclick="openMobileFiche('${cardId}')">
       <div class="mobile-card-name">${card.name || 'Sans nom'}</div>
       <div class="mobile-card-middle">
-        <span class="mobile-card-region">${regionText}</span>
+        <span class="mobile-card-rep">${repText}</span>
         <span class="mobile-card-order">#${card.order || '000000'}</span>
+        <span class="mobile-card-region">${regionText}</span>
       </div>
-      ${repText ? `<div class="mobile-card-rep">👩‍💼 ${repText}</div>` : ''}
       ${isEnAttente 
         ? `<div class="mobile-card-attente-badge">⏳ EN ATTENTE</div>
            ${raisonAttente ? `<div class="mobile-card-raison">${raisonAttente}</div>` : ''}`
@@ -9629,18 +10155,33 @@ function createMobileCardHTML(cardId, card) {
   `;
 }
 
-// Calculer les jours restants pour mobile
+// Calculer les jours restants pour mobile (version simplifiée et robuste)
 function calculateMobileDaysRemaining(card) {
-  if (!card.dateRobot) return { text: '-', class: '' };
+  // Si pas de date livraison, retourner vide
+  if (!card.dateLivraison) return { text: '-', class: '' };
   
-  const joursRestants = calculerJoursRestants(card.dateRobot, card.region, card);
-  
-  if (joursRestants < 0) {
-    return { text: `${Math.abs(joursRestants)}j retard`, class: 'retard' };
-  } else if (joursRestants <= 14) {
-    return { text: `${joursRestants}j`, class: 'urgent' };
-  } else {
-    return { text: `${joursRestants}j`, class: '' };
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dateLiv = new Date(card.dateLivraison + 'T00:00:00');
+    
+    if (isNaN(dateLiv.getTime())) return { text: '-', class: '' };
+    
+    // Calculer différence en jours
+    const diffTime = dateLiv - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays < 0) {
+      return { text: `${Math.abs(diffDays)}j retard`, class: 'retard' };
+    } else if (diffDays <= 3) {
+      return { text: `${diffDays}j`, class: 'urgent' };
+    } else if (diffDays <= 10) {
+      return { text: `${diffDays}j`, class: 'warning' };
+    } else {
+      return { text: `${diffDays}j`, class: '' };
+    }
+  } catch (e) {
+    return { text: '-', class: '' };
   }
 }
 
@@ -9738,6 +10279,7 @@ function openMobileFiche(cardId) {
   
   currentMobileFicheId = cardId;
   mobileSwipeCurrentPage = 0; // Commencer sur Info (page 0)
+  mobileNoteTimestampAdded = false; // Réinitialiser pour permettre nouvelle signature
   
   // Mettre à jour le header
   document.getElementById('mobileFicheTitle').textContent = card.name || 'Sans nom';
@@ -9758,19 +10300,12 @@ function openMobileFiche(cardId) {
     const hint = document.getElementById('mobileSwipeHint');
     if (hint) hint.style.opacity = '0';
   }, 3000);
-  
-  // Activer auto-save pour les notes
-  setupMobileNotesAutoSave();
 }
 
 // Fermer la fiche mobile
 function closeMobileFiche() {
   // Sauvegarder les notes avant de fermer
-  const textarea = document.getElementById('mobileNotesTextarea');
-  if (textarea && currentMobileFicheId && cardsData[currentMobileFicheId]) {
-    cardsData[currentMobileFicheId].notes = textarea.value;
-    saveCardToFirebase(currentMobileFicheId);
-  }
+  saveMobileNotesContent();
   
   document.getElementById('mobileFicheOverlay').classList.remove('active');
   currentMobileFicheId = null;
@@ -9808,10 +10343,13 @@ function renderMobilePageInfo(card) {
   else if (currentDept === 'Couture' || currentDept === 'Peinture' || currentDept === 'Expédition') article = 'À la ';
   else if (isAttente) article = '';
   
-  // Date depuis
+  // Date depuis (à partir du tracking)
   let dateSince = '';
+  const deptKey = ['robot', 'degauchage', 'essayage', 'atelier', 'couture', 'peinture', 'expedition'][colIndex];
   if (isAttente && card.dateAttente) {
     dateSince = card.dateAttente;
+  } else if (card.tracking && card.tracking[deptKey] && card.tracking[deptKey].entree) {
+    dateSince = card.tracking[deptKey].entree;
   } else if (card.dateRecue) {
     dateSince = card.dateRecue;
   }
@@ -9822,9 +10360,10 @@ function renderMobilePageInfo(card) {
   
   container.innerHTML = `
     <div class="mobile-info-card" style="flex: 1;">
-      <!-- STATUT - Une seule ligne -->
-      <div class="mobile-status-block ${isAttente ? 'attente' : ''}">
+      <!-- STATUT - Cliquable pour voir/modifier l'historique -->
+      <div class="mobile-status-block ${isAttente ? 'attente' : ''}" onclick="openMobileDeptHistory()">
         <span class="mobile-status-text">${statutLine}</span>
+        <span class="mobile-status-edit">📊 Voir historique</span>
         ${isAttente && raisonAttente ? `<span class="mobile-status-raison blink">${raisonAttente}</span>` : ''}
       </div>
       
@@ -9838,7 +10377,7 @@ function renderMobilePageInfo(card) {
       </div>
       <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">📋 # de soumission</span>
-        <span class="mobile-info-value">${card.numeroSoumission || '-'}</span>
+        <span class="mobile-info-value">${formatSoumission(card.numeroSoumission)}</span>
       </div>
       <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">📑 # de PO</span>
@@ -9857,37 +10396,39 @@ function renderMobilePageInfo(card) {
       
       <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">👩‍⚕️ Intervenant</span>
-        <span class="mobile-info-value">${card.intervenant || '-'}</span>
+        <span class="mobile-info-value shrink-text">${card.intervenant || '-'}</span>
       </div>
       <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">👩‍💼 Représentante</span>
-        <span class="mobile-info-value">${card.representant || '-'}</span>
+        <span class="mobile-info-value shrink-text">${card.representant || '-'}</span>
       </div>
       
       <div class="mobile-section-divider"></div>
       
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📥 Date réception de la commande</span>
-        <span class="mobile-info-value">${card.dateRecue || '-'}</span>
+      <!-- DATES CLIQUABLES (labels courts, taille réduite) -->
+      <div class="mobile-info-row mobile-date-row">
+        <span class="mobile-info-label">📥 Réception</span>
+        <span class="mobile-info-value mobile-date-editable" onclick="openMobileMoulageCalendar('dateRecue')">${card.dateRecue || 'Sélectionner'}</span>
       </div>
-      <div class="mobile-info-row size-plus2">
-        <span class="mobile-info-label">📦 Date de livraison</span>
-        <span class="mobile-info-value highlight">${card.dateLivraison || '-'}</span>
+      <div class="mobile-info-row mobile-date-row">
+        <span class="mobile-info-label">📦 Livraison</span>
+        <span class="mobile-info-value mobile-date-editable highlight" onclick="openMobileMoulageCalendar('dateLivraison')">${card.dateLivraison || 'Sélectionner'}</span>
       </div>
-      <div class="mobile-info-row size-plus1">
-        <span class="mobile-info-label">🤖 Date de fabrication au robot</span>
-        <span class="mobile-info-value">${card.dateRobot || '-'}</span>
+      <div class="mobile-info-row mobile-date-row">
+        <span class="mobile-info-label">🤖 Fab. robot</span>
+        <span class="mobile-info-value mobile-date-editable" onclick="openMobileMoulageCalendar('dateRobot')">${card.dateRobot || 'Sélectionner'}</span>
       </div>
-      <div class="mobile-info-row">
-        <span class="mobile-info-label">📅 Date du RDV essayage avec Rep</span>
-        <span class="mobile-info-value">${card.dateEssayage || '-'}</span>
+      <div class="mobile-info-row mobile-date-row">
+        <span class="mobile-info-label">📅 RDV essayage</span>
+        <span class="mobile-info-value mobile-date-editable" onclick="openMobileMoulageCalendar('dateEssayage')">${card.dateEssayage || 'Sélectionner'}</span>
       </div>
       
       <div class="mobile-section-divider"></div>
       
+      <!-- ITEM CLIQUABLE -->
       <div class="mobile-info-row size-plus2">
         <span class="mobile-info-label">📦 Item</span>
-        <span class="mobile-info-value">${card.item || '-'}</span>
+        <span class="mobile-info-value mobile-item-editable" onclick="openMobileItemSelector()">${card.item || '-- Sélectionner --'}</span>
       </div>
       
       <div class="mobile-section-divider"></div>
@@ -9904,7 +10445,7 @@ function renderMobilePageInfo(card) {
   `;
 }
 
-// Générer la page Notes
+// Générer la page Notes (avec support images)
 function renderMobilePageNotes(card) {
   // Générer les 6 boutons photos (vert si vide, bleu si plein) - Utilise notePhoto1, etc. pour synchro avec PC
   const photosSection = document.getElementById('mobileNotesPhotos');
@@ -9922,69 +10463,187 @@ function renderMobilePageNotes(card) {
     `;
   }
   
-  // Notes
-  const textarea = document.getElementById('mobileNotesTextarea');
-  if (textarea) {
-    textarea.value = card.notes || '';
+  // Notes (contenteditable avec support images)
+  const content = document.getElementById('mobileNotesContent');
+  if (content) {
+    content.innerHTML = card.notes || '';
+    // Initialiser le redimensionnement des images existantes
+    setTimeout(() => initMobileNotesImageResizing(), 100);
   }
 }
 
-// Auto-save pour les notes mobile
-function setupMobileNotesAutoSave() {
-  const textarea = document.getElementById('mobileNotesTextarea');
-  if (!textarea) return;
+// Variable globale pour le timestamp moulages
+var mobileNoteTimestampAdded = false;
+
+// Insérer timestamp au clic dans les notes moulage mobile  
+function insertMobileNoteTimestamp(event) {
+  if (mobileNoteTimestampAdded) return;
+  mobileNoteTimestampAdded = true;
   
-  // Variable pour éviter d'ajouter plusieurs fois le nom
-  let signatureAdded = false;
+  const content = document.getElementById('mobileNotesContent');
+  if (!content) return;
   
-  // Ajouter le nom de l'utilisateur quand on clique dans les notes
-  textarea.addEventListener('focus', function onFocus() {
-    if (signatureAdded) return;
-    signatureAdded = true;
-    
-    // TOUJOURS utiliser le nom de l'utilisateur, jamais l'email
-    let userName = 'Utilisateur';
-    if (currentUser && currentUser.name) {
-      userName = currentUser.name;
+  let userName = 'Utilisateur';
+  if (currentUser && currentUser.name) {
+    userName = currentUser.name;
+  }
+  
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-CA');
+  const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+  const signature = `<div><strong>— ${userName} (${dateStr} à ${timeStr}) —</strong></div><div><br></div>`;
+  
+  content.innerHTML += signature;
+  
+  // Placer le curseur à la fin
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.selectNodeContents(content);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  content.focus();
+  
+  saveMobileNotesContent();
+}
+
+// Gérer le collage d'images dans les notes moulage mobile
+function handleMobileNotesPaste(event) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+  
+  for (let item of items) {
+    if (item.type.indexOf('image') !== -1) {
+      event.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.width = '150px';
+        img.style.cursor = 'nwse-resize';
+        img.style.display = 'block';
+        img.style.margin = '5px 0';
+        
+        makeMobileNoteImageResizable(img);
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          range.setStartAfter(img);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          document.getElementById('mobileNotesContent').appendChild(img);
+        }
+        
+        saveMobileNotesContent();
+      };
+      
+      reader.readAsDataURL(file);
+      break;
     }
-    
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('fr-CA');
-    const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
-    const signature = `— ${userName} (${dateStr} à ${timeStr}) —`;
-    
-    const existingNotes = textarea.value;
-    // Ajouter signature + saut de ligne pour le curseur
-    const newNotes = existingNotes + (existingNotes && !existingNotes.endsWith('\n') ? '\n' : '') + signature + '\n';
-    
-    textarea.value = newNotes;
-    
-    // GARANTIR que le curseur est à la fin (après le saut de ligne)
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(textarea.value.length, textarea.value.length);
-      // Scroll vers le bas pour voir le curseur
-      textarea.scrollTop = textarea.scrollHeight;
-    }, 10);
-    
-    // Sauvegarder immédiatement
-    if (currentMobileFicheId && cardsData[currentMobileFicheId]) {
-      cardsData[currentMobileFicheId].notes = textarea.value;
-      saveCardToFirebase(currentMobileFicheId);
-    }
-  }, { once: true });
+  }
+}
+
+// Rendre une image redimensionnable (moulages)
+function makeMobileNoteImageResizable(img) {
+  let isResizing = false;
+  let startX, startWidth;
   
-  // Debounce pour éviter trop de sauvegardes
-  let saveTimeout;
-  textarea.addEventListener('input', () => {
-    clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
-      if (currentMobileFicheId && cardsData[currentMobileFicheId]) {
-        cardsData[currentMobileFicheId].notes = textarea.value;
-        saveCardToFirebase(currentMobileFicheId);
+  img.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      const rect = img.getBoundingClientRect();
+      const isNearEdge = (rect.right - touch.clientX < 30) && (rect.bottom - touch.clientY < 30);
+      
+      if (isNearEdge) {
+        e.preventDefault();
+        isResizing = true;
+        startX = touch.clientX;
+        startWidth = img.offsetWidth;
+        img.style.opacity = '0.7';
       }
-    }, 1000);
+    }
+  }, { passive: false });
+  
+  img.addEventListener('touchmove', function(e) {
+    if (!isResizing) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const newWidth = startWidth + (touch.clientX - startX);
+    if (newWidth > 50 && newWidth < 300) {
+      img.style.width = newWidth + 'px';
+      img.style.height = 'auto';
+    }
+  }, { passive: false });
+  
+  img.addEventListener('touchend', function() {
+    if (isResizing) {
+      isResizing = false;
+      img.style.opacity = '1';
+      saveMobileNotesContent();
+    }
   });
+  
+  // Mouse events
+  img.addEventListener('mousedown', function(e) {
+    const rect = img.getBoundingClientRect();
+    const isNearEdge = (rect.right - e.clientX < 20) && (rect.bottom - e.clientY < 20);
+    
+    if (isNearEdge) {
+      e.preventDefault();
+      isResizing = true;
+      startX = e.clientX;
+      startWidth = img.offsetWidth;
+      
+      const onMouseMove = (e) => {
+        if (!isResizing) return;
+        const newWidth = startWidth + (e.clientX - startX);
+        if (newWidth > 50 && newWidth < 300) {
+          img.style.width = newWidth + 'px';
+          img.style.height = 'auto';
+        }
+      };
+      
+      const onMouseUp = () => {
+        isResizing = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        saveMobileNotesContent();
+      };
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  });
+}
+
+// Initialiser le redimensionnement des images existantes (moulages)
+function initMobileNotesImageResizing() {
+  const content = document.getElementById('mobileNotesContent');
+  if (content) {
+    content.querySelectorAll('img').forEach(img => {
+      img.style.cursor = 'nwse-resize';
+      img.style.maxWidth = '100%';
+      makeMobileNoteImageResizable(img);
+    });
+  }
+}
+
+// Sauvegarder les notes moulage mobile
+function saveMobileNotesContent() {
+  if (!currentMobileFicheId || !cardsData[currentMobileFicheId]) return;
+  const content = document.getElementById('mobileNotesContent');
+  if (content) {
+    cardsData[currentMobileFicheId].notes = content.innerHTML;
+    saveCardToFirebase(currentMobileFicheId);
+  }
 }
 
 // Ouvrir le lien photo (si existe)
@@ -10043,6 +10702,191 @@ function closeMobilePhotoMenu(event) {
   if (event && event.target.id !== 'mobilePhotoMenu') return;
   const menu = document.getElementById('mobilePhotoMenu');
   if (menu) menu.remove();
+}
+
+// ===== CALENDRIER POUR DATES MOULAGE MOBILE =====
+function openMobileMoulageCalendar(field) {
+  if (!currentMobileFicheId) return;
+  const card = cardsData[currentMobileFicheId];
+  if (!card) return;
+  
+  const currentDate = card[field] || '';
+  
+  showCalendar({
+    value: currentDate,
+    mode: 'modal',
+    onSelect: (dateStr) => {
+      if (currentMobileFicheId && cardsData[currentMobileFicheId]) {
+        cardsData[currentMobileFicheId][field] = dateStr;
+        saveCardToFirebase(currentMobileFicheId);
+        renderMobilePageInfo(cardsData[currentMobileFicheId]);
+        renderAllCards();
+      }
+    }
+  });
+}
+
+// ===== SÉLECTEUR D'ITEM MOBILE =====
+function openMobileItemSelector() {
+  if (!currentMobileFicheId) return;
+  const card = cardsData[currentMobileFicheId];
+  if (!card) return;
+  
+  const items = customLists.items || ['Appui-tête', 'Coussin', 'Dossier', 'Siège', 'Siège + Dossier'];
+  
+  const menuHTML = `
+    <div class="mobile-item-selector-overlay" id="mobileItemSelector" onclick="closeMobileItemSelector(event)">
+      <div class="mobile-item-selector" onclick="event.stopPropagation()">
+        <div class="mobile-item-selector-header">
+          <span>📦 Sélectionner un Item</span>
+          <button onclick="closeMobileItemSelector()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#fff;">✕</button>
+        </div>
+        <div class="mobile-item-selector-body">
+          ${items.map(item => `
+            <div class="mobile-item-option ${card.item === item ? 'selected' : ''}" onclick="selectMobileItem('${item}')">${item}</div>
+          `).join('')}
+          <div class="mobile-item-option" onclick="selectMobileItem('')">-- Aucun --</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', menuHTML);
+}
+
+function closeMobileItemSelector(event) {
+  if (event && event.target.id !== 'mobileItemSelector') return;
+  const menu = document.getElementById('mobileItemSelector');
+  if (menu) menu.remove();
+}
+
+function selectMobileItem(item) {
+  if (!currentMobileFicheId) return;
+  cardsData[currentMobileFicheId].item = item;
+  saveCardToFirebase(currentMobileFicheId);
+  closeMobileItemSelector({ target: { id: 'mobileItemSelector' } });
+  renderMobilePageInfo(cardsData[currentMobileFicheId]);
+  displayAllMobileCards();
+}
+
+// ===== HISTORIQUE DES DÉPARTEMENTS MOBILE =====
+function openMobileDeptHistory() {
+  if (!currentMobileFicheId) return;
+  const card = cardsData[currentMobileFicheId];
+  if (!card) return;
+  
+  const depts = [
+    { key: 'robot', name: 'Robot', icon: '🤖' },
+    { key: 'degauchage', name: 'Dégauchage', icon: '🔧' },
+    { key: 'essayage', name: 'Essayage', icon: '👔' },
+    { key: 'atelier', name: 'Atelier', icon: '🏭' },
+    { key: 'couture', name: 'Couture', icon: '🧵' },
+    { key: 'peinture', name: 'Peinture', icon: '🎨' },
+    { key: 'expedition', name: 'Expédition', icon: '📦' }
+  ];
+  
+  const tracking = card.tracking || {};
+  const colIndex = card.columnIndex || 0;
+  
+  let historyHTML = depts.map((dept, idx) => {
+    const data = tracking[dept.key] || {};
+    const entree = data.entree || '';
+    const sortie = data.sortie || '';
+    const isCurrent = idx === colIndex;
+    const isCompleted = entree && sortie;
+    const isActive = entree && !sortie;
+    
+    let jours = '-';
+    if (isCompleted) {
+      jours = calcJoursOuvrables(entree, sortie) + 'j';
+    } else if (isActive) {
+      jours = calcJoursOuvrables(entree, new Date().toISOString().split('T')[0]) + 'j';
+    }
+    
+    let statusClass = '';
+    if (isCompleted) statusClass = 'completed';
+    else if (isActive) statusClass = 'active';
+    
+    return `
+      <div class="mobile-dept-row ${statusClass} ${isCurrent ? 'current' : ''}">
+        <div class="mobile-dept-name">${dept.icon} ${dept.name}</div>
+        <div class="mobile-dept-dates">
+          <div class="mobile-dept-date-field">
+            <label>Entrée</label>
+            <input type="date" value="${entree}" onchange="updateMobileDeptDate('${dept.key}', 'entree', this.value)">
+          </div>
+          <div class="mobile-dept-date-field">
+            <label>Sortie</label>
+            <input type="date" value="${sortie}" onchange="updateMobileDeptDate('${dept.key}', 'sortie', this.value)">
+          </div>
+          <div class="mobile-dept-jours">${jours}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  const menuHTML = `
+    <div class="mobile-dept-history-overlay" id="mobileDeptHistory" onclick="closeMobileDeptHistory(event)">
+      <div class="mobile-dept-history" onclick="event.stopPropagation()">
+        <div class="mobile-dept-history-header">
+          <span>📊 Historique des départements</span>
+          <button onclick="closeMobileDeptHistory()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#fff;">✕</button>
+        </div>
+        <div class="mobile-dept-history-body">
+          ${historyHTML}
+        </div>
+        <div class="mobile-dept-history-footer">
+          <button onclick="closeMobileDeptHistory()" class="mobile-dept-close-btn">Fermer</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', menuHTML);
+}
+
+function closeMobileDeptHistory(event) {
+  if (event && event.target.id !== 'mobileDeptHistory') return;
+  const menu = document.getElementById('mobileDeptHistory');
+  if (menu) menu.remove();
+}
+
+function updateMobileDeptDate(deptKey, field, value) {
+  if (!currentMobileFicheId) return;
+  
+  if (!cardsData[currentMobileFicheId].tracking) {
+    cardsData[currentMobileFicheId].tracking = {};
+  }
+  if (!cardsData[currentMobileFicheId].tracking[deptKey]) {
+    cardsData[currentMobileFicheId].tracking[deptKey] = {};
+  }
+  
+  cardsData[currentMobileFicheId].tracking[deptKey][field] = value;
+  saveCardToFirebase(currentMobileFicheId);
+  
+  // Rafraîchir l'historique
+  closeMobileDeptHistory({ target: { id: 'mobileDeptHistory' } });
+  openMobileDeptHistory();
+  
+  // Rafraîchir la fiche
+  renderMobilePageInfo(cardsData[currentMobileFicheId]);
+}
+
+// Helper pour calculer jours ouvrables
+function calcJoursOuvrables(dateDebut, dateFin) {
+  if (!dateDebut || !dateFin) return 0;
+  const d1 = new Date(dateDebut + 'T00:00:00');
+  const d2 = new Date(dateFin + 'T00:00:00');
+  if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return 0;
+  
+  let count = 0;
+  const current = new Date(d1);
+  while (current <= d2) {
+    const day = current.getDay();
+    if (day !== 0 && day !== 6) count++;
+    current.setDate(current.getDate() + 1);
+  }
+  return count;
 }
 
 function saveMobilePhotos() {
@@ -10255,30 +11099,36 @@ window.openMobilePhotoLink1to6 = openMobilePhotoLink1to6;
 window.openMobilePhotos1to6Menu = openMobilePhotos1to6Menu;
 window.closeMobilePhotos1to6Menu = closeMobilePhotos1to6Menu;
 window.saveMobilePhotos1to6 = saveMobilePhotos1to6;
+window.openMobileMoulageCalendar = openMobileMoulageCalendar;
+window.openMobileItemSelector = openMobileItemSelector;
+window.closeMobileItemSelector = closeMobileItemSelector;
+window.selectMobileItem = selectMobileItem;
+window.openMobileDeptHistory = openMobileDeptHistory;
+window.closeMobileDeptHistory = closeMobileDeptHistory;
+window.updateMobileDeptDate = updateMobileDeptDate;
+window.insertMobileNoteTimestamp = insertMobileNoteTimestamp;
+window.handleMobileNotesPaste = handleMobileNotesPaste;
+window.saveMobileNotesContent = saveMobileNotesContent;
 
 // ===== MOBILE MENU & JOBS =====
-let currentMobileJobId = null;
-let mobileJobSwipePage = 0;
+var currentMobileJobId = null;
+var mobileJobSwipePage = 0;
 
 // Créer le HTML du menu mobile
 function createMobileMenuHTML() {
   const menuHTML = `
     <!-- MENU MOBILE - CHOIX MOULAGES / JOBS -->
     <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-      <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro1.png" 
-           class="mobile-menu-logo" 
-           alt="PhysiPro"
-           onerror="this.style.display='none';">
       <div class="mobile-menu-title">Outil de gestion simplifiée</div>
       <div class="mobile-menu-buttons">
         <button class="mobile-menu-btn btn-moulages" onclick="openMobileMoulages()">
           <span class="mobile-menu-btn-icon">📋</span>
-          <span>Moulages</span>
+          <span class="mobile-menu-btn-text">Moulages</span>
           <span class="mobile-menu-btn-count" id="menuMoulagesCount"></span>
         </button>
         <button class="mobile-menu-btn btn-jobs" onclick="openMobileJobs()">
           <span class="mobile-menu-btn-icon">⏳</span>
-          <span>Jobs en attente</span>
+          <span class="mobile-menu-btn-text">Jobs en attente</span>
           <span class="mobile-menu-btn-count" id="menuJobsCount"></span>
         </button>
       </div>
@@ -10290,8 +11140,8 @@ function createMobileMenuHTML() {
     <!-- LISTE JOBS MOBILE -->
     <div class="mobile-jobs-overlay" id="mobileJobsOverlay">
       <div class="mobile-jobs-header">
-        <button class="mobile-jobs-back" onclick="closeMobileJobs()">← Retour</button>
-        <div class="mobile-jobs-title">⏳ En attente de réponse</div>
+        <button class="mobile-jobs-back" onclick="closeMobileJobs()">←</button>
+        <div class="mobile-jobs-title">Job en attente de réponse</div>
         <button class="mobile-jobs-add" onclick="showMobileAddJob()">+</button>
       </div>
       <div class="mobile-jobs-list" id="mobileJobsList"></div>
@@ -10330,13 +11180,7 @@ function showMobileMenu() {
   }
   
   // Mettre à jour les compteurs
-  const moulagesCount = Object.keys(cardsData || {}).length;
-  const jobsCount = Object.keys(jobsData || {}).filter(k => jobsData[k].type === 'question').length;
-  
-  const moulagesCountEl = document.getElementById('menuMoulagesCount');
-  const jobsCountEl = document.getElementById('menuJobsCount');
-  if (moulagesCountEl) moulagesCountEl.textContent = `(${moulagesCount})`;
-  if (jobsCountEl) jobsCountEl.textContent = `(${jobsCount})`;
+  updateMobileMenuCounts();
   
   // Afficher le menu
   document.getElementById('mobileMenuOverlay').classList.add('active');
@@ -10344,10 +11188,27 @@ function showMobileMenu() {
   document.getElementById('mobileJobsOverlay')?.classList.remove('active');
 }
 
+// Mettre à jour les compteurs du menu mobile
+function updateMobileMenuCounts() {
+  const moulagesCount = Object.keys(cardsData || {}).length;
+  const jobsCount = Object.keys(jobsData || {}).filter(k => jobsData[k] && jobsData[k].type === 'question').length;
+  
+  const moulagesCountEl = document.getElementById('menuMoulagesCount');
+  const jobsCountEl = document.getElementById('menuJobsCount');
+  if (moulagesCountEl) moulagesCountEl.textContent = `(${moulagesCount})`;
+  if (jobsCountEl) jobsCountEl.textContent = `(${jobsCount})`;
+}
+
 // Ouvrir les Moulages depuis le menu
 function openMobileMoulages() {
   document.getElementById('mobileMenuOverlay')?.classList.remove('active');
   document.getElementById('mobileHomeOverlay')?.classList.add('active');
+}
+
+// Fermer les Moulages et retourner au menu
+function closeMobileMoulages() {
+  document.getElementById('mobileHomeOverlay')?.classList.remove('active');
+  document.getElementById('mobileMenuOverlay')?.classList.add('active');
 }
 
 // Ouvrir les Jobs depuis le menu
@@ -10370,28 +11231,33 @@ function renderMobileJobsList() {
   
   const questionJobs = Object.entries(jobsData || {})
     .filter(([id, job]) => job.type === 'question')
-    .sort((a, b) => (b[1].dateAmene || '').localeCompare(a[1].dateAmene || ''));
+    // Trier par temps d'attente décroissant (plus ancien = plus de jours en haut)
+    .sort((a, b) => {
+      const daysA = calcJobDays(a[1].dateAmene);
+      const daysB = calcJobDays(b[1].dateAmene);
+      return daysB - daysA; // Plus de jours = en haut
+    });
   
   if (questionJobs.length === 0) {
-    list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.6);padding:40px;">Aucun job en questionnement</div>';
+    list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.6);padding:40px;">Aucun job en attente</div>';
     return;
   }
   
   list.innerHTML = questionJobs.map(([id, job]) => {
+    const regionClass = job.region === 'Ontario' ? 'region-on' : job.region === 'France' ? 'region-fr' : '';
     const days = calcJobDays(job.dateAmene);
     const daysClass = getDaysClass(days);
-    const regionClass = job.region === 'Ontario' ? 'region-on' : job.region === 'France' ? 'region-fr' : '';
     
     return `
       <div class="mobile-job-card ${regionClass}" onclick="openMobileJobFiche('${id}')">
         <div class="mobile-job-card-row1">
           <span class="mobile-job-card-order">#${job.order || '------'}</span>
-          <span class="mobile-job-card-client">${job.client || '-'}</span>
+          <span class="mobile-job-card-rep">${job.representant || '-'}</span>
         </div>
         <div class="mobile-job-card-row2">
-          <span class="mobile-job-card-rep">REP: ${job.representant || '-'}</span>
-          <span class="mobile-job-card-days ${daysClass}">${days} jours</span>
+          <span class="mobile-job-card-client">Client: ${job.client || '-'}</span>
         </div>
+        <div class="mobile-job-card-days ${daysClass}">${days}j en attente</div>
       </div>
     `;
   }).join('');
@@ -10400,6 +11266,7 @@ function renderMobileJobsList() {
 // Ouvrir la fiche job mobile
 function openMobileJobFiche(jobId) {
   currentMobileJobId = jobId;
+  mobileJobNoteTimestampAdded = false; // Réinitialiser pour permettre nouvelle signature
   const job = jobsData[jobId];
   if (!job) return;
   
@@ -10492,34 +11359,216 @@ function renderMobileJobPageInfo(job) {
     <div class="mobile-job-field-row">
       <div class="mobile-job-field">
         <label>Réception</label>
-        <div class="mobile-job-date-pill">${formatJobDate(job.dateRecue)}</div>
+        <div class="mobile-job-date-pill" onclick="openMobileJobCalendar('dateRecue')">${formatJobDate(job.dateRecue)}</div>
       </div>
       <div class="mobile-job-field">
         <label>En attente</label>
-        <div class="mobile-job-date-pill">${formatJobDate(job.dateAmene)}</div>
+        <div class="mobile-job-date-pill" onclick="openMobileJobCalendar('dateAmene')">${formatJobDate(job.dateAmene)}</div>
       </div>
       <div class="mobile-job-field">
         <label>Livraison</label>
-        <div class="mobile-job-date-pill">${formatJobDate(job.dateLivraison)}</div>
+        <div class="mobile-job-date-pill" onclick="openMobileJobCalendar('dateLivraison')">${formatJobDate(job.dateLivraison)}</div>
       </div>
     </div>
   `;
 }
 
-// Rendre la page Notes du job mobile
+// Rendre la page Notes du job mobile (avec support images comme desktop)
 function renderMobileJobPageNotes(job) {
   const page = document.getElementById('mobileJobPageNotes');
   if (!page) return;
   
   page.innerHTML = `
     <div class="mobile-job-notes-area">
-      <div class="mobile-job-notes-header">📝 Notes</div>
+      <div class="mobile-job-notes-header">📝 Notes (collez des images!)</div>
       <div class="mobile-job-notes-content" 
            id="mobileJobNotesContent" 
-           contenteditable="true" 
-           onblur="saveMobileJobNotes()">${job.notes || ''}</div>
+           contenteditable="true"
+           onclick="insertMobileJobNoteTimestamp(event)"
+           onpaste="handleMobileJobNotesPaste(event)"
+           onblur="saveMobileJobNotesContent()">${job.notes || ''}</div>
     </div>
   `;
+  
+  // Initialiser le redimensionnement des images existantes
+  setTimeout(() => initMobileJobNotesImageResizing(), 100);
+}
+
+// Insérer timestamp au clic dans les notes job mobile
+var mobileJobNoteTimestampAdded = false;
+
+function insertMobileJobNoteTimestamp(event) {
+  if (mobileJobNoteTimestampAdded) return;
+  mobileJobNoteTimestampAdded = true;
+  
+  const content = document.getElementById('mobileJobNotesContent');
+  if (!content) return;
+  
+  let userName = 'Utilisateur';
+  if (currentUser && currentUser.name) {
+    userName = currentUser.name;
+  }
+  
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('fr-CA');
+  const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+  const signature = `<div><strong>— ${userName} (${dateStr} à ${timeStr}) —</strong></div><div><br></div>`;
+  
+  // Ajouter à la fin
+  content.innerHTML += signature;
+  
+  // Placer le curseur à la fin
+  const range = document.createRange();
+  const sel = window.getSelection();
+  range.selectNodeContents(content);
+  range.collapse(false);
+  sel.removeAllRanges();
+  sel.addRange(range);
+  content.focus();
+  
+  // Sauvegarder
+  saveMobileJobNotesContent();
+}
+
+// Gérer le collage d'images dans les notes job mobile
+function handleMobileJobNotesPaste(event) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+  
+  for (let item of items) {
+    if (item.type.indexOf('image') !== -1) {
+      event.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.width = '150px';
+        img.style.cursor = 'nwse-resize';
+        img.style.display = 'block';
+        img.style.margin = '5px 0';
+        
+        // Activer le redimensionnement
+        makeMobileJobImageResizable(img);
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          range.setStartAfter(img);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          document.getElementById('mobileJobNotesContent').appendChild(img);
+        }
+        
+        saveMobileJobNotesContent();
+      };
+      
+      reader.readAsDataURL(file);
+      break;
+    }
+  }
+}
+
+// Rendre une image redimensionnable (touch + mouse)
+function makeMobileJobImageResizable(img) {
+  let isResizing = false;
+  let startX, startWidth;
+  
+  // Touch events
+  img.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      const rect = img.getBoundingClientRect();
+      const isNearEdge = (rect.right - touch.clientX < 30) && (rect.bottom - touch.clientY < 30);
+      
+      if (isNearEdge) {
+        e.preventDefault();
+        isResizing = true;
+        startX = touch.clientX;
+        startWidth = img.offsetWidth;
+        img.style.opacity = '0.7';
+      }
+    }
+  }, { passive: false });
+  
+  img.addEventListener('touchmove', function(e) {
+    if (!isResizing) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    const newWidth = startWidth + (touch.clientX - startX);
+    if (newWidth > 50 && newWidth < 300) {
+      img.style.width = newWidth + 'px';
+      img.style.height = 'auto';
+    }
+  }, { passive: false });
+  
+  img.addEventListener('touchend', function() {
+    if (isResizing) {
+      isResizing = false;
+      img.style.opacity = '1';
+      saveMobileJobNotesContent();
+    }
+  });
+  
+  // Mouse events (pour desktop)
+  img.addEventListener('mousedown', function(e) {
+    const rect = img.getBoundingClientRect();
+    const isNearEdge = (rect.right - e.clientX < 20) && (rect.bottom - e.clientY < 20);
+    
+    if (isNearEdge) {
+      e.preventDefault();
+      isResizing = true;
+      startX = e.clientX;
+      startWidth = img.offsetWidth;
+      
+      const onMouseMove = (e) => {
+        if (!isResizing) return;
+        const newWidth = startWidth + (e.clientX - startX);
+        if (newWidth > 50 && newWidth < 300) {
+          img.style.width = newWidth + 'px';
+          img.style.height = 'auto';
+        }
+      };
+      
+      const onMouseUp = () => {
+        isResizing = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        saveMobileJobNotesContent();
+      };
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  });
+}
+
+// Initialiser le redimensionnement des images existantes
+function initMobileJobNotesImageResizing() {
+  const content = document.getElementById('mobileJobNotesContent');
+  if (content) {
+    content.querySelectorAll('img').forEach(img => {
+      img.style.cursor = 'nwse-resize';
+      img.style.maxWidth = '100%';
+      makeMobileJobImageResizable(img);
+    });
+  }
+}
+
+// Sauvegarder les notes job mobile
+function saveMobileJobNotesContent() {
+  if (!currentMobileJobId || !jobsData[currentMobileJobId]) return;
+  const content = document.getElementById('mobileJobNotesContent');
+  if (content) {
+    jobsData[currentMobileJobId].notes = content.innerHTML;
+    saveJobToFirebase(currentMobileJobId);
+  }
 }
 
 // Mettre à jour un champ du job mobile
@@ -10530,14 +11579,25 @@ function updateMobileJobField(field, value) {
   renderMobileJobsList();
 }
 
-// Sauvegarder les notes du job mobile
-function saveMobileJobNotes() {
-  if (!currentMobileJobId || !jobsData[currentMobileJobId]) return;
-  const content = document.getElementById('mobileJobNotesContent');
-  if (content) {
-    jobsData[currentMobileJobId].notes = content.innerHTML;
-    saveJobToFirebase(currentMobileJobId);
-  }
+// Ouvrir le calendrier pour une date de job mobile
+function openMobileJobCalendar(field) {
+  const job = jobsData[currentMobileJobId];
+  if (!job) return;
+  
+  const currentDate = job[field] || '';
+  
+  showCalendar({
+    value: currentDate,
+    mode: 'modal',
+    onSelect: (dateStr) => {
+      if (currentMobileJobId && jobsData[currentMobileJobId]) {
+        jobsData[currentMobileJobId][field] = dateStr;
+        saveJobToFirebase(currentMobileJobId);
+        renderMobileJobPageInfo(jobsData[currentMobileJobId]);
+        renderMobileJobsList();
+      }
+    }
+  });
 }
 
 // Résoudre le job mobile
@@ -10557,47 +11617,86 @@ function emailMobileJob() {
   sendJobEmail();
 }
 
-// Initialiser le swipe pour les jobs mobiles
+// Variables globales pour le swipe jobs
+var jobSwipeIsDragging = false;
+var jobSwipeStartX = 0;
+var jobSwipeCurrentX = 0;
+
+// Initialiser le swipe pour les jobs mobiles (identique aux moulages)
 function initMobileJobSwipe() {
-  const container = document.getElementById('mobileJobFicheSwipe');
-  if (!container) return;
-  
-  let startX = 0;
-  let currentX = 0;
-  let isDragging = false;
-  
-  container.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-  });
-  
-  container.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-  });
-  
-  container.addEventListener('touchend', () => {
-    if (!isDragging) return;
-    isDragging = false;
+  setTimeout(() => {
+    const container = document.getElementById('mobileJobFicheSwipe');
+    if (!container) return;
     
-    const diff = startX - currentX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0 && mobileJobSwipePage < 1) {
-        mobileJobSwipePage = 1;
-      } else if (diff < 0 && mobileJobSwipePage > 0) {
-        mobileJobSwipePage = 0;
-      }
-      setMobileJobSwipePage(mobileJobSwipePage, true);
-      updateMobileJobSwipeIndicator();
-    }
-  });
+    // Touch events
+    container.addEventListener('touchstart', handleJobSwipeStart, { passive: true });
+    container.addEventListener('touchmove', handleJobSwipeMove, { passive: false });
+    container.addEventListener('touchend', handleJobSwipeEnd);
+    
+    // Mouse events (pour tester sur desktop)
+    container.addEventListener('mousedown', handleJobSwipeStart);
+    container.addEventListener('mousemove', handleJobSwipeMove);
+    container.addEventListener('mouseup', handleJobSwipeEnd);
+    container.addEventListener('mouseleave', handleJobSwipeEnd);
+  }, 500);
+}
+
+function handleJobSwipeStart(e) {
+  jobSwipeIsDragging = true;
+  jobSwipeStartX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+  jobSwipeCurrentX = jobSwipeStartX;
+  
+  const wrapper = document.getElementById('mobileJobFicheWrapper');
+  if (wrapper) {
+    wrapper.style.transition = 'none';
+  }
+}
+
+function handleJobSwipeMove(e) {
+  if (!jobSwipeIsDragging) return;
+  
+  jobSwipeCurrentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+  const diff = jobSwipeCurrentX - jobSwipeStartX;
+  
+  // Calculer la nouvelle position en suivant le doigt
+  let newOffset = (mobileJobSwipePage * -50) + (diff / window.innerWidth * 50);
+  newOffset = Math.max(-50, Math.min(0, newOffset));
+  
+  const wrapper = document.getElementById('mobileJobFicheWrapper');
+  if (wrapper) {
+    wrapper.style.transform = `translateX(${newOffset}%)`;
+  }
+  
+  if (e.type === 'touchmove' && Math.abs(diff) > 10) {
+    e.preventDefault();
+  }
+}
+
+function handleJobSwipeEnd(e) {
+  if (!jobSwipeIsDragging) return;
+  jobSwipeIsDragging = false;
+  
+  const diff = jobSwipeCurrentX - jobSwipeStartX;
+  const threshold = window.innerWidth * 0.2;
+  
+  let newPage = mobileJobSwipePage;
+  
+  if (diff > threshold && mobileJobSwipePage > 0) {
+    newPage = mobileJobSwipePage - 1;
+  } else if (diff < -threshold && mobileJobSwipePage < 1) {
+    newPage = mobileJobSwipePage + 1;
+  }
+  
+  mobileJobSwipePage = newPage;
+  setMobileJobSwipePage(newPage, true);
+  updateMobileJobSwipeIndicator();
 }
 
 // Définir la page du swipe job
 function setMobileJobSwipePage(pageIndex, animate) {
   const wrapper = document.getElementById('mobileJobFicheWrapper');
   if (wrapper) {
-    wrapper.style.transition = animate ? 'transform 0.3s ease' : 'none';
+    wrapper.style.transition = animate ? 'transform 0.3s ease-out' : 'none';
     wrapper.style.transform = `translateX(${pageIndex * -50}%)`;
   }
 }
@@ -10620,12 +11719,16 @@ function showMobileAddJob() {
 // Exposer les nouvelles fonctions
 window.showMobileMenu = showMobileMenu;
 window.openMobileMoulages = openMobileMoulages;
+window.closeMobileMoulages = closeMobileMoulages;
 window.openMobileJobs = openMobileJobs;
 window.closeMobileJobs = closeMobileJobs;
 window.openMobileJobFiche = openMobileJobFiche;
 window.closeMobileJobFiche = closeMobileJobFiche;
 window.updateMobileJobField = updateMobileJobField;
-window.saveMobileJobNotes = saveMobileJobNotes;
+window.openMobileJobCalendar = openMobileJobCalendar;
+window.insertMobileJobNoteTimestamp = insertMobileJobNoteTimestamp;
+window.handleMobileJobNotesPaste = handleMobileJobNotesPaste;
+window.saveMobileJobNotesContent = saveMobileJobNotesContent;
 window.resolveMobileJob = resolveMobileJob;
 window.emailMobileJob = emailMobileJob;
 window.showMobileAddJob = showMobileAddJob;
