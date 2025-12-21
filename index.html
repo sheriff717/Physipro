@@ -4669,13 +4669,14 @@ html, body {
 
 /* ===== MINI-CARTE JOB - Style moulage ===== */
 .job-mini {
-  border-radius: 6px;
-  padding: 6px 8px;
+  border-radius: 10px;
+  padding: 8px 10px;
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.3);
   color: white;
   text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  border: 2px solid #000;
 }
 
 .job-mini:hover {
@@ -4685,73 +4686,80 @@ html, body {
 
 /* Couleurs par région - EXACTEMENT comme moulages */
 .job-mini.region-quebec {
-  background: linear-gradient(to bottom, #04152c 0%, #4a8ef5 100%);
+  background: linear-gradient(135deg, #04152c, #4a8ef5);
 }
 .job-mini.region-ontario {
-  background: linear-gradient(to bottom, #704414 0%, #E8B97A 100%);
+  background: linear-gradient(135deg, #704414, #E8B97A);
 }
 .job-mini.region-france {
-  background: linear-gradient(to bottom, #5c4d00 0%, #d4a800 50%, #f5c800 100%);
+  background: linear-gradient(135deg, #5c4d00, #f5c800);
 }
 .job-mini.region-default {
-  background: linear-gradient(to bottom, #1e3a5f 0%, #4a8ef5 100%);
+  background: linear-gradient(135deg, #04152c, #4a8ef5);
 }
 
-/* Ligne 1: Commande + Client */
+/* Ligne 1: # commande centré + Rep à droite */
 .job-mini-row1 {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
+  position: relative;
+  margin-bottom: 2px;
 }
 
 .job-mini-order {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
-  flex-shrink: 0;
+  text-align: center;
+}
+
+.job-mini-rep {
+  position: absolute;
+  right: 0;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+/* Ligne 2: Client centré */
+.job-mini-row2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
 .job-mini-client {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
 }
 
-/* Ligne 2: Rep + Badge jours */
-.job-mini-row2 {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.job-mini-rep {
-  font-size: 9px;
-  font-weight: 500;
-  opacity: 0.9;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
+/* Ligne 3: Pastille délai pleine largeur */
 .job-mini-days {
-  flex: 1;
-  font-size: 8px;
-  font-weight: 600;
-  padding: 2px 6px;
-  border-radius: 6px;
-  background: rgba(0,0,0,0.4);
-  text-shadow: none;
+  display: block;
+  width: 100%;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 999px;
+  border: 2px solid #000;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
   color: white;
   text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.job-mini-days.ok { background: linear-gradient(to bottom, #16a34a, #15803d); }
-.job-mini-days.warn { background: linear-gradient(to bottom, #f59e0b, #d97706); }
-.job-mini-days.danger { background: linear-gradient(to bottom, #ef4444, #dc2626); }
+/* Couleurs selon délai - OK = transparent */
+.job-mini-days.ok { background: rgba(0,0,0,0.2); }
+.job-mini-days.warn { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.job-mini-days.danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.job-mini-days.critical { 
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  animation: pulseRed 2s ease-in-out infinite;
+}
 
 /* ===== FICHE JOB ===== */
 .job-fiche-overlay {
@@ -9100,28 +9108,28 @@ function createJobMiniCard(jobId, job) {
   const regionClass = getRegionClass(job.region);
   const orderDisplay = job.order || '000000';
   
-  // Label selon le type
+  // Label selon le type - version courte
   let daysLabel = '';
   if (job.type === 'question') {
-    daysLabel = `En questionnement depuis ${days} jours`;
+    daysLabel = `${days}j en attente`;
   } else if (job.type === 'materiauBO') {
-    daysLabel = `BO depuis ${days} jours`;
+    daysLabel = `${days}j BO`;
   } else if (job.type === 'autre') {
-    daysLabel = `Autre depuis ${days} jours`;
+    daysLabel = `${days}j autre`;
   } else {
-    daysLabel = `En attente depuis ${days} jours`;
+    daysLabel = `${days}j attente mat.`;
   }
   
   return `
     <div class="job-mini ${regionClass}" onclick="openJobFiche('${jobId}')">
       <div class="job-mini-row1">
         <span class="job-mini-order">#${orderDisplay}</span>
-        <span class="job-mini-client">${job.client || '-'}</span>
+        <span class="job-mini-rep">${job.representant || '-'}</span>
       </div>
       <div class="job-mini-row2">
-        <span class="job-mini-rep">REP: ${job.representant || '-'}</span>
-        <span class="job-mini-days ${daysClass}">${daysLabel}</span>
+        <span class="job-mini-client">${job.client || '-'}</span>
       </div>
+      <div class="job-mini-days ${daysClass}">${daysLabel}</div>
     </div>
   `;
 }
