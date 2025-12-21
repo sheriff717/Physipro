@@ -1436,13 +1436,6 @@ html, body {
 .gcal-btn { padding: 8px 16px; font-size: 11px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; }
 .gcal-btn-today { background: linear-gradient(to bottom, #10b981, #059669); color: white; }
 .gcal-btn-today:hover { background: linear-gradient(to bottom, #059669, #047857); }
-.gcal-btn-clear { background: linear-gradient(to bottom, #f59e0b, #d97706); color: white; }
-.gcal-btn-clear:hover { background: linear-gradient(to bottom, #d97706, #b45309); }
-.gcal-btn-close { background: linear-gradient(to bottom, #6b7280, #4b5563); color: white; }
-.gcal-btn-close:hover { background: linear-gradient(to bottom, #4b5563, #374151); }
-
-/* Ancien calendrier - garder pour compatibilité mais masqué */
-.fiche-calendar-popup { display: none !important; }
 
 /* Menu photos popup */
 .photos-menu-popup {
@@ -2497,12 +2490,12 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 25000;
+  z-index: 200000;
 }
 
 .cal-popup {
   position: fixed;
-  z-index: 25000;
+  z-index: 200000;
 }
 
 .cal-container {
@@ -2638,6 +2631,41 @@ html, body {
   opacity: 0.7;
 }
 
+/* Pages Série et Inventaire */
+.serie-page,
+.inventaire-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+}
+
+.page-coming-soon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.coming-soon-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.page-coming-soon h2 {
+  font-size: 28px;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.page-coming-soon p {
+  font-size: 16px;
+  opacity: 0.7;
+}
+
 /* ===== LOGIN ===== */
 .login-overlay {
   position: fixed;
@@ -2689,6 +2717,10 @@ html, body {
   font-style: italic;
 }
 .login-subtitle { font-size: 13px; opacity: 0.8; margin-bottom: 25px; }
+
+#loginForm {
+  width: 100%;
+}
 
 .login-input {
   width: 100%;
@@ -3245,6 +3277,391 @@ html, body {
 }
 
 /* =============================================================================
+   MENU MOBILE - CHOIX MOULAGES / JOBS
+============================================================================= */
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  z-index: 100000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.mobile-menu-overlay.active {
+  display: flex;
+}
+
+.mobile-menu-logo {
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.mobile-menu-title {
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+.mobile-menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.mobile-menu-btn {
+  padding: 20px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s;
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.98);
+}
+
+.mobile-menu-btn.btn-moulages {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.mobile-menu-btn.btn-jobs {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: white;
+}
+
+.mobile-menu-btn-icon {
+  font-size: 24px;
+}
+
+.mobile-menu-btn-count {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-left: 5px;
+}
+
+/* =============================================================================
+   JOBS MOBILE - LISTE
+============================================================================= */
+.mobile-jobs-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  z-index: 100000;
+  flex-direction: column;
+}
+
+.mobile-jobs-overlay.active {
+  display: flex;
+}
+
+.mobile-jobs-header {
+  padding: 15px 20px;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.mobile-jobs-back {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.mobile-jobs-title {
+  flex: 1;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.mobile-jobs-add {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  color: white;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mobile-jobs-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Carte Job Mobile */
+.mobile-job-card {
+  background: linear-gradient(135deg, #04152c, #4a8ef5);
+  border-radius: 10px;
+  padding: 12px 15px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.mobile-job-card:active {
+  transform: scale(0.98);
+}
+
+.mobile-job-card.region-on {
+  background: linear-gradient(135deg, #704414, #E8B97A);
+}
+
+.mobile-job-card.region-fr {
+  background: linear-gradient(135deg, #5c4d00, #f5c800);
+}
+
+.mobile-job-card-row1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.mobile-job-card-order {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mobile-job-card-client {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.mobile-job-card-row2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-job-card-rep {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+.mobile-job-card-days {
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.3);
+}
+
+.mobile-job-card-days.warn {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.mobile-job-card-days.danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+/* =============================================================================
+   FICHE JOB MOBILE
+============================================================================= */
+.mobile-job-fiche-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #f8fafc;
+  z-index: 100002;
+  flex-direction: column;
+}
+
+.mobile-job-fiche-overlay.active {
+  display: flex;
+  animation: mobileSlideInUp 0.3s ease-out;
+}
+
+.mobile-job-fiche-header {
+  padding: 12px 15px;
+  background: linear-gradient(to right, #04152c, #4a8ef5);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-job-fiche-header.region-on {
+  background: linear-gradient(to right, #704414, #E8B97A);
+}
+
+.mobile-job-fiche-header.region-fr {
+  background: linear-gradient(to right, #5c4d00, #f5c800);
+}
+
+.mobile-job-fiche-back {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.mobile-job-fiche-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.mobile-job-fiche-swipe {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.mobile-job-fiche-wrapper {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.mobile-job-fiche-page {
+  width: 50%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.mobile-job-fiche-page.page-info {
+  background: #f8fafc;
+}
+
+.mobile-job-fiche-page.page-notes {
+  background: white;
+}
+
+.mobile-job-field {
+  margin-bottom: 12px;
+}
+
+.mobile-job-field label {
+  display: block;
+  font-size: 10px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.mobile-job-field input,
+.mobile-job-field select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+  box-sizing: border-box;
+}
+
+.mobile-job-field-row {
+  display: flex;
+  gap: 10px;
+}
+
+.mobile-job-field-row .mobile-job-field {
+  flex: 1;
+}
+
+.mobile-job-date-pill {
+  padding: 10px 12px;
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.mobile-job-notes-area {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-job-notes-header {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobile-job-notes-content {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px;
+  overflow-y: auto;
+  min-height: 200px;
+  background: white;
+}
+
+.mobile-job-fiche-footer {
+  padding: 10px 15px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  gap: 10px;
+}
+
+.mobile-job-fiche-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mobile-job-fiche-btn.btn-done {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.mobile-job-fiche-btn.btn-email {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.mobile-job-swipe-indicator {
+  padding: 8px;
+  text-align: center;
+  font-size: 11px;
+  color: #64748b;
+  background: #f1f5f9;
+}
+
+/* =============================================================================
    FICHE MOBILE AVEC SWIPE - 2 PAGES (Info et Notes)
 ============================================================================= */
 
@@ -3706,6 +4123,683 @@ html, body {
   font-size: 18px;
   color: #3b82f6;
 }
+
+
+
+/* ===== PAGE JOBS EN ATTENTE ===== */
+.jobs-page {
+  height: calc(100vh - 70px);
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.jobs-columns {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.jobs-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 2px solid rgba(255,255,255,0.25);
+}
+
+.jobs-col:last-child {
+  border-right: none;
+}
+
+.jobs-col-title {
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.jobs-col-title .count {
+  background: rgba(255,255,255,0.3);
+  padding: 1px 6px;
+  border-radius: 6px;
+  font-size: 9px;
+  margin-left: 4px;
+}
+
+.jobs-col-add-btn {
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.jobs-col-add-btn:hover {
+  background: rgba(255,255,255,0.3);
+  color: white;
+}
+
+.jobs-col-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===== MINI-CARTE JOB - Style moulage ===== */
+.job-mini {
+  border-radius: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.3);
+  color: white;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+.job-mini:hover {
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.35);
+}
+
+/* Couleurs par région - EXACTEMENT comme moulages */
+.job-mini.region-quebec {
+  background: linear-gradient(to bottom, #04152c 0%, #4a8ef5 100%);
+}
+.job-mini.region-ontario {
+  background: linear-gradient(to bottom, #704414 0%, #E8B97A 100%);
+}
+.job-mini.region-france {
+  background: linear-gradient(to bottom, #5c4d00 0%, #d4a800 50%, #f5c800 100%);
+}
+.job-mini.region-default {
+  background: linear-gradient(to bottom, #1e3a5f 0%, #4a8ef5 100%);
+}
+
+/* Ligne 1: Commande + Client */
+.job-mini-row1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.job-mini-order {
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.job-mini-client {
+  font-size: 10px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Ligne 2: Rep + Badge jours */
+.job-mini-row2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.job-mini-rep {
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 0.9;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.job-mini-days {
+  flex: 1;
+  font-size: 8px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.4);
+  text-shadow: none;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.job-mini-days.ok { background: linear-gradient(to bottom, #16a34a, #15803d); }
+.job-mini-days.warn { background: linear-gradient(to bottom, #f59e0b, #d97706); }
+.job-mini-days.danger { background: linear-gradient(to bottom, #ef4444, #dc2626); }
+
+/* ===== FICHE JOB ===== */
+.job-fiche-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  padding: 15px 192px; /* moins d'espace haut/bas */
+}
+
+.job-fiche {
+  background: #f8fafc;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* Header par région - EXACTEMENT comme moulages */
+.job-fiche.region-quebec .job-fiche-header {
+  background: linear-gradient(to right, #04152c, #4a8ef5);
+}
+.job-fiche.region-ontario .job-fiche-header {
+  background: linear-gradient(to right, #704414, #E8B97A);
+}
+.job-fiche.region-france .job-fiche-header {
+  background: linear-gradient(to right, #5c4d00, #f5c800);
+}
+
+.job-fiche-main {
+  flex: 0 0 50%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid #cbd5e1;
+}
+
+.job-fiche-header {
+  padding: 8px 24px;
+  background: linear-gradient(to right, #04152c, #4a8ef5);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+  flex-shrink: 0;
+}
+
+.job-fiche-header h2 {
+  font-size: 12px;
+  margin: 0;
+}
+
+.job-fiche-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  font-size: 16px;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+.job-fiche-close:hover { color: white; }
+
+.job-fiche-body {
+  flex: 1;
+  overflow: hidden;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.job-fiche-row {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.job-fiche-field {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.job-fiche-field.flex1 { flex: 1 1 0; }
+.job-fiche-field.flex3 { flex: 3 1 0; }
+
+.job-fiche-field label {
+  font-size: 9px;
+  color: #64748b;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.job-fiche-field input,
+.job-fiche-field select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 5px 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 11px;
+  background: white;
+}
+
+.job-fiche-field input:focus,
+.job-fiche-field select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.job-fiche-section {
+  margin-bottom: 8px;
+}
+
+.job-fiche-section-title {
+  font-size: 9px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Boutons région style EXACTEMENT moulage */
+/* Matériau */
+.job-fiche-materiau {
+  background: linear-gradient(to bottom, #fef3c7, #fde68a);
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #fcd34d;
+}
+
+.job-fiche-materiau label { color: #92400e; }
+
+/* Dates */
+.job-date-pill {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.job-date-pill:hover {
+  background: linear-gradient(to bottom, #dbeafe, #bfdbfe);
+  border-color: #3b82f6;
+}
+
+/* Footer */
+.job-fiche-footer {
+  padding: 8px 24px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  background: #f8fafc;
+  flex-shrink: 0;
+}
+
+.job-fiche-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.job-fiche-btn.btn-done {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  color: white;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+}
+.job-fiche-btn.btn-done:hover {
+  background: linear-gradient(to bottom, #16a34a, #15803d);
+}
+
+.job-fiche-btn.btn-email {
+  background: linear-gradient(to bottom, #dbeafe, #bfdbfe);
+  color: #1e40af;
+}
+.job-fiche-btn.btn-email:hover {
+  background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+  color: white;
+}
+
+.job-fiche-btn.btn-close {
+  background: linear-gradient(to bottom, #f1f5f9, #e2e8f0);
+  color: #475569;
+  border: 1px solid #cbd5e1;
+}
+.job-fiche-btn.btn-close:hover {
+  background: linear-gradient(to bottom, #e2e8f0, #cbd5e1);
+}
+
+/* Zone Notes */
+.job-fiche-notes {
+  flex: 0 0 50%;
+  max-width: 50%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.job-notes-header {
+  padding: 8px 24px;
+  background: linear-gradient(to bottom, #e2e8f0, #cbd5e1);
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e3a5f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-notes-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.job-notes-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.job-notes-close:hover { color: #ef4444; }
+
+.job-notes-photos-btns {
+  display: flex;
+  gap: 3px;
+}
+
+.job-photo-btn {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #94a3b8;
+  border-radius: 3px;
+  background: white;
+  font-size: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.job-photo-btn:hover { border-color: #3b82f6; background: #dbeafe; }
+.job-photo-btn.has-link {
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  border-color: #15803d;
+  color: white;
+}
+
+.job-notes-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: white;
+}
+
+.job-notes-content {
+  flex: 1;
+  padding: 16px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  overflow-y: auto;
+  background: white !important;
+  color: #000 !important;
+  min-height: 150px;
+  -webkit-text-fill-color: #000;
+}
+
+.job-notes-content * {
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+}
+
+.job-notes-content:focus { outline: none; }
+.job-notes-content:empty:before { content: attr(placeholder); color: #999 !important; -webkit-text-fill-color: #999; }
+
+/* Images redimensionnables comme Word */
+.job-notes-content img { 
+  max-width: 100%; 
+  border-radius: 4px; 
+  margin: 6px 0; 
+  cursor: nwse-resize;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+.job-notes-content img:hover { border-color: #3b82f6; }
+.job-notes-content img.resizing { border-color: #22c55e; }
+
+.note-timestamp {
+  background: none;
+  padding: 2px 0;
+  border-radius: 0;
+  font-size: 11px;
+  color: #1e3a5f;
+  margin: 6px 0;
+  display: block;
+  border-bottom: 1px solid #e0e0e0;
+}
+.note-timestamp strong { color: #1e3a5f; font-weight: 700; }
+
+/* Menu photo */
+.job-photo-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 10px;
+  width: 320px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  z-index: 100001;
+  overflow: hidden;
+}
+
+.job-photo-menu-header {
+  padding: 10px 14px;
+  background: linear-gradient(to right, #1e3a5f, #2d5a87);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.job-photo-menu-body { padding: 14px; }
+.job-photo-menu-body input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.job-photo-menu-btns {
+  padding: 10px 14px;
+  background: #f8fafc;
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  border-top: 1px solid #e2e8f0;
+}
+
+.job-photo-menu-btns button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* Modal ajout */
+.job-add-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100001;
+  padding: 20px;
+}
+
+.job-add-modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.job-add-header {
+  padding: 12px 16px;
+  background: linear-gradient(to right, #1e3a5f, #2d5a87);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-add-header h3 { margin: 0; font-size: 14px; }
+
+.job-add-header-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.job-header-import-btn {
+  padding: 5px 10px;
+  background: linear-gradient(to bottom, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.job-header-import-btn:hover {
+  background: linear-gradient(to bottom, #16a34a, #15803d);
+}
+
+.job-add-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.job-add-body { padding: 14px; }
+
+.job-add-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.job-add-field { flex: 1; }
+.job-add-field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.job-add-field input,
+.job-add-field select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.job-add-date-pill {
+  padding: 8px 10px;
+  background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  font-size: 12px;
+  color: #334155;
+  cursor: pointer;
+  text-align: center;
+}
+.job-add-date-pill:hover { border-color: #3b82f6; }
+
+.job-add-footer {
+  padding: 12px 16px;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.job-add-btn {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.job-add-btn.cancel { background: #f1f5f9; color: #64748b; }
+.job-add-btn.save { background: linear-gradient(to bottom, #22c55e, #16a34a); color: white; }
+
+/* Vide */
+.jobs-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255,255,255,0.6);
+}
+
+.jobs-empty-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
   </style>
 </head>
 <body>
@@ -3729,19 +4823,19 @@ html, body {
     </div>
     
     <div class="tb-center">
-      <span class="top-title">Outil de gestion des moulages</span>
+      <span class="top-title" id="pageMainTitle">Outil de gestion des moulages</span>
       <button class="settings-btn" id="btnSettings" title="Parametres">⚙️</button>
     </div>
     
     <div class="tb-right">
-      <button class="header-btn" id="btnAddMoulage">+ Ajouter moulage</button>
+      <button class="header-btn" id="btnAddItem" onclick="handleAddButton()">+ Ajouter moulage</button>
       <div class="user-status" id="userStatus">
         <span class="status-dot"></span>
         <span class="user-name">Non connecte</span>
       </div>
     </div>
     
-    <div class="search-row">
+    <div class="search-row" id="searchRow">
       <div class="search-box">
         <span class="search-icon">&#128269;</span>
         <input type="text" class="search-input" id="searchInput" placeholder="Rechercher (nom, commande, client...)">
@@ -3808,28 +4902,59 @@ html, body {
   
   <!-- Page Série -->
   <div class="page" id="pageSerie">
-    <div class="page-placeholder">
-      <h1>📦 Série</h1>
-      <p>Page en développement</p>
-      <button class="header-btn" onclick="switchToPage('moulages')" style="background:linear-gradient(to bottom,#3b82f6,#1e40af);padding:12px 24px;font-size:14px;">← Retour aux Moulages</button>
+    <div class="serie-page">
+      <div class="page-coming-soon">
+        <div class="coming-soon-icon">📦</div>
+        <h2>Page Série en développement</h2>
+        <p>Cette fonctionnalité sera bientôt disponible</p>
+      </div>
     </div>
   </div>
   
   <!-- Page Inventaire -->
   <div class="page" id="pageInventaire">
-    <div class="page-placeholder">
-      <h1>📋 Inventaire</h1>
-      <p>Page en développement</p>
-      <button class="header-btn" onclick="switchToPage('moulages')" style="background:linear-gradient(to bottom,#3b82f6,#1e40af);padding:12px 24px;font-size:14px;">← Retour aux Moulages</button>
+    <div class="inventaire-page">
+      <div class="page-coming-soon">
+        <div class="coming-soon-icon">📋</div>
+        <h2>Page Inventaire en développement</h2>
+        <p>Cette fonctionnalité sera bientôt disponible</p>
+      </div>
     </div>
   </div>
   
   <!-- Page Jobs en Attente -->
   <div class="page" id="pageJobs">
-    <div class="page-placeholder">
-      <h1>⏳ Jobs en Attente</h1>
-      <p>Page en développement</p>
-      <button class="header-btn" onclick="switchToPage('moulages')" style="background:linear-gradient(to bottom,#3b82f6,#1e40af);padding:12px 24px;font-size:14px;">← Retour aux Moulages</button>
+    <div class="jobs-page">
+      <div class="jobs-columns">
+        <div class="jobs-col">
+          <div class="jobs-col-title">
+            <span>⏳ En attente de réponse <span class="count" id="countQuestion">0</span></span>
+          </div>
+          <button class="jobs-col-add-btn" onclick="showAddJobModal('question')">+ Ajouter en attente</button>
+          <div class="jobs-col-content" id="listQuestion"></div>
+        </div>
+        <div class="jobs-col">
+          <div class="jobs-col-title">
+            <span>🔧 En attente de matériaux <span class="count" id="countMateriau">0</span></span>
+          </div>
+          <button class="jobs-col-add-btn" onclick="showAddJobModal('materiau')">+ Ajouter en attente</button>
+          <div class="jobs-col-content" id="listMateriau"></div>
+        </div>
+        <div class="jobs-col">
+          <div class="jobs-col-title">
+            <span>📦 Liste des matériaux BO <span class="count" id="countMateriauBO">0</span></span>
+          </div>
+          <button class="jobs-col-add-btn" onclick="showAddJobModal('materiauBO')">+ Ajouter en attente</button>
+          <div class="jobs-col-content" id="listMateriauBO"></div>
+        </div>
+        <div class="jobs-col">
+          <div class="jobs-col-title">
+            <span>📋 Autres <span class="count" id="countAutre">0</span></span>
+          </div>
+          <button class="jobs-col-add-btn" onclick="showAddJobModal('autre')">+ Ajouter en attente</button>
+          <div class="jobs-col-content" id="listAutre"></div>
+        </div>
+      </div>
     </div>
   </div>
   
@@ -3980,17 +5105,19 @@ html, body {
         </div>
       </div>
       <div class="login-title-container">
-        <div class="login-title">Outil d'aide de gestion pour les moulages</div>
+        <div class="login-title">Outil de gestion simplifiée</div>
         <div class="login-author">par Daniel Charest</div>
       </div>
       <div class="login-subtitle">Connectez-vous avec votre email d'entreprise</div>
-      <input type="email" id="loginEmail" class="login-input login-input-email" placeholder="Email d'entreprise" autocomplete="email">
-      <input type="password" id="loginPassword" class="login-input" placeholder="Mot de passe" maxlength="50" autocomplete="current-password">
-      <div class="login-remember">
-        <input type="checkbox" id="rememberMe">
-        <label for="rememberMe">Se souvenir de moi sur cet ordinateur</label>
-      </div>
-      <button class="login-btn" id="loginBtn">Se connecter</button>
+      <form id="loginForm" autocomplete="on">
+        <input type="email" id="loginEmail" name="email" class="login-input login-input-email" placeholder="Email d'entreprise" autocomplete="username">
+        <input type="password" id="loginPassword" name="password" class="login-input" placeholder="Mot de passe" maxlength="50" autocomplete="current-password">
+        <div class="login-remember">
+          <input type="checkbox" id="rememberMe" name="remember">
+          <label for="rememberMe">Se souvenir de moi sur cet ordinateur</label>
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Se connecter</button>
+      </form>
       <button class="login-forgot-btn" id="forgotPasswordBtn">Mot de passe oublie?</button>
       <div class="login-error" id="loginError"></div>
     </div>
@@ -4193,6 +5320,7 @@ function loginSuccess(userInfo, email) {
   
   loadCardsFromFirebase();
   loadCustomLists();
+  initJobsPage();
   showToast("Connexion réussie!");
   
   // Initialiser l'interface mobile si on est sur mobile/tablette
@@ -4911,7 +6039,6 @@ function closeFiche() {
     currentExpandedCard.classList.remove('mcard-expanded');
     
     // Fermer tous les menus et popups
-    currentExpandedCard.querySelector('.fiche-calendar-popup')?.classList.remove('active');
     currentExpandedCard.querySelector('.photos-menu-popup')?.classList.remove('active');
     currentExpandedCard.querySelector('.notes-photos-links-panel')?.style.setProperty('display', 'none');
   }
@@ -5339,19 +6466,6 @@ function selectCalendarToday() {
   selectGlobalCalDate(today.getFullYear(), today.getMonth(), today.getDate());
 }
 
-function clearCalendarDate() {
-  if (currentCalendarCardId && currentCalendarField && cardsData[currentCalendarCardId]) {
-    cardsData[currentCalendarCardId][currentCalendarField] = '';
-    saveCardToFirebase(currentCalendarCardId);
-    
-    if (currentCalendarElement) {
-      currentCalendarElement.textContent = 'AAAA-MM-JJ';
-    }
-  }
-  
-  closeGlobalCalendar();
-}
-
 // Initialiser les événements du calendrier global
 function initGlobalCalendar() {
   const popup = document.getElementById('globalCalendarPopup');
@@ -5390,12 +6504,6 @@ function initGlobalCalendar() {
     closeGlobalCalendar();
   });
 }
-
-// Anciennes fonctions pour compatibilité
-function renderTableCalendar(popup) {}
-function navigateCalendar(direction) { navigateGlobalCalendar(direction); }
-function selectDate(year, month, day) { selectGlobalCalDate(year, month, day); }
-function selectToday() { selectCalendarToday(); }
 
 // Photos
 function openPhotoLink(cardId, field) {
@@ -6075,9 +7183,13 @@ document.addEventListener('DOMContentLoaded', () => {
   
   loadSavedCredentials();
   
-  loginBtn.addEventListener('click', attemptLogin);
+  // Gestion du formulaire de login
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    attemptLogin();
+  });
   loginEmail.addEventListener('keydown', e => { if (e.key === 'Enter') loginPassword.focus(); });
-  loginPassword.addEventListener('keydown', e => { if (e.key === 'Enter') attemptLogin(); });
   
   document.getElementById('btnSettings').addEventListener('click', () => document.getElementById('settingsOverlay').classList.remove('hidden'));
   document.getElementById('settingsCloseBtn').addEventListener('click', () => document.getElementById('settingsOverlay').classList.add('hidden'));
@@ -6129,10 +7241,6 @@ window.closeDeleteConfirm = closeDeleteConfirm;
 window.confirmDelete = confirmDelete;
 window.openPriorityMenu = openPriorityMenu;
 window.openCalendar = openCalendar;
-window.closeCalendar = closeCalendar;
-window.navigateCalendar = navigateCalendar;
-window.selectDate = selectDate;
-window.selectToday = selectToday;
 window.openPhotoLink = openPhotoLink;
 window.openNotePhoto = openNotePhoto;
 window.saveMoulageNotes = saveMoulageNotes;
@@ -6376,14 +7484,6 @@ function clearRaison(cardId) {
   closeContextMenus();
   showToast('Raison effacée');
 }
-
-// Alias pour compatibilité
-function openRaisonAttenteMenu(cardId, event) { showRaisonMenu(cardId, event); }
-function selectRaisonAttente(cardId, raison) { selectRaison(cardId, raison); }
-function addRaisonAttente(cardId) { addRaison(cardId); }
-function clearRaisonAttente(cardId) { clearRaison(cardId); }
-function selectRegionDelai(cardId, region) { if(cardsData[cardId]) cardsData[cardId].region = region; }
-function saveDelaiAndClose(cardId) { saveDelai(cardId); }
 
 // ===== VUE ROBOT HORIZONTALE =====
 
@@ -6748,9 +7848,6 @@ window.toggleRobotView = toggleRobotView;
 window.updateTableField = updateTableField;
 window.handleSelectChange = handleSelectChange;
 window.showTableCalendar = showTableCalendar;
-window.navTableCal = navTableCal;
-window.selectTableDate = selectTableDate;
-window.closeTableCalendar = closeTableCalendar;
 window.openCardNotes = openCardNotes;
 window.closeNotesPopup = closeNotesPopup;
 window.savePopupNotes = savePopupNotes;
@@ -7211,32 +8308,48 @@ function showTableCalendar(cardId, field, cell) {
     }
   });
 }
-function closeTableCalendar() { closeCalendar(); }
-function navTableCal(dir, cardId, field) { navCal(dir); }
-function selectTableDate(cardId, field, dateStr) { selectCalDate(dateStr); }
 
 // ===== NAVIGATION PAGES =====
 let currentPage = 'moulages';
 
-// Mapping pages vers noms affichés
-const pageNames = {
-  'moulages': 'Moulage',
-  'serie': 'Série +',
-  'inventaire': 'Inventaire',
-  'jobs': 'Jobs en attente'
+// Configuration des pages
+const pageConfig = {
+  'moulages': {
+    logoText: 'Moulage',
+    title: 'Outil de gestion des moulages',
+    addBtn: '+ Ajouter moulage',
+    showSearch: true
+  },
+  'serie': {
+    logoText: 'Série +',
+    title: 'Outil de gestion des séries',
+    addBtn: '+ Ajouter série',
+    showSearch: true
+  },
+  'inventaire': {
+    logoText: 'Inventaire',
+    title: 'Outil de gestion de l\'inventaire',
+    addBtn: '+ Ajouter inventaire',
+    showSearch: true
+  },
+  'jobs': {
+    logoText: 'Jobs',
+    title: 'Outil de gestion des jobs en attente',
+    addBtn: '',
+    showSearch: false
+  }
 };
 
 function updateLogoMenu() {
   const menu = document.getElementById('logoMenu');
   if (!menu) return;
   
-  // Reconstruire le menu avec les 3 autres pages (pas la page actuelle)
   menu.innerHTML = '';
-  Object.keys(pageNames).forEach(page => {
+  Object.keys(pageConfig).forEach(page => {
     if (page !== currentPage) {
       const item = document.createElement('div');
       item.className = 'logo-menu-item';
-      item.textContent = pageNames[page];
+      item.textContent = pageConfig[page].logoText;
       item.onclick = () => switchToPage(page);
       menu.appendChild(item);
     }
@@ -7245,12 +8358,24 @@ function updateLogoMenu() {
 
 function switchToPage(page) {
   currentPage = page;
+  const config = pageConfig[page];
+  if (!config) return;
   
-  // Changer le texte du bas du logo
+  // Mettre à jour le logo
   const logoText = document.getElementById('logoBottomText');
-  if (logoText && pageNames[page]) {
-    logoText.textContent = pageNames[page];
-  }
+  if (logoText) logoText.textContent = config.logoText;
+  
+  // Mettre à jour le titre principal
+  const titleEl = document.getElementById('pageMainTitle');
+  if (titleEl) titleEl.textContent = config.title;
+  
+  // Mettre à jour le bouton d'ajout
+  const addBtn = document.getElementById('btnAddItem');
+  if (addBtn) addBtn.textContent = config.addBtn;
+  
+  // Afficher/cacher la barre de recherche
+  const searchRow = document.getElementById('searchRow');
+  if (searchRow) searchRow.style.display = config.showSearch ? '' : 'none';
   
   // Mettre à jour le menu
   updateLogoMenu();
@@ -7262,17 +8387,24 @@ function switchToPage(page) {
   const pageEl = document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1));
   if (pageEl) {
     pageEl.classList.add('active');
-  } else {
-    // Page pas encore créée - afficher toast
-    showToast('Page "' + pageNames[page] + '" - À développer');
-    // Revenir à moulages
-    currentPage = 'moulages';
-    const moulagesPage = document.getElementById('pageMoulages');
-    if (moulagesPage) moulagesPage.classList.add('active');
-    // Remettre le texte Moulage
-    if (logoText) logoText.textContent = pageNames['moulages'];
-    // Mettre à jour le menu
-    updateLogoMenu();
+  }
+}
+
+// Fonction appelée par le bouton d'ajout
+function handleAddButton() {
+  switch (currentPage) {
+    case 'moulages':
+      showAddMoulageModal();
+      break;
+    case 'jobs':
+      showAddJobModal();
+      break;
+    case 'serie':
+      showToast('Ajout série - À développer');
+      break;
+    case 'inventaire':
+      showToast('Ajout inventaire - À développer');
+      break;
   }
 }
 
@@ -7281,6 +8413,7 @@ window.closeAddMoulageModal = closeAddMoulageModal;
 window.confirmAddMoulage = confirmAddMoulage;
 window.handleImportMoulageJson = handleImportMoulageJson;
 window.switchToPage = switchToPage;
+window.handleAddButton = handleAddButton;
 window.openCalendarPopup = openCalendarPopup;
 window.closeCalendarPopup = closeCalendarPopup;
 window.calendarPrev = calendarPrev;
@@ -7291,8 +8424,928 @@ window.selectCalendarDate = selectCalendarDate;
 window.formatDateFR = formatDateFR;
 window.createCard = createCard;
 window.generateCardId = generateCardId;
+window.showCalendar = showCalendar;
+window.closeCalendar = closeCalendar;
+window.navCal = navCal;
+window.selectCalDate = selectCalDate;
+window.clearCalDate = clearCalDate;
+
 
 // =============================================================================
+
+// =============================================================================
+
+
+// PAGE JOBS EN ATTENTE
+// =============================================================================
+
+let jobsData = {
+  // 2 cartes exemple pour tests
+  'job_example_1': {
+    type: 'question',
+    order: '287001',
+    client: 'Centre ABC',
+    numeroPO: 'PO-2024-001',
+    numeroSoumission: 'S-001',
+    representant: 'Marie-Soleil',
+    intervenant: 'Dr Martin',
+    region: 'Quebec',
+    dateRecue: '2024-12-01',
+    dateAmene: '2024-12-10',
+    dateLivraison: '2024-12-25',
+    notes: '',
+    createdAt: new Date().toISOString()
+  },
+  'job_example_2': {
+    type: 'question',
+    order: '287002',
+    client: 'Clinique XYZ',
+    numeroPO: 'PO-2024-002',
+    numeroSoumission: 'S-002',
+    representant: 'Valérie',
+    intervenant: 'Dr Tremblay',
+    region: 'Ontario',
+    dateRecue: '2024-12-05',
+    dateAmene: '2024-12-12',
+    dateLivraison: '2024-12-28',
+    notes: '',
+    createdAt: new Date().toISOString()
+  }
+};
+let currentJobId = null;
+
+// Charger les jobs depuis Firebase
+function loadJobsFromFirebase() {
+  // Toujours afficher immédiatement les exemples
+  renderJobs();
+  
+  if (!firebaseDb) return;
+  
+  firebaseDb.ref('jobs').on('value', snapshot => {
+    if (snapshot.exists()) {
+      const data = snapshot.val();
+      jobsData = {};
+      Object.keys(data).forEach(key => {
+        jobsData[key] = data[key];
+      });
+    } else {
+      // Firebase vide - sauvegarder les exemples dans Firebase
+      Object.keys(jobsData).forEach(key => {
+        firebaseDb.ref('jobs/' + key).set(jobsData[key]);
+      });
+    }
+    renderJobs();
+  });
+}
+
+// Sauvegarder un job
+function saveJobToFirebase(jobId) {
+  if (!firebaseDb || !jobsData[jobId]) return;
+  firebaseDb.ref('jobs/' + jobId).set(jobsData[jobId]);
+}
+
+// Supprimer un job (résolu)
+function deleteJobFromFirebase(jobId) {
+  if (!firebaseDb) return;
+  firebaseDb.ref('jobs/' + jobId).remove().then(() => {
+    delete jobsData[jobId];
+    renderJobs();
+    closeJobFiche();
+    showToast('Job résolu et archivé');
+  });
+}
+
+// Calculer jours en attente
+function calcJobDays(dateStr) {
+  if (!dateStr) return 0;
+  const date = new Date(dateStr);
+  const today = new Date();
+  return Math.floor((today - date) / (1000 * 60 * 60 * 24));
+}
+
+// Classe couleur jours
+function getDaysClass(days) {
+  if (days <= 7) return 'ok';
+  if (days <= 14) return 'warn';
+  return 'danger';
+}
+
+// Formater date en français
+function formatJobDate(dateStr) {
+  if (!dateStr) return '-- Sélectionner --';
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('fr-CA', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+// Classe région pour CSS
+function getRegionClass(region) {
+  if (region === 'Quebec') return 'region-quebec';
+  if (region === 'Ontario') return 'region-ontario';
+  if (region === 'France') return 'region-france';
+  return 'region-default';
+}
+
+// Créer une mini-carte PROPRE
+function createJobMiniCard(jobId, job) {
+  const days = calcJobDays(job.dateAmene);
+  const daysClass = getDaysClass(days);
+  const regionClass = getRegionClass(job.region);
+  const orderDisplay = job.order || '000000';
+  
+  // Label selon le type
+  let daysLabel = '';
+  if (job.type === 'question') {
+    daysLabel = `En questionnement depuis ${days} jours`;
+  } else if (job.type === 'materiauBO') {
+    daysLabel = `BO depuis ${days} jours`;
+  } else if (job.type === 'autre') {
+    daysLabel = `Autre depuis ${days} jours`;
+  } else {
+    daysLabel = `En attente depuis ${days} jours`;
+  }
+  
+  return `
+    <div class="job-mini ${regionClass}" onclick="openJobFiche('${jobId}')">
+      <div class="job-mini-row1">
+        <span class="job-mini-order">#${orderDisplay}</span>
+        <span class="job-mini-client">${job.client || '-'}</span>
+      </div>
+      <div class="job-mini-row2">
+        <span class="job-mini-rep">REP: ${job.representant || '-'}</span>
+        <span class="job-mini-days ${daysClass}">${daysLabel}</span>
+      </div>
+    </div>
+  `;
+}
+
+// Afficher les jobs
+function renderJobs() {
+  const listQ = document.getElementById('listQuestion');
+  const listM = document.getElementById('listMateriau');
+  const listBO = document.getElementById('listMateriauBO');
+  const listA = document.getElementById('listAutre');
+  if (!listQ || !listM || !listBO || !listA) return;
+  
+  let htmlQ = '', htmlM = '', htmlBO = '', htmlA = '';
+  let countQ = 0, countM = 0, countBO = 0, countA = 0;
+  
+  const sorted = Object.entries(jobsData).sort((a, b) => {
+    return calcJobDays(b[1].dateAmene) - calcJobDays(a[1].dateAmene);
+  });
+  
+  sorted.forEach(([id, job]) => {
+    const card = createJobMiniCard(id, job);
+    if (job.type === 'question') {
+      htmlQ += card;
+      countQ++;
+    } else if (job.type === 'materiauBO') {
+      htmlBO += card;
+      countBO++;
+    } else if (job.type === 'autre') {
+      htmlA += card;
+      countA++;
+    } else {
+      htmlM += card;
+      countM++;
+    }
+  });
+  
+  listQ.innerHTML = htmlQ || '<div class="jobs-empty"><div class="jobs-empty-icon">⏳</div><p>Aucun</p></div>';
+  listM.innerHTML = htmlM || '<div class="jobs-empty"><div class="jobs-empty-icon">🔧</div><p>Aucun</p></div>';
+  listBO.innerHTML = htmlBO || '<div class="jobs-empty"><div class="jobs-empty-icon">📦</div><p>Aucun</p></div>';
+  listA.innerHTML = htmlA || '<div class="jobs-empty"><div class="jobs-empty-icon">📋</div><p>Aucun</p></div>';
+  
+  document.getElementById('countQuestion').textContent = countQ;
+  document.getElementById('countMateriau').textContent = countM;
+  document.getElementById('countMateriauBO').textContent = countBO;
+  document.getElementById('countAutre').textContent = countA;
+}
+
+// ===== FICHE JOB =====
+function openJobFiche(jobId) {
+  currentJobId = jobId;
+  const job = jobsData[jobId];
+  if (!job) return;
+  
+  let overlay = document.getElementById('jobFicheOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'jobFicheOverlay';
+    overlay.className = 'job-fiche-overlay';
+    document.body.appendChild(overlay);
+  }
+  
+  const isMateriau = job.type === 'materiau';
+  const regionClass = getRegionClass(job.region);
+  
+  overlay.innerHTML = `
+    <div class="job-fiche ${regionClass}">
+      <div class="job-fiche-main">
+        <div class="job-fiche-header">
+          <h2>Job en attente #${job.order || '------'}</h2>
+          <button class="job-fiche-close" onclick="closeJobFiche()">×</button>
+        </div>
+        
+        <div class="job-fiche-body">
+          <!-- Ligne 1: Client + Commande -->
+          <div class="job-fiche-row">
+            <div class="job-fiche-field">
+              <label>Client</label>
+              <select id="jfClient" onchange="updateJobField('client', this.value)">
+                <option value="">-- Sélectionner --</option>
+                ${(customLists.moulageClients || []).map(c => `<option value="${c}" ${job.client === c ? 'selected' : ''}>${c}</option>`).join('')}
+              </select>
+            </div>
+            <div class="job-fiche-field">
+              <label>N° Commande</label>
+              <input type="text" id="jfOrder" value="${job.order || ''}" onchange="updateJobField('order', this.value)">
+            </div>
+          </div>
+          
+          <!-- Ligne 2: PO + Soumission -->
+          <div class="job-fiche-row">
+            <div class="job-fiche-field">
+              <label>Numéro PO</label>
+              <input type="text" id="jfPO" value="${job.numeroPO || ''}" onchange="updateJobField('numeroPO', this.value)">
+            </div>
+            <div class="job-fiche-field">
+              <label>Numéro Soumission</label>
+              <input type="text" id="jfSoum" value="${job.numeroSoumission || ''}" onchange="updateJobField('numeroSoumission', this.value)">
+            </div>
+          </div>
+          
+          <!-- Ligne 3: Rep + Interv + Région -->
+          <div class="job-fiche-row">
+            <div class="job-fiche-field">
+              <label>Représentante</label>
+              <select id="jfRep" onchange="updateJobField('representant', this.value)">
+                <option value="">-- Sélectionner --</option>
+                ${(customLists.representantes || []).map(r => `<option value="${r}" ${job.representant === r ? 'selected' : ''}>${r}</option>`).join('')}
+              </select>
+            </div>
+            <div class="job-fiche-field">
+              <label>Intervenant</label>
+              <select id="jfInterv" onchange="updateJobField('intervenant', this.value)">
+                <option value="">-- Sélectionner --</option>
+                ${(customLists.intervenants || []).map(i => `<option value="${i}" ${job.intervenant === i ? 'selected' : ''}>${i}</option>`).join('')}
+              </select>
+            </div>
+            <div class="job-fiche-field">
+              <label>Région</label>
+              <select id="jfRegion" onchange="updateJobField('region', this.value); updateFicheRegionColor();">
+                <option value="Quebec" ${job.region === 'Quebec' ? 'selected' : ''}>Québec</option>
+                <option value="Ontario" ${job.region === 'Ontario' ? 'selected' : ''}>Ontario</option>
+                <option value="France" ${job.region === 'France' ? 'selected' : ''}>France</option>
+              </select>
+            </div>
+          </div>
+          
+          ${isMateriau || job.type === 'materiauBO' ? `
+          <!-- Ligne 4: Matériau -->
+          <div class="job-fiche-row">
+            <div class="job-fiche-field">
+              <label>🔧 Matériau manquant</label>
+              <input type="text" id="jfMateriau" value="${job.materiau || ''}" onchange="updateJobField('materiau', this.value)" placeholder="Ex: Mousse, Velcro...">
+            </div>
+          </div>
+          ` : ''}
+          
+          <!-- Ligne 5: Dates -->
+          <div class="job-fiche-row">
+            <div class="job-fiche-field">
+              <label>Date réception</label>
+              <div class="job-date-pill" id="jfDateRecue" onclick="openJobCalendar('dateRecue', this)">${formatJobDate(job.dateRecue)}</div>
+            </div>
+            <div class="job-fiche-field">
+              <label>Mise en attente</label>
+              <div class="job-date-pill" id="jfDateAmene" onclick="openJobCalendar('dateAmene', this)">${formatJobDate(job.dateAmene)}</div>
+            </div>
+            <div class="job-fiche-field">
+              <label>Livraison prévue</label>
+              <div class="job-date-pill" id="jfDateLivraison" onclick="openJobCalendar('dateLivraison', this)">${formatJobDate(job.dateLivraison)}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="job-fiche-footer">
+          <button class="job-fiche-btn btn-done" onclick="resolveJob()">✓ Résolu</button>
+          <button class="job-fiche-btn btn-email" onclick="sendJobEmail()">✉️ Email</button>
+          <button class="job-fiche-btn btn-close" onclick="closeJobFiche()">Fermer</button>
+        </div>
+      </div>
+      
+      <div class="job-fiche-notes">
+        <div class="job-notes-header">
+          <div class="job-notes-header-left">
+            <span>📝 Notes</span>
+            <div class="job-notes-photos-btns">
+              <button class="job-photo-btn ${job.photo1 ? 'has-link' : ''}" onclick="openJobPhotoMenu(1)" title="Photo 1">📷</button>
+              <button class="job-photo-btn ${job.photo2 ? 'has-link' : ''}" onclick="openJobPhotoMenu(2)" title="Photo 2">📷</button>
+              <button class="job-photo-btn ${job.photo3 ? 'has-link' : ''}" onclick="openJobPhotoMenu(3)" title="Photo 3">📷</button>
+            </div>
+          </div>
+          <button class="job-notes-close" onclick="closeJobFiche()">×</button>
+        </div>
+        <div class="job-notes-body">
+          <div class="job-notes-content" 
+               id="jobNotesContent" 
+               contenteditable="true" 
+               onclick="insertJobNoteTimestamp(event)"
+               onpaste="handleJobNotesPaste(event)"
+               onblur="saveJobNotes()"
+               placeholder="Cliquer pour ajouter une note...">${job.notes || ''}</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Menu photo popup -->
+    <div class="job-photo-menu" id="jobPhotoMenu" style="display:none;">
+      <div class="job-photo-menu-header">📷 Photo <span id="jobPhotoMenuNum">1</span></div>
+      <div class="job-photo-menu-body">
+        <input type="text" id="jobPhotoUrl" placeholder="Coller l'URL de l'image..." onkeyup="if(event.key==='Enter')saveJobPhotoUrl()">
+      </div>
+      <div class="job-photo-menu-btns">
+        <button onclick="viewJobPhoto()">👁️ Voir</button>
+        <button onclick="saveJobPhotoUrl()">💾 Sauver</button>
+        <button onclick="clearJobPhoto()">🗑️</button>
+        <button onclick="closeJobPhotoMenu()">Fermer</button>
+      </div>
+    </div>
+  `;
+  
+  overlay.style.display = 'flex';
+  
+  // Initialiser le redimensionnement des images existantes
+  setTimeout(() => initNotesImageResizing(), 100);
+}
+
+function closeJobFiche() {
+  const overlay = document.getElementById('jobFicheOverlay');
+  if (overlay) overlay.style.display = 'none';
+  currentJobId = null;
+  closeJobPhotoMenu();
+  closeCalendar();
+}
+
+function updateFicheRegionColor() {
+  const region = document.getElementById('jfRegion')?.value || 'Quebec';
+  const fiche = document.querySelector('.job-fiche');
+  if (fiche) {
+    fiche.className = 'job-fiche ' + getRegionClass(region);
+  }
+}
+
+function updateJobField(field, value) {
+  if (!currentJobId || !jobsData[currentJobId]) return;
+  jobsData[currentJobId][field] = value;
+  jobsData[currentJobId].updatedAt = new Date().toISOString();
+  saveJobToFirebase(currentJobId);
+  renderJobs();
+  
+  // Mettre à jour la classe région si changement
+  if (field === 'region') {
+    const fiche = document.querySelector('.job-fiche');
+    if (fiche) {
+      fiche.className = 'job-fiche ' + getRegionClass(value);
+    }
+  }
+}
+
+// Sélectionner la région
+function selectJobRegion(region) {
+  document.querySelectorAll('.job-region-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelector(`.job-region-btn[data-region="${region}"]`)?.classList.add('active');
+  updateJobField('region', region);
+}
+
+// ===== CALENDRIER POUR JOBS =====
+function openJobCalendar(field, element) {
+  if (!currentJobId) return;
+  
+  showCalendar({
+    value: jobsData[currentJobId][field] || '',
+    mode: 'modal',
+    onSelect: (dateStr) => {
+      if (dateStr && currentJobId && jobsData[currentJobId]) {
+        jobsData[currentJobId][field] = dateStr;
+        element.textContent = formatJobDate(dateStr);
+        saveJobToFirebase(currentJobId);
+        renderJobs();
+      }
+      closeCalendar();
+    },
+    onClear: () => {
+      if (currentJobId && jobsData[currentJobId]) {
+        jobsData[currentJobId][field] = '';
+        element.textContent = '-- Sélectionner --';
+        saveJobToFirebase(currentJobId);
+        renderJobs();
+      }
+      closeCalendar();
+    }
+  });
+}
+
+// ===== PHOTOS =====
+let currentJobPhotoNum = 1;
+
+function openJobPhotoMenu(num) {
+  currentJobPhotoNum = num;
+  const job = jobsData[currentJobId];
+  if (!job) return;
+  
+  document.getElementById('jobPhotoMenuNum').textContent = num;
+  document.getElementById('jobPhotoUrl').value = job['photo' + num] || '';
+  document.getElementById('jobPhotoMenu').style.display = 'block';
+}
+
+function closeJobPhotoMenu() {
+  const menu = document.getElementById('jobPhotoMenu');
+  if (menu) menu.style.display = 'none';
+}
+
+function saveJobPhotoUrl() {
+  if (!currentJobId) return;
+  const url = document.getElementById('jobPhotoUrl').value.trim();
+  jobsData[currentJobId]['photo' + currentJobPhotoNum] = url;
+  saveJobToFirebase(currentJobId);
+  
+  const btns = document.querySelectorAll('.job-photo-btn');
+  if (btns[currentJobPhotoNum - 1]) {
+    btns[currentJobPhotoNum - 1].classList.toggle('has-link', !!url);
+  }
+  
+  closeJobPhotoMenu();
+  showToast('Photo enregistrée');
+}
+
+function viewJobPhoto() {
+  const url = document.getElementById('jobPhotoUrl').value.trim();
+  if (url) window.open(url, '_blank');
+}
+
+function clearJobPhoto() {
+  document.getElementById('jobPhotoUrl').value = '';
+  saveJobPhotoUrl();
+}
+
+// ===== NOTES =====
+function insertJobNoteTimestamp(event) {
+  const content = document.getElementById('jobNotesContent');
+  if (!content) return;
+  
+  const selection = window.getSelection();
+  const isAtEnd = !content.textContent || selection.anchorOffset === content.textContent.length;
+  const isEmpty = !content.innerHTML || content.innerHTML === '<br>';
+  
+  if (isEmpty || (isAtEnd && event.target === content)) {
+    const now = new Date();
+    const userName = currentUser?.name || 'Utilisateur';
+    const dateStr = now.toLocaleDateString('fr-CA', { year: 'numeric', month: 'short', day: 'numeric' });
+    const timeStr = now.toLocaleTimeString('fr-CA', { hour: '2-digit', minute: '2-digit' });
+    
+    const timestamp = `<div class="note-timestamp"><strong>${userName}</strong> - ${dateStr} ${timeStr}</div>`;
+    
+    if (isEmpty) {
+      content.innerHTML = timestamp + '<br>';
+    } else {
+      content.innerHTML += '<br>' + timestamp + '<br>';
+    }
+    
+    const range = document.createRange();
+    range.selectNodeContents(content);
+    range.collapse(false);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+}
+
+function handleJobNotesPaste(event) {
+  const items = event.clipboardData?.items;
+  if (!items) return;
+  
+  for (let item of items) {
+    if (item.type.indexOf('image') !== -1) {
+      event.preventDefault();
+      const file = item.getAsFile();
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.maxWidth = '100%';
+        img.style.width = '200px';
+        img.style.cursor = 'nwse-resize';
+        
+        // Activer le redimensionnement
+        makeImageResizable(img);
+        
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(img);
+          range.setStartAfter(img);
+          range.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          document.getElementById('jobNotesContent').appendChild(img);
+        }
+        
+        saveJobNotes();
+      };
+      
+      reader.readAsDataURL(file);
+      break;
+    }
+  }
+}
+
+// Rendre une image redimensionnable comme Word
+function makeImageResizable(img) {
+  let isResizing = false;
+  let startX, startY, startWidth, startHeight;
+  
+  img.addEventListener('mousedown', function(e) {
+    // Commencer le redimensionnement seulement si on est près du bord
+    const rect = img.getBoundingClientRect();
+    const isNearEdge = (rect.right - e.clientX < 20) && (rect.bottom - e.clientY < 20);
+    
+    if (isNearEdge) {
+      e.preventDefault();
+      isResizing = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startWidth = img.offsetWidth;
+      startHeight = img.offsetHeight;
+      img.classList.add('resizing');
+      
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    }
+  });
+  
+  function onMouseMove(e) {
+    if (!isResizing) return;
+    const newWidth = startWidth + (e.clientX - startX);
+    if (newWidth > 50 && newWidth < 500) {
+      img.style.width = newWidth + 'px';
+      img.style.height = 'auto';
+    }
+  }
+  
+  function onMouseUp() {
+    isResizing = false;
+    img.classList.remove('resizing');
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    saveJobNotes();
+  }
+}
+
+// Initialiser le redimensionnement pour les images existantes
+function initNotesImageResizing() {
+  const content = document.getElementById('jobNotesContent');
+  if (content) {
+    content.querySelectorAll('img').forEach(img => {
+      img.style.cursor = 'nwse-resize';
+      makeImageResizable(img);
+    });
+  }
+}
+
+function saveJobNotes() {
+  if (!currentJobId) return;
+  const content = document.getElementById('jobNotesContent');
+  if (content) {
+    jobsData[currentJobId].notes = content.innerHTML;
+    saveJobToFirebase(currentJobId);
+  }
+}
+
+// ===== MODAL AJOUT =====
+let addJobType = 'question';
+let addJobDates = { dateRecue: '', dateAmene: new Date().toISOString().split('T')[0] };
+
+function showAddJobModal(defaultType = 'question') {
+  addJobType = defaultType;
+  addJobDates = { dateRecue: '', dateAmene: new Date().toISOString().split('T')[0] };
+  
+  // Titre selon le type
+  const titles = {
+    'question': 'Ajouter - En attente de réponse',
+    'materiau': 'Ajouter - En attente de matériaux',
+    'materiauBO': 'Ajouter - Liste des matériaux BO',
+    'autre': 'Ajouter - Autres'
+  };
+  const modalTitle = titles[defaultType] || 'Ajouter un Job';
+  
+  let modal = document.getElementById('jobAddModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'jobAddModal';
+    modal.className = 'job-add-overlay';
+    document.body.appendChild(modal);
+  }
+  
+  modal.innerHTML = `
+    <div class="job-add-modal">
+      <div class="job-add-header">
+        <h3>${modalTitle}</h3>
+        <div class="job-add-header-btns">
+          <input type="file" id="jobJsonInput" accept=".json" style="display:none" onchange="handleImportJobJson(event)" multiple>
+          <button class="job-header-import-btn" onclick="document.getElementById('jobJsonInput').click()">📥 JSON</button>
+          <button class="job-add-close" onclick="closeAddJobModal()">×</button>
+        </div>
+      </div>
+      <div class="job-add-body">
+        <!-- Client + Commande -->
+        <div class="job-add-row">
+          <div class="job-add-field" style="flex:3;">
+            <label>Client</label>
+            <select id="addJobClient">
+              <option value="">-- Sélectionner --</option>
+              ${(customLists.moulageClients || []).map(c => `<option value="${c}">${c}</option>`).join('')}
+            </select>
+          </div>
+          <div class="job-add-field" style="flex:1;">
+            <label>N° Commande *</label>
+            <input type="text" id="addJobOrder" placeholder="000000" value="000000" onclick="if(this.value==='000000')this.select()">
+          </div>
+        </div>
+        
+        <!-- PO + Soumission -->
+        <div class="job-add-row">
+          <div class="job-add-field">
+            <label>Numéro PO</label>
+            <input type="text" id="addJobPO" placeholder="PO">
+          </div>
+          <div class="job-add-field">
+            <label>Numéro Soumission</label>
+            <input type="text" id="addJobSoum" placeholder="Soumission">
+          </div>
+        </div>
+        
+        <!-- Représentante + Intervenant -->
+        <div class="job-add-row">
+          <div class="job-add-field">
+            <label>Représentante</label>
+            <select id="addJobRep">
+              <option value="">-- Sélectionner --</option>
+              ${(customLists.representantes || []).map(r => `<option value="${r}">${r}</option>`).join('')}
+            </select>
+          </div>
+          <div class="job-add-field">
+            <label>Intervenant</label>
+            <select id="addJobInterv">
+              <option value="">-- Sélectionner --</option>
+              ${(customLists.intervenants || []).map(i => `<option value="${i}">${i}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        
+        <!-- Région -->
+        <div class="job-add-row">
+          <div class="job-add-field">
+            <label>Région</label>
+            <select id="addJobRegion">
+              <option value="Quebec">Québec</option>
+              <option value="Ontario">Ontario</option>
+              <option value="France">France</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Dates -->
+        <div class="job-add-row">
+          <div class="job-add-field">
+            <label>Date réception</label>
+            <div class="job-add-date-pill" id="addDateRecue" onclick="openAddJobCalendar('dateRecue', this)">-- Sélectionner --</div>
+          </div>
+          <div class="job-add-field">
+            <label>Date mise en attente</label>
+            <div class="job-add-date-pill" id="addDateAmene" onclick="openAddJobCalendar('dateAmene', this)">${formatJobDate(addJobDates.dateAmene)}</div>
+          </div>
+        </div>
+        
+        <div class="job-add-row" id="materiauRow" style="display:none;">
+          <div class="job-add-field">
+            <label>Matériau manquant</label>
+            <input type="text" id="addJobMateriau" placeholder="Ex: Mousse, Velcro...">
+          </div>
+        </div>
+      </div>
+      <div class="job-add-footer">
+        <button class="job-add-btn cancel" onclick="closeAddJobModal()">Annuler</button>
+        <button class="job-add-btn save" onclick="saveNewJob()">💾 Ajouter</button>
+      </div>
+    </div>
+  `;
+  
+  modal.style.display = 'flex';
+}
+
+// Import JSON - comme moulages
+function handleImportJobJson(event) {
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+  
+  let totalImported = 0;
+  let filesProcessed = 0;
+  
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const data = JSON.parse(e.target.result);
+        const jobsArray = Array.isArray(data) ? data : [data];
+        
+        jobsArray.forEach(job => {
+          if (job.order) {
+            const jobId = 'job_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            jobsData[jobId] = {
+              type: job.type || 'question',
+              order: job.order || '',
+              numeroPO: job.numeroPO || job.po || '',
+              numeroSoumission: job.numeroSoumission || job.soumission || '',
+              client: job.client || '',
+              representant: job.representant || job.rep || '',
+              intervenant: job.intervenant || '',
+              region: job.region || 'Quebec',
+              dateRecue: job.dateRecue || '',
+              dateAmene: job.dateAmene || new Date().toISOString().split('T')[0],
+              dateLivraison: job.dateLivraison || '',
+              materiau: job.materiau || '',
+              notes: job.notes || '',
+              createdAt: new Date().toISOString()
+            };
+            saveJobToFirebase(jobId);
+            totalImported++;
+          }
+        });
+        
+        filesProcessed++;
+        if (filesProcessed === files.length) {
+          renderJobs();
+          closeAddJobModal();
+          showToast(`${totalImported} job(s) importé(s)!`);
+        }
+      } catch (err) {
+        console.error('Erreur JSON:', err);
+        showToast('Erreur dans le fichier JSON');
+      }
+    };
+    reader.readAsText(file);
+  });
+  
+  event.target.value = '';
+}
+
+function openAddJobCalendar(field, element) {
+  showCalendar({
+    value: addJobDates[field] || '',
+    mode: 'modal',
+    onSelect: (dateStr) => {
+      if (dateStr) {
+        addJobDates[field] = dateStr;
+        element.textContent = formatJobDate(dateStr);
+      }
+      closeCalendar();
+    },
+    onClear: () => {
+      addJobDates[field] = '';
+      element.textContent = '-- Sélectionner --';
+      closeCalendar();
+    }
+  });
+}
+
+function closeAddJobModal() {
+  const modal = document.getElementById('jobAddModal');
+  if (modal) modal.style.display = 'none';
+  closeCalendar();
+}
+
+function saveNewJob() {
+  const order = document.getElementById('addJobOrder').value.trim();
+  if (!order) {
+    alert('Numéro de commande requis');
+    return;
+  }
+  
+  const jobId = 'job_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  
+  jobsData[jobId] = {
+    type: addJobType,
+    order: order,
+    numeroPO: document.getElementById('addJobPO').value.trim(),
+    numeroSoumission: document.getElementById('addJobSoum')?.value.trim() || '',
+    client: document.getElementById('addJobClient').value,
+    representant: document.getElementById('addJobRep').value,
+    intervenant: document.getElementById('addJobInterv').value,
+    region: document.getElementById('addJobRegion').value || 'Quebec',
+    dateRecue: addJobDates.dateRecue,
+    dateAmene: addJobDates.dateAmene,
+    materiau: document.getElementById('addJobMateriau')?.value.trim() || '',
+    notes: '',
+    createdAt: new Date().toISOString()
+  };
+  
+  saveJobToFirebase(jobId);
+  closeAddJobModal();
+  renderJobs();
+  showToast('Job ajouté!');
+}
+
+// ===== ACTIONS =====
+function resolveJob() {
+  if (!currentJobId) return;
+  if (!confirm('Marquer ce job comme résolu?')) return;
+  deleteJobFromFirebase(currentJobId);
+}
+
+async function sendJobEmail() {
+  if (!currentJobId) return;
+  const job = jobsData[currentJobId];
+  if (!job) return;
+  
+  const subject = `Job en attente #${job.order}`;
+  
+  // Corps de base pour mailto (texte seulement)
+  let body = `Bonjour,\n\nVoici les détails du job en attente:\n\n`;
+  body += `COMMANDE: #${job.order}\n`;
+  body += `CLIENT: ${job.client || '-'}\n`;
+  body += `PO: ${job.numeroPO || '-'}\n`;
+  body += `SOUMISSION: ${job.numeroSoumission || '-'}\n`;
+  body += `REPRÉSENTANTE: ${job.representant || '-'}\n`;
+  body += `INTERVENANT: ${job.intervenant || '-'}\n`;
+  body += `RÉGION: ${job.region || '-'}\n`;
+  if ((job.type === 'materiau' || job.type === 'materiauBO') && job.materiau) {
+    body += `MATÉRIAU: ${job.materiau}\n`;
+  }
+  body += `\n[COLLEZ VOS NOTES ICI AVEC CTRL+V]\n`;
+  body += `\n---\nEnvoyé depuis PhysiPro`;
+  
+  // Copier les notes HTML (avec images) dans le presse-papier
+  const notesContent = document.getElementById('jobNotesContent');
+  if (notesContent && notesContent.innerHTML.trim()) {
+    try {
+      // Créer le HTML complet avec les notes
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; font-size: 14px;">
+          <p><strong>NOTES:</strong></p>
+          ${notesContent.innerHTML}
+        </div>
+      `;
+      
+      // Copier en HTML dans le presse-papier
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const clipboardItem = new ClipboardItem({ 'text/html': blob });
+      await navigator.clipboard.write([clipboardItem]);
+      
+      showToast('📋 Notes copiées! Collez dans votre email (Ctrl+V)');
+    } catch (err) {
+      console.error('Erreur copie:', err);
+      showToast('⚠️ Copie impossible - collez manuellement les notes', true);
+    }
+  }
+  
+  // Ouvrir le client email
+  window.open(`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+}
+
+// Init
+function initJobsPage() {
+  loadJobsFromFirebase();
+}
+
+// Exports
+window.showAddJobModal = showAddJobModal;
+window.closeAddJobModal = closeAddJobModal;
+window.selectAddType = selectAddType;
+window.saveNewJob = saveNewJob;
+window.handleImportJobJson = handleImportJobJson;
+window.openJobFiche = openJobFiche;
+window.closeJobFiche = closeJobFiche;
+window.updateJobField = updateJobField;
+window.updateFicheRegionColor = updateFicheRegionColor;
+window.selectJobRegion = selectJobRegion;
+window.openJobCalendar = openJobCalendar;
+window.openAddJobCalendar = openAddJobCalendar;
+window.openJobPhotoMenu = openJobPhotoMenu;
+window.closeJobPhotoMenu = closeJobPhotoMenu;
+window.saveJobPhotoUrl = saveJobPhotoUrl;
+window.viewJobPhoto = viewJobPhoto;
+window.clearJobPhoto = clearJobPhoto;
+window.insertJobNoteTimestamp = insertJobNoteTimestamp;
+window.handleJobNotesPaste = handleJobNotesPaste;
+window.makeImageResizable = makeImageResizable;
+window.initNotesImageResizing = initNotesImageResizing;
+window.saveJobNotes = saveJobNotes;
+window.resolveJob = resolveJob;
+window.sendJobEmail = sendJobEmail;
+
 // INTERFACE MOBILE - COMPLÈTEMENT SÉPARÉE DU DESKTOP
 // =============================================================================
 
@@ -7311,27 +9364,35 @@ let mobileSwipeCurrentPage = 0; // 0=Info, 1=Notes
 function initMobileAfterLogin() {
   if (!isMobileDevice()) return;
   
-  console.log('📱 Connexion réussie, initialisation mobile...');
-  
-  // Cacher immédiatement le board et header sur mobile
+  // Cacher le board desktop
   const appRoot = document.querySelector('.app-root');
   if (appRoot) appRoot.style.display = 'none';
   
-  // Créer l'overlay mobile s'il n'existe pas
+  // Créer les overlays mobiles s'ils n'existent pas
   if (!document.getElementById('mobileHomeOverlay')) {
     createMobileHomeHTML();
   }
+  if (!document.getElementById('mobileMenuOverlay')) {
+    createMobileMenuHTML();
+  }
   
-  // Afficher l'écran d'accueil mobile
-  showMobileHome();
+  // Afficher le menu principal
+  showMobileMenu();
   
-  // Mettre à jour le compteur plusieurs fois pour s'assurer que les données sont chargées
+  // Mettre à jour les compteurs
   let checkCount = 0;
   const checkInterval = setInterval(() => {
     updateMobileDataCount();
+    const moulagesCount = Object.keys(cardsData || {}).length;
+    const jobsCount = Object.keys(jobsData || {}).filter(k => jobsData[k].type === 'question').length;
+    
+    const menuMoulagesCount = document.getElementById('menuMoulagesCount');
+    const menuJobsCount = document.getElementById('menuJobsCount');
+    if (menuMoulagesCount) menuMoulagesCount.textContent = `(${moulagesCount})`;
+    if (menuJobsCount) menuJobsCount.textContent = `(${jobsCount})`;
+    
     checkCount++;
-    const dataCount = Object.keys(cardsData).length;
-    if (checkCount >= 10 || dataCount > 0) {
+    if (checkCount >= 10 || moulagesCount > 0) {
       clearInterval(checkInterval);
     }
   }, 1000);
@@ -8194,6 +10255,380 @@ window.openMobilePhotoLink1to6 = openMobilePhotoLink1to6;
 window.openMobilePhotos1to6Menu = openMobilePhotos1to6Menu;
 window.closeMobilePhotos1to6Menu = closeMobilePhotos1to6Menu;
 window.saveMobilePhotos1to6 = saveMobilePhotos1to6;
+
+// ===== MOBILE MENU & JOBS =====
+let currentMobileJobId = null;
+let mobileJobSwipePage = 0;
+
+// Créer le HTML du menu mobile
+function createMobileMenuHTML() {
+  const menuHTML = `
+    <!-- MENU MOBILE - CHOIX MOULAGES / JOBS -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+      <img src="https://raw.githubusercontent.com/sheriff717/Physipro-serie/main/logo-physipro1.png" 
+           class="mobile-menu-logo" 
+           alt="PhysiPro"
+           onerror="this.style.display='none';">
+      <div class="mobile-menu-title">Outil de gestion simplifiée</div>
+      <div class="mobile-menu-buttons">
+        <button class="mobile-menu-btn btn-moulages" onclick="openMobileMoulages()">
+          <span class="mobile-menu-btn-icon">📋</span>
+          <span>Moulages</span>
+          <span class="mobile-menu-btn-count" id="menuMoulagesCount"></span>
+        </button>
+        <button class="mobile-menu-btn btn-jobs" onclick="openMobileJobs()">
+          <span class="mobile-menu-btn-icon">⏳</span>
+          <span>Jobs en attente</span>
+          <span class="mobile-menu-btn-count" id="menuJobsCount"></span>
+        </button>
+      </div>
+      <div class="mobile-desktop-btn" onclick="switchToDesktopMode()">
+        💻 Version complète
+      </div>
+    </div>
+    
+    <!-- LISTE JOBS MOBILE -->
+    <div class="mobile-jobs-overlay" id="mobileJobsOverlay">
+      <div class="mobile-jobs-header">
+        <button class="mobile-jobs-back" onclick="closeMobileJobs()">← Retour</button>
+        <div class="mobile-jobs-title">⏳ En attente de réponse</div>
+        <button class="mobile-jobs-add" onclick="showMobileAddJob()">+</button>
+      </div>
+      <div class="mobile-jobs-list" id="mobileJobsList"></div>
+    </div>
+    
+    <!-- FICHE JOB MOBILE -->
+    <div class="mobile-job-fiche-overlay" id="mobileJobFicheOverlay">
+      <div class="mobile-job-fiche-header" id="mobileJobFicheHeader">
+        <button class="mobile-job-fiche-back" onclick="closeMobileJobFiche()">← Retour</button>
+        <div class="mobile-job-fiche-title" id="mobileJobFicheTitle">Job #000000</div>
+      </div>
+      <div class="mobile-job-swipe-indicator" id="mobileJobSwipeIndicator">
+        ← Glissez pour voir les notes →
+      </div>
+      <div class="mobile-job-fiche-swipe" id="mobileJobFicheSwipe">
+        <div class="mobile-job-fiche-wrapper" id="mobileJobFicheWrapper">
+          <div class="mobile-job-fiche-page page-info" id="mobileJobPageInfo"></div>
+          <div class="mobile-job-fiche-page page-notes" id="mobileJobPageNotes"></div>
+        </div>
+      </div>
+      <div class="mobile-job-fiche-footer">
+        <button class="mobile-job-fiche-btn btn-done" onclick="resolveMobileJob()">✓ Résolu</button>
+        <button class="mobile-job-fiche-btn btn-email" onclick="emailMobileJob()">✉️ Email</button>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', menuHTML);
+  initMobileJobSwipe();
+}
+
+// Ouvrir le menu mobile (au lieu de l'écran moulages directement)
+function showMobileMenu() {
+  // S'assurer que le menu existe
+  if (!document.getElementById('mobileMenuOverlay')) {
+    createMobileMenuHTML();
+  }
+  
+  // Mettre à jour les compteurs
+  const moulagesCount = Object.keys(cardsData || {}).length;
+  const jobsCount = Object.keys(jobsData || {}).filter(k => jobsData[k].type === 'question').length;
+  
+  const moulagesCountEl = document.getElementById('menuMoulagesCount');
+  const jobsCountEl = document.getElementById('menuJobsCount');
+  if (moulagesCountEl) moulagesCountEl.textContent = `(${moulagesCount})`;
+  if (jobsCountEl) jobsCountEl.textContent = `(${jobsCount})`;
+  
+  // Afficher le menu
+  document.getElementById('mobileMenuOverlay').classList.add('active');
+  document.getElementById('mobileHomeOverlay')?.classList.remove('active');
+  document.getElementById('mobileJobsOverlay')?.classList.remove('active');
+}
+
+// Ouvrir les Moulages depuis le menu
+function openMobileMoulages() {
+  document.getElementById('mobileMenuOverlay')?.classList.remove('active');
+  document.getElementById('mobileHomeOverlay')?.classList.add('active');
+}
+
+// Ouvrir les Jobs depuis le menu
+function openMobileJobs() {
+  document.getElementById('mobileMenuOverlay')?.classList.remove('active');
+  document.getElementById('mobileJobsOverlay')?.classList.add('active');
+  renderMobileJobsList();
+}
+
+// Fermer les Jobs et retourner au menu
+function closeMobileJobs() {
+  document.getElementById('mobileJobsOverlay')?.classList.remove('active');
+  document.getElementById('mobileMenuOverlay')?.classList.add('active');
+}
+
+// Rendre la liste des jobs mobile (seulement type question)
+function renderMobileJobsList() {
+  const list = document.getElementById('mobileJobsList');
+  if (!list) return;
+  
+  const questionJobs = Object.entries(jobsData || {})
+    .filter(([id, job]) => job.type === 'question')
+    .sort((a, b) => (b[1].dateAmene || '').localeCompare(a[1].dateAmene || ''));
+  
+  if (questionJobs.length === 0) {
+    list.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.6);padding:40px;">Aucun job en questionnement</div>';
+    return;
+  }
+  
+  list.innerHTML = questionJobs.map(([id, job]) => {
+    const days = calcJobDays(job.dateAmene);
+    const daysClass = getDaysClass(days);
+    const regionClass = job.region === 'Ontario' ? 'region-on' : job.region === 'France' ? 'region-fr' : '';
+    
+    return `
+      <div class="mobile-job-card ${regionClass}" onclick="openMobileJobFiche('${id}')">
+        <div class="mobile-job-card-row1">
+          <span class="mobile-job-card-order">#${job.order || '------'}</span>
+          <span class="mobile-job-card-client">${job.client || '-'}</span>
+        </div>
+        <div class="mobile-job-card-row2">
+          <span class="mobile-job-card-rep">REP: ${job.representant || '-'}</span>
+          <span class="mobile-job-card-days ${daysClass}">${days} jours</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// Ouvrir la fiche job mobile
+function openMobileJobFiche(jobId) {
+  currentMobileJobId = jobId;
+  const job = jobsData[jobId];
+  if (!job) return;
+  
+  // Header
+  const header = document.getElementById('mobileJobFicheHeader');
+  header.className = 'mobile-job-fiche-header';
+  if (job.region === 'Ontario') header.classList.add('region-on');
+  else if (job.region === 'France') header.classList.add('region-fr');
+  
+  document.getElementById('mobileJobFicheTitle').textContent = `Job #${job.order || '------'}`;
+  
+  // Page Info
+  renderMobileJobPageInfo(job);
+  
+  // Page Notes
+  renderMobileJobPageNotes(job);
+  
+  // Reset swipe
+  mobileJobSwipePage = 0;
+  setMobileJobSwipePage(0, false);
+  updateMobileJobSwipeIndicator();
+  
+  // Afficher
+  document.getElementById('mobileJobFicheOverlay')?.classList.add('active');
+}
+
+// Fermer la fiche job mobile
+function closeMobileJobFiche() {
+  document.getElementById('mobileJobFicheOverlay')?.classList.remove('active');
+  currentMobileJobId = null;
+}
+
+// Rendre la page Info du job mobile
+function renderMobileJobPageInfo(job) {
+  const page = document.getElementById('mobileJobPageInfo');
+  if (!page) return;
+  
+  page.innerHTML = `
+    <div class="mobile-job-field">
+      <label>Client</label>
+      <select id="mobileJobClient" onchange="updateMobileJobField('client', this.value)">
+        <option value="">-- Sélectionner --</option>
+        ${(customLists.moulageClients || []).map(c => `<option value="${c}" ${job.client === c ? 'selected' : ''}>${c}</option>`).join('')}
+      </select>
+    </div>
+    
+    <div class="mobile-job-field-row">
+      <div class="mobile-job-field">
+        <label>N° Commande</label>
+        <input type="text" value="${job.order || ''}" onchange="updateMobileJobField('order', this.value)">
+      </div>
+      <div class="mobile-job-field">
+        <label>Région</label>
+        <select onchange="updateMobileJobField('region', this.value)">
+          <option value="Quebec" ${job.region === 'Quebec' ? 'selected' : ''}>Québec</option>
+          <option value="Ontario" ${job.region === 'Ontario' ? 'selected' : ''}>Ontario</option>
+          <option value="France" ${job.region === 'France' ? 'selected' : ''}>France</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="mobile-job-field-row">
+      <div class="mobile-job-field">
+        <label>PO</label>
+        <input type="text" value="${job.numeroPO || ''}" onchange="updateMobileJobField('numeroPO', this.value)">
+      </div>
+      <div class="mobile-job-field">
+        <label>Soumission</label>
+        <input type="text" value="${job.numeroSoumission || ''}" onchange="updateMobileJobField('numeroSoumission', this.value)">
+      </div>
+    </div>
+    
+    <div class="mobile-job-field-row">
+      <div class="mobile-job-field">
+        <label>Représentante</label>
+        <select onchange="updateMobileJobField('representant', this.value)">
+          <option value="">--</option>
+          ${(customLists.representantes || []).map(r => `<option value="${r}" ${job.representant === r ? 'selected' : ''}>${r}</option>`).join('')}
+        </select>
+      </div>
+      <div class="mobile-job-field">
+        <label>Intervenant</label>
+        <select onchange="updateMobileJobField('intervenant', this.value)">
+          <option value="">--</option>
+          ${(customLists.intervenants || []).map(i => `<option value="${i}" ${job.intervenant === i ? 'selected' : ''}>${i}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    
+    <div class="mobile-job-field-row">
+      <div class="mobile-job-field">
+        <label>Réception</label>
+        <div class="mobile-job-date-pill">${formatJobDate(job.dateRecue)}</div>
+      </div>
+      <div class="mobile-job-field">
+        <label>En attente</label>
+        <div class="mobile-job-date-pill">${formatJobDate(job.dateAmene)}</div>
+      </div>
+      <div class="mobile-job-field">
+        <label>Livraison</label>
+        <div class="mobile-job-date-pill">${formatJobDate(job.dateLivraison)}</div>
+      </div>
+    </div>
+  `;
+}
+
+// Rendre la page Notes du job mobile
+function renderMobileJobPageNotes(job) {
+  const page = document.getElementById('mobileJobPageNotes');
+  if (!page) return;
+  
+  page.innerHTML = `
+    <div class="mobile-job-notes-area">
+      <div class="mobile-job-notes-header">📝 Notes</div>
+      <div class="mobile-job-notes-content" 
+           id="mobileJobNotesContent" 
+           contenteditable="true" 
+           onblur="saveMobileJobNotes()">${job.notes || ''}</div>
+    </div>
+  `;
+}
+
+// Mettre à jour un champ du job mobile
+function updateMobileJobField(field, value) {
+  if (!currentMobileJobId || !jobsData[currentMobileJobId]) return;
+  jobsData[currentMobileJobId][field] = value;
+  saveJobToFirebase(currentMobileJobId);
+  renderMobileJobsList();
+}
+
+// Sauvegarder les notes du job mobile
+function saveMobileJobNotes() {
+  if (!currentMobileJobId || !jobsData[currentMobileJobId]) return;
+  const content = document.getElementById('mobileJobNotesContent');
+  if (content) {
+    jobsData[currentMobileJobId].notes = content.innerHTML;
+    saveJobToFirebase(currentMobileJobId);
+  }
+}
+
+// Résoudre le job mobile
+function resolveMobileJob() {
+  if (!currentMobileJobId) return;
+  if (confirm('Marquer ce job comme résolu?')) {
+    deleteJobFromFirebase(currentMobileJobId);
+    closeMobileJobFiche();
+    renderMobileJobsList();
+  }
+}
+
+// Email du job mobile
+function emailMobileJob() {
+  if (!currentMobileJobId) return;
+  currentJobId = currentMobileJobId;
+  sendJobEmail();
+}
+
+// Initialiser le swipe pour les jobs mobiles
+function initMobileJobSwipe() {
+  const container = document.getElementById('mobileJobFicheSwipe');
+  if (!container) return;
+  
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+  
+  container.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+  });
+  
+  container.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+  });
+  
+  container.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const diff = startX - currentX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && mobileJobSwipePage < 1) {
+        mobileJobSwipePage = 1;
+      } else if (diff < 0 && mobileJobSwipePage > 0) {
+        mobileJobSwipePage = 0;
+      }
+      setMobileJobSwipePage(mobileJobSwipePage, true);
+      updateMobileJobSwipeIndicator();
+    }
+  });
+}
+
+// Définir la page du swipe job
+function setMobileJobSwipePage(pageIndex, animate) {
+  const wrapper = document.getElementById('mobileJobFicheWrapper');
+  if (wrapper) {
+    wrapper.style.transition = animate ? 'transform 0.3s ease' : 'none';
+    wrapper.style.transform = `translateX(${pageIndex * -50}%)`;
+  }
+}
+
+// Mettre à jour l'indicateur de swipe
+function updateMobileJobSwipeIndicator() {
+  const indicator = document.getElementById('mobileJobSwipeIndicator');
+  if (indicator) {
+    indicator.textContent = mobileJobSwipePage === 0 
+      ? '← Glissez pour voir les notes →' 
+      : '← Glissez pour voir les infos →';
+  }
+}
+
+// Afficher le modal d'ajout de job mobile
+function showMobileAddJob() {
+  showAddJobModal('question');
+}
+
+// Exposer les nouvelles fonctions
+window.showMobileMenu = showMobileMenu;
+window.openMobileMoulages = openMobileMoulages;
+window.openMobileJobs = openMobileJobs;
+window.closeMobileJobs = closeMobileJobs;
+window.openMobileJobFiche = openMobileJobFiche;
+window.closeMobileJobFiche = closeMobileJobFiche;
+window.updateMobileJobField = updateMobileJobField;
+window.saveMobileJobNotes = saveMobileJobNotes;
+window.resolveMobileJob = resolveMobileJob;
+window.emailMobileJob = emailMobileJob;
+window.showMobileAddJob = showMobileAddJob;
 
 // ===== IMPORT/EXPORT & LOG FUNCTIONS =====
 let logEntries = [];
