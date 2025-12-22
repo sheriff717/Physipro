@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhysiPro Moulage v10.0</title>
+  <title>PhysiPro Moulage v10.1</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -1227,8 +1227,13 @@ html, body {
   text-decoration: underline;
 }
 
-.notes-page-content .uploaded-image-container {
-  margin: 6px 0;
+.notes-page-content img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 4px;
+  margin: 4px 0;
+  cursor: pointer;
+  display: block;
 }
 
 .notes-photos-links {
@@ -5942,64 +5947,21 @@ html, body {
 .job-notes-content img:hover { border-color: #3b82f6; }
 .job-notes-content img.resizing { border-color: #22c55e; }
 
-/* Container d'image uploadée */
-.uploaded-image-container {
-  margin: 8px 0;
-  padding: 8px;
-  background: #f0f9ff;
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-}
-
-.image-resize-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.image-resize-wrapper img.resizable-image {
+/* Images inline uploadées */
+.uploaded-image-inline {
   display: block;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.image-resize-controls {
-  display: flex;
-  gap: 4px;
-  margin-top: 6px;
-}
-
-.image-resize-controls button {
-  padding: 4px 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: #fff;
-  cursor: pointer;
-  font-size: 12px;
-  transition: all 0.2s;
-}
-
-.image-resize-controls button:hover {
-  background: #3b82f6;
-  color: white;
-  border-color: #3b82f6;
-}
-
-.image-link {
-  display: block;
-  margin-top: 6px;
-  font-size: 11px;
-  color: #2563eb;
-  word-break: break-all;
-}
-
-.image-upload-placeholder {
-  padding: 10px;
-  background: #f0f9ff;
-  border: 2px dashed #3b82f6;
-  border-radius: 8px;
-  text-align: center;
   margin: 4px 0;
-  color: #3b82f6;
+}
+
+.uploaded-image-inline img {
+  display: block;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.uploaded-image-inline a {
+  font-size: 10px;
+  color: #2563eb;
 }
 
 .note-timestamp {
@@ -13243,23 +13205,13 @@ async function uploadImageToFirebase(blob, placeholder, saveCallback, folderName
     // Obtenir l'URL de téléchargement
     const downloadURL = await snapshot.ref.getDownloadURL();
     
-    // Créer le conteneur avec image redimensionnable et lien
-    const container = document.createElement('div');
-    container.className = 'uploaded-image-container';
-    container.innerHTML = `
-      <div class="image-resize-wrapper">
-        <img src="${downloadURL}" class="resizable-image" style="max-width:100%;max-height:300px;">
-        <div class="image-resize-controls">
-          <button onclick="resizeImage(this, 0.5)" title="Réduire">➖</button>
-          <button onclick="resizeImage(this, 2)" title="Agrandir">➕</button>
-          <button onclick="resetImageSize(this)" title="Réinitialiser">↺</button>
-        </div>
-      </div>
-      <a href="${downloadURL}" target="_blank" class="image-link">📎 ${downloadURL}</a>
-    `;
+    // Créer juste une image simple avec lien en dessous (inline)
+    const span = document.createElement('span');
+    span.className = 'uploaded-image-inline';
+    span.innerHTML = `<img src="${downloadURL}" style="max-width:100%;max-height:250px;border-radius:4px;display:block;margin:4px 0;"><a href="${downloadURL}" target="_blank" style="font-size:10px;color:#2563eb;">📎 Lien image</a>`;
     
     // Remplacer le placeholder
-    placeholder.replaceWith(container);
+    placeholder.replaceWith(span);
     
     // Appeler le callback de sauvegarde
     if (typeof saveCallback === 'function') {
@@ -13274,19 +13226,10 @@ async function uploadImageToFirebase(blob, placeholder, saveCallback, folderName
     // Fallback: afficher l'image en base64
     const reader = new FileReader();
     reader.onload = function(event) {
-      const container = document.createElement('div');
-      container.className = 'uploaded-image-container';
-      container.innerHTML = `
-        <div class="image-resize-wrapper">
-          <img src="${event.target.result}" class="resizable-image" style="max-width:100%;max-height:300px;">
-          <div class="image-resize-controls">
-            <button onclick="resizeImage(this, 0.5)" title="Réduire">➖</button>
-            <button onclick="resizeImage(this, 2)" title="Agrandir">➕</button>
-            <button onclick="resetImageSize(this)" title="Réinitialiser">↺</button>
-          </div>
-        </div>
-      `;
-      placeholder.replaceWith(container);
+      const span = document.createElement('span');
+      span.className = 'uploaded-image-inline';
+      span.innerHTML = `<img src="${event.target.result}" style="max-width:100%;max-height:250px;border-radius:4px;display:block;margin:4px 0;">`;
+      placeholder.replaceWith(span);
       if (typeof saveCallback === 'function') {
         saveCallback();
       }
@@ -13294,35 +13237,6 @@ async function uploadImageToFirebase(blob, placeholder, saveCallback, folderName
     };
     reader.readAsDataURL(blob);
   }
-}
-
-// Redimensionner une image
-function resizeImage(btn, factor) {
-  const wrapper = btn.closest('.image-resize-wrapper');
-  const img = wrapper.querySelector('img');
-  if (!img) return;
-  
-  const currentWidth = img.offsetWidth;
-  let newWidth = currentWidth * factor;
-  
-  // Limites
-  if (newWidth < 50) newWidth = 50;
-  if (newWidth > 800) newWidth = 800;
-  
-  img.style.width = newWidth + 'px';
-  img.style.maxWidth = newWidth + 'px';
-  img.style.height = 'auto';
-}
-
-// Réinitialiser la taille de l'image
-function resetImageSize(btn) {
-  const wrapper = btn.closest('.image-resize-wrapper');
-  const img = wrapper.querySelector('img');
-  if (!img) return;
-  
-  img.style.width = '';
-  img.style.maxWidth = '100%';
-  img.style.maxHeight = '300px';
 }
 
 // Fonction générique pour gérer le collage d'images
@@ -13336,10 +13250,11 @@ function handleGenericImagePaste(e, saveCallback, folderName) {
       e.preventDefault();
       const blob = items[i].getAsFile();
       
-      // Créer un placeholder
-      const placeholder = document.createElement('div');
+      // Créer un placeholder simple (span au lieu de div pour éviter les divisions)
+      const placeholder = document.createElement('span');
       placeholder.className = 'image-upload-placeholder';
-      placeholder.innerHTML = '⏳ Upload de l\'image en cours...';
+      placeholder.innerHTML = '⏳ Upload...';
+      placeholder.style.cssText = 'display:inline-block;padding:4px 8px;background:#e0f2fe;border-radius:4px;font-size:11px;color:#0369a1;';
       
       const selection = window.getSelection();
       if (selection.rangeCount > 0) {
@@ -13690,8 +13605,6 @@ window.handleGenericImagePaste = handleGenericImagePaste;
 window.handleGenericLinkClick = handleGenericLinkClick;
 window.handleQuestionsLinkClick = handleQuestionsLinkClick;
 window.uploadImageToFirebase = uploadImageToFirebase;
-window.resizeImage = resizeImage;
-window.resetImageSize = resetImageSize;
 window.saveJobResponse = saveJobResponse;
 window.resolveJob = resolveJob;
 window.deleteJob = deleteJob;
