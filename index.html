@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PhysiPro Moulage v9.0</title>
+  <title>PhysiPro Moulage v9.4</title>
   
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -2420,6 +2420,30 @@ html, body {
   gap: 4px;
 }
 
+/* Bouton + pour gérer les listes */
+.list-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  margin-left: 4px;
+  border: none;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.list-add-btn:hover {
+  background: #2563eb;
+  transform: scale(1.1);
+}
+
 .add-modal-field input,
 .add-modal-field select {
   padding: 5px 8px;
@@ -3563,11 +3587,10 @@ html, body {
   transition: transform 0.15s;
 }
 
-/* Ligne du haut: Statut + Nom */
+/* Ligne du haut: Statut à gauche */
 .mobile-card-top {
   display: flex;
   align-items: center;
-  gap: 6px;
   margin-bottom: 2px;
 }
 
@@ -3610,22 +3633,23 @@ html, body {
   background: linear-gradient(to bottom, #451238 0%, #8D2E6A 40%, #C7458C 100%);
 }
 
-/* Carte en attente - bordure rouge */
+/* Carte en attente - pas de bordure spéciale */
 .mobile-card.en-attente {
-  border-color: #ef4444;
-  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+  /* Style normal */
 }
 
-/* Nom du moulage - à droite du statut */
+/* Nom du moulage - centré */
 .mobile-card-name {
-  flex: 1;
+  width: 100%;
   font-size: 16px;
   font-weight: 700;
   color: #fff;
+  text-align: center;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 2px;
 }
 
 /* Ligne du milieu : REP + Commande + Région */
@@ -3720,6 +3744,15 @@ html, body {
   text-align: center;
   margin-top: 2px;
   animation: mobileBlink 1s infinite;
+}
+
+/* Barre info en attente (raison + jours) */
+.mobile-card-delay.attente-info {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  color: #fff !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  font-size: 10px;
+  padding: 4px 6px;
 }
 
 /* Raison attente */
@@ -8018,9 +8051,9 @@ html, body {
         </div>
         <div class="jobs-col">
           <div class="jobs-col-title">
-            <span>👤 Jacinthe <span class="count" id="countJacinthe">0</span></span>
+            <span>👤 Jacynthe <span class="count" id="countJacynthe">0</span></span>
           </div>
-          <div class="jobs-col-content" id="listJacinthe"></div>
+          <div class="jobs-col-content" id="listJacynthe"></div>
         </div>
         <div class="jobs-col">
           <div class="jobs-col-title">
@@ -9152,6 +9185,18 @@ function moveCardToPosition(card, targetColIndex, position) {
           cardsData[cardId].tracking[deptKey].entree = today;
         }
       }
+    }
+    
+    // Si on entre dans En attente (colonne 7), marquer la date
+    if (targetColIndex === 7 && cardsData[cardId]) {
+      if (!cardsData[cardId].dateAttente) {
+        cardsData[cardId].dateAttente = today;
+      }
+    }
+    
+    // Si on quitte En attente (colonne 7), effacer la date
+    if (currentColIndex === 7 && targetColIndex !== 7 && cardsData[cardId]) {
+      cardsData[cardId].dateAttente = '';
     }
     
     // Mettre à jour cardsData et sauvegarder
@@ -11096,7 +11141,7 @@ function showAddMoulageModal() {
         </div>
         <div class="add-modal-body">
           <div class="add-modal-field">
-            <label>Client</label>
+            <label>Client <button class="list-add-btn" onclick="openListManager('moulageClients', 'Clients')" title="Gérer la liste">+</button></label>
             <select id="addMoulageClient"></select>
           </div>
           <div class="add-modal-field">
@@ -11136,7 +11181,7 @@ function showAddMoulageModal() {
             <input type="text" id="addMoulageNumeroPO" placeholder="Numéro...">
           </div>
           <div class="add-modal-field">
-            <label>Région</label>
+            <label>Région <button class="list-add-btn" onclick="openListManager('regions', 'Régions')" title="Gérer la liste">+</button></label>
             <select id="addMoulageRegion"></select>
           </div>
           <div class="add-modal-field">
@@ -11144,11 +11189,11 @@ function showAddMoulageModal() {
             <input type="text" id="addMoulageSoumission" placeholder="Numéro de soumission...">
           </div>
           <div class="add-modal-field">
-            <label>Intervenant</label>
+            <label>Intervenant <button class="list-add-btn" onclick="openListManager('intervenants', 'Intervenants')" title="Gérer la liste">+</button></label>
             <select id="addMoulageIntervenant"></select>
           </div>
           <div class="add-modal-field">
-            <label>Représentante</label>
+            <label>Représentante <button class="list-add-btn" onclick="openListManager('representantes', 'Représentantes')" title="Gérer la liste">+</button></label>
             <select id="addMoulageRepresentant"></select>
           </div>
         </div>
@@ -11692,7 +11737,7 @@ let jobsData = {
     representant: 'Valérie',
     intervenant: 'Dr Tremblay',
     region: 'Canada anglais',
-    assignee: 'Jacinthe',
+    assignee: 'Jacynthe',
     dateRecue: '2025-12-05',
     dateAmene: '2025-12-18',
     dateLivraison: '2025-12-30',
@@ -11931,15 +11976,15 @@ function createJobMiniCard(jobId, job) {
 // Afficher les jobs
 function renderJobs() {
   const listSonia = document.getElementById('listSonia');
-  const listJacinthe = document.getElementById('listJacinthe');
+  const listJacynthe = document.getElementById('listJacynthe');
   const listNadia = document.getElementById('listNadia');
   const listNouveau = document.getElementById('listNouveau');
   
   // Si on est sur mobile, ces éléments n'existent pas - ne pas planter
-  if (!listSonia && !listJacinthe && !listNadia && !listNouveau) return;
+  if (!listSonia && !listJacynthe && !listNadia && !listNouveau) return;
   
-  let htmlSonia = '', htmlJacinthe = '', htmlNadia = '', htmlNouveau = '';
-  let countSonia = 0, countJacinthe = 0, countNadia = 0, countNouveau = 0;
+  let htmlSonia = '', htmlJacynthe = '', htmlNadia = '', htmlNouveau = '';
+  let countSonia = 0, countJacynthe = 0, countNadia = 0, countNouveau = 0;
   
   // Trier par jours en attente (plus ancien en haut)
   const sorted = Object.entries(jobsData || {})
@@ -11953,9 +11998,9 @@ function renderJobs() {
     if (assignee === 'Sonia') {
       htmlSonia += card;
       countSonia++;
-    } else if (assignee === 'Jacinthe') {
-      htmlJacinthe += card;
-      countJacinthe++;
+    } else if (assignee === 'Jacynthe') {
+      htmlJacynthe += card;
+      countJacynthe++;
     } else if (assignee === 'Nadia') {
       htmlNadia += card;
       countNadia++;
@@ -11966,17 +12011,17 @@ function renderJobs() {
   });
   
   if (listSonia) listSonia.innerHTML = htmlSonia || '<div class="jobs-empty"><div class="jobs-empty-icon">✓</div><p>Aucun</p></div>';
-  if (listJacinthe) listJacinthe.innerHTML = htmlJacinthe || '<div class="jobs-empty"><div class="jobs-empty-icon">✓</div><p>Aucun</p></div>';
+  if (listJacynthe) listJacynthe.innerHTML = htmlJacynthe || '<div class="jobs-empty"><div class="jobs-empty-icon">✓</div><p>Aucun</p></div>';
   if (listNadia) listNadia.innerHTML = htmlNadia || '<div class="jobs-empty"><div class="jobs-empty-icon">✓</div><p>Aucun</p></div>';
   if (listNouveau) listNouveau.innerHTML = htmlNouveau || '<div class="jobs-empty"><div class="jobs-empty-icon">🆕</div><p>Aucun</p></div>';
   
   const countSoniaEl = document.getElementById('countSonia');
-  const countJacintheEl = document.getElementById('countJacinthe');
+  const countJacyntheEl = document.getElementById('countJacynthe');
   const countNadiaEl = document.getElementById('countNadia');
   const countNouveauEl = document.getElementById('countNouveau');
   
   if (countSoniaEl) countSoniaEl.textContent = countSonia;
-  if (countJacintheEl) countJacintheEl.textContent = countJacinthe;
+  if (countJacyntheEl) countJacyntheEl.textContent = countJacynthe;
   if (countNadiaEl) countNadiaEl.textContent = countNadia;
   if (countNouveauEl) countNouveauEl.textContent = countNouveau;
 }
@@ -12058,7 +12103,7 @@ function openJobFiche(jobId) {
               <label>Assigné à</label>
               <select id="jfAssignee" onchange="updateJobField('assignee', this.value); renderJobs();">
                 <option value="Sonia" ${job.assignee === 'Sonia' ? 'selected' : ''}>Sonia</option>
-                <option value="Jacinthe" ${job.assignee === 'Jacinthe' ? 'selected' : ''}>Jacinthe</option>
+                <option value="Jacynthe" ${job.assignee === 'Jacynthe' ? 'selected' : ''}>Jacynthe</option>
                 <option value="Nadia" ${job.assignee === 'Nadia' ? 'selected' : ''}>Nadia</option>
                 <option value="Nouveau" ${(job.assignee === 'Nouveau' || !job.assignee) ? 'selected' : ''}>Nouveau</option>
               </select>
@@ -12608,7 +12653,7 @@ function showAddJobModal(defaultType = 'question', assignee = 'Nouveau') {
             <label>Assigné à</label>
             <select id="addJobAssignee">
               <option value="Sonia" ${assignee === 'Sonia' ? 'selected' : ''}>Sonia</option>
-              <option value="Jacinthe" ${assignee === 'Jacinthe' ? 'selected' : ''}>Jacinthe</option>
+              <option value="Jacynthe" ${assignee === 'Jacynthe' ? 'selected' : ''}>Jacynthe</option>
               <option value="Nadia" ${assignee === 'Nadia' ? 'selected' : ''}>Nadia</option>
               <option value="Nouveau" ${assignee === 'Nouveau' ? 'selected' : ''}>Nouveau</option>
             </select>
@@ -13473,8 +13518,20 @@ function createMobileCardHTML(cardId, card) {
     }
   }
   
-  // Raison attente
+  // Raison attente et calcul des jours
   const raisonAttente = card.raisonAttente || '';
+  let joursAttenteText = '';
+  
+  if (isEnAttente && card.dateAttente) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dateAttente = new Date(card.dateAttente + 'T00:00:00');
+    if (!isNaN(dateAttente.getTime())) {
+      const diffTime = today - dateAttente;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      joursAttenteText = diffDays <= 0 ? "aujourd'hui" : `depuis ${diffDays} jour${diffDays > 1 ? 's' : ''}`;
+    }
+  }
   
   // Statut basé sur la colonne
   const statusNames = ['Robot', 'Dégauchage', 'Essayage', 'Atelier', 'Couture', 'Peinture', 'Expédition', 'En attente'];
@@ -13483,21 +13540,35 @@ function createMobileCardHTML(cardId, card) {
   const statusText = statusNames[colIndex] || 'Robot';
   const statusClass = statusClasses[colIndex] || 'robot';
   
-  // HTML pour la carte - Statut + Nom sur la même ligne
+  // Construire le texte de la barre en attente
+  let attenteBarText = '';
+  if (raisonAttente) {
+    // La raison contient déjà "En attente de..." donc on l'utilise directement
+    attenteBarText = raisonAttente;
+    if (joursAttenteText) {
+      attenteBarText += ` ${joursAttenteText}`;
+    }
+  } else {
+    attenteBarText = 'En attente';
+    if (joursAttenteText) {
+      attenteBarText += ` ${joursAttenteText}`;
+    }
+  }
+  
+  // HTML pour la carte - Statut à gauche, Nom centré
   return `
     <div class="mobile-card ${regionClass} ${isEnAttente ? 'en-attente' : ''}" onclick="openMobileFiche('${cardId}')">
       <div class="mobile-card-top">
         <div class="mobile-card-status status-${statusClass}">${statusText}</div>
-        <div class="mobile-card-name">${card.name || 'Sans nom'}</div>
       </div>
+      <div class="mobile-card-name">${card.name || 'Sans nom'}</div>
       <div class="mobile-card-middle">
         <span class="mobile-card-rep">${repText}</span>
         <span class="mobile-card-order">#${card.order || '000000'}</span>
         <span class="mobile-card-region">${regionText}</span>
       </div>
       ${isEnAttente 
-        ? `<div class="mobile-card-attente-badge">⏳ EN ATTENTE</div>
-           ${raisonAttente ? `<div class="mobile-card-raison">${raisonAttente}</div>` : ''}`
+        ? `<div class="mobile-card-delay attente-info">${attenteBarText}</div>`
         : `<div class="mobile-card-delay ${daysInfo.class}">${daysInfo.text}</div>`
       }
     </div>
